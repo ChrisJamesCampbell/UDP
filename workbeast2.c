@@ -22,7 +22,7 @@ int main(void)
   */
   
   long double a = 0;
-  long double i = rand(100);
+  int i = rand();
   
   for(int c = 0; c<10000000; c++)
   {
