@@ -52,19 +52,14 @@ static void monitor_cpu_load(struct sysinfo_type *sysinfo);
     //replaces old value with most recent value
     oldvalue[0] = newvalue[0];
     
-    int cut_cpu_load = (int) (roundl(loadavg* 100)/100);
     
-    for(int i = 0; i < 3; i++)
-    {
-        cpu_load[i] = cut_cpu_load[i];
-    }
+    //casting rounded double to char so as to only use 1 byte
+    char cut_cpu_load = (char) (roundl(loadavg* 100));
     
-    if(cpu_load[0] != 1 or 0)
-    {
-        break;
-    }
     
-    sysinfo->cpu_load = loadavg;
+  
+    
+    sysinfo->cpu_load = cut_cpu_load;
     return;
     
     
