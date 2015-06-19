@@ -16,9 +16,12 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
-struct sysinfo_type
+
+//the struct that will conatin metrics which will be used
+//to calculate state of system
+struct sysinfo_type     
 {
-    char cpu_load;
+    char cpu_load; //1 byte which represents CPU Utilisation, with values between 0 and 100
 };
 
 
@@ -32,6 +35,9 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     
 }
 
+
+//function that calculates the load average of the CPU
+//and updates cpu_load within the struct sysinfo 
 static void monitor_cpu_load(struct sysinfo_type *sysinfo) 
 {
     long double newvalue[4], loadavg;
