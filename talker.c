@@ -21,7 +21,7 @@ struct sysinfo_type
 };
 
 
-static void initialise_sysinfo(struct sysinfo_type *sysinfo); 
+static void initialise_sysinfo(struct sysinfo_type *sysinfo) 
 {
     
     sysinfo->cpu_load = 0;
@@ -31,7 +31,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo);
     
 }
 
-static void monitor_cpu_load(struct sysinfo_type *sysinfo); 
+static void monitor_cpu_load(struct sysinfo_type *sysinfo) 
 {
     long double newvalue[4], loadavg;
     static long double oldvalue[4];
