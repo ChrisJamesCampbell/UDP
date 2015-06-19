@@ -25,9 +25,10 @@ int main(void)
   long double a = 0;
   int i = rand();
   
-  for(int c = 0; c<10000000; c++)
+  for(int c = 0; c<1000000000000; c++)
   {
     a = i * i;
+    printf(a);
   }
   
   printf("End of test\n");
