@@ -7,7 +7,7 @@
 int main(void)
 {
   printf("Start of test\n");
-  long double a = rand();
+  /*long double a = rand();
   long double b = rand();
   long double i = 0.0;
   
@@ -19,10 +19,14 @@ int main(void)
     {
         i = b;
     }
+  */
+  
+  long double a = 0;
+  long double i = rand(100);
   
   for(int c = 0; c<10000000; c++)
   {
-    long double a = i * i;
+    a = i * i;
   }
   
   printf("End of test\n");
