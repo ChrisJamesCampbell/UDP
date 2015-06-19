@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
         struct sysinfo_type sysinfo;
         initialise_sysinfo(&sysinfo);
         
-        
+        monitor_cpu_load(&sysinfo);
         
     
         if (argc != 2) {
