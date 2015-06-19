@@ -78,7 +78,8 @@ static void monitor_cpu_load(struct sysinfo_type *sysinfo)
 int main(int argc, char *argv[])
 {
     
-    while(1);
+    while(1)
+    {
     
         int sockfd;
         struct addrinfo hints, *servinfo, *p;
@@ -133,6 +134,7 @@ int main(int argc, char *argv[])
         close(sockfd);
     
         
-    sleep(10);
+        sleep(10);
+    }
     return 0;
 }
