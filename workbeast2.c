@@ -8,20 +8,7 @@
 int main(void)
 {
   printf("Start of test\n");
-  /*long double a = rand();
-  long double b = rand();
-  long double i = 0.0;
-  
-  if(a > b)
-    {
-        i = a;
-    }
-  else
-    {
-        i = b;
-    }
-  */
-  
+
   long double a = 0;
   int i = rand();
   
