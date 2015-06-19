@@ -21,7 +21,7 @@ int main(void)
         i = b;
     }
   
-  for(int c = (int) i; i<1000; c++)
+  for(int c = 0; c<10000000; c++)
   {
     long double a = i * i;
   }
