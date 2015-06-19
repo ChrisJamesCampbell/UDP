@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     int numbytes;
     
     struct sysinfo_type sysinfo;
-    initiliase_sysinfo(&sysinfo);
+    initialise_sysinfo(&sysinfo);
     
 
     if (argc != 3) {
