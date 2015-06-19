@@ -21,7 +21,7 @@
 //to calculate state of system
 struct sysinfo_type     
 {
-    char cpu_load; //1 byte which represents CPU Utilisation, with values between 0 and 100
+    char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
 };
 
 
