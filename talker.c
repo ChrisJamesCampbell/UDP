@@ -46,7 +46,7 @@ static void monitor_cpu_load(struct sysinfo_type *sysinfo)
     
     
     //calculates the load average of the cpu
-    long double loadavg = ((oldvalue[0]+oldvalue[1]+oldvalue[2]) - (newvalue[0]+newvalue[1]+newvalue[2])) / 
+    loadavg = ((oldvalue[0]+oldvalue[1]+oldvalue[2]) - (newvalue[0]+newvalue[1]+newvalue[2])) / 
     ((oldvalue[0]+oldvalue[1]+oldvalue[2]+oldvalue[3]) - (newvalue[0]+newvalue[1]+newvalue[2]+newvalue[3]));
     
     //replaces old value with most recent value
