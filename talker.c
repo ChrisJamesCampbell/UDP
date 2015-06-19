@@ -82,8 +82,10 @@ int main(int argc, char *argv[])
         struct sysinfo_type sysinfo;
         initialise_sysinfo(&sysinfo);
         
+        
+        
     
-        if (argc != 3) {
+        if (argc != 2) {
             fprintf(stderr,"usage: talker hostname message\n");
             exit(1);
         }
