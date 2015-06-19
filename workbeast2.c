@@ -12,10 +12,10 @@ int main(void)
   
   for(int c = i; i<1000; c++)
   {
-    long double a = i * i
+    long double a = i * i;
   }
   
-  printf("stop\n");
+  printf("End of test\n");
 
   return 0;
 
