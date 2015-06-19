@@ -17,7 +17,7 @@
 
 struct sysinfo_type
 {
-    char[3] cpu_load;
+    char cpu_load;
 };
 
 
