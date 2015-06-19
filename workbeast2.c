@@ -12,7 +12,7 @@ int main(void)
   long double a = 0;
   int i = rand();
   
-  for(int c = 0; c<1000; c++)
+  for(int c = 0; c<10000000000; c++)
   {
     a = i * i;
     printf("%f", a);
