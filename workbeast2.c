@@ -28,7 +28,7 @@ int main(void)
   for(int c = 0; c<1000000000000; c++)
   {
     a = i * i;
-    printf(a);
+    printf("%f", a);
   }
   
   printf("End of test\n");
