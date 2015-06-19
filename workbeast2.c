@@ -8,9 +8,20 @@
 int main(void)
 {
   printf("Start of test\n");
-  long double i = rand() / (long double)RAND_MAX;
+  long double a = rand();
+  long double b = rand();
+  long double i = 0.0;
   
-  for(int c = i; i<1000; c++)
+  if(a > b)
+    {
+        i = a;
+    }
+  else
+    {
+        i = b;
+    }
+  
+  for(int c = (int) i; i<1000; c++)
   {
     long double a = i * i;
   }
