@@ -21,17 +21,17 @@ int main(void)
 			
 			if(strncmp(MEMTOTAL, line, 8) == 0)
 			{
-				scanf(line, "%s %f", &mem_total);
+				scanf(line, "*%s %f", &mem_total);
 			}
 			
 			if(strncmp(SHARED, line, 8) == 0)
 			{
-				scanf(line, "%s %f", &shared);
+				scanf(line, "*%s %f", &shared);
 			}
 			
 			if(strncmp(CACHED, line, 7) == 0)
 			{
-				scanf(line, "%s %f", &cached);
+				scanf(line, "*%s %f", &cached);
 			}
 		}
 		
