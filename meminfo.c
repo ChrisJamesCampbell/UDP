@@ -35,6 +35,8 @@ int main(void)
 			}
 		}
 		
+		printf("%f %f %f", mem_total, shared, cached);
+		
 		fclose(fp);
 		
 		return 0;
