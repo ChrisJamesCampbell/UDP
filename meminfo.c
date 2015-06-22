@@ -21,17 +21,17 @@ int main(void)
 			
 			if(strncmp(MEMTOTAL, line, 9) == 0)
 			{
-				sscanf(line, "%*[ \n\t]s %f", &mem_total);
+				sscanf(line, "%*[ ]%s %f", &mem_total);
 			}
 			
 			if(strncmp(SHARED, line, 7) == 0)
 			{
-				sscanf(line, "%*[ \n\t]s %f", &shared);
+				sscanf(line, "%*[ ]%s %f", &shared);
 			}
 			
 			if(strncmp(CACHED, line, 7) == 0)
 			{
-				sscanf(line, "%*[ \n\t]s %f", &cached);
+				sscanf(line, "%*[ ]%s %f", &cached);
 			}
 		}
 		
