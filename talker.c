@@ -61,7 +61,7 @@ static void monitor_cpu_load(struct sysinfo_type *sysinfo)
     oldvalue[0] = newvalue[0];
     oldvalue[1] = newvalue[1];
     oldvalue[2] = newvalue[2];
-    oldvalue[3] = oldvalue[3];
+    oldvalue[3] = newvalue[3];
     
     
     //casting rounded double to char so as to only use 1 byte
