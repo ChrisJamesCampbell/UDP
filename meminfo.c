@@ -16,7 +16,7 @@ int main(void)
 	
 	fp = fopen("/proc/meminfo","r");
 	
-	while(getline(&((char *)line),255, fp) > 0)
+	while(getline(&line,255, fp) > 0)
 		{
 			line[255] = '\0';
 			
