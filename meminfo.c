@@ -16,9 +16,8 @@ int main(void)
 	
 	fp = fopen("/proc/meminfo","r");
 	
-	while(getline(&line,255, fp) > 0)
+	while(fgets(line,256, fp))
 		{
-			line[255] = '\0';
 			
 			if(strncmp(MEMTOTAL, line, 8) == 0)
 			{
