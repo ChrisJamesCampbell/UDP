@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MEMTOTAL "MemTotal"
-#define SHARED "Shared"
-#define CACHED "Cached"
+#define MEMTOTAL "MemTotal:"
+#define SHARED "Shared:"
+#define CACHED "Cached:"
 
 int main(void)
 {
@@ -30,7 +30,7 @@ int main(void)
 				scanf(line, "%s %f", shared);
 			}
 			
-			if(strncmp(CACHED, line, 8) == 0)
+			if(strncmp(CACHED, line, 7) == 0)
 			{
 				scanf(line, "%s %f", cached);
 			}
