@@ -19,23 +19,21 @@ int main(void)
 	while(fgets(line,256, fp))
 		{
 			
-			if(strncmp(MEMTOTAL, line, 8) == 0)
+			if(strncmp(MEMTOTAL, line, 9) == 0)
 			{
-				sscanf(line, "%*s %f", &mem_total);
+				sscanf(line, "%*[ \n\t]%s %f", &mem_total);
 			}
 			
-			if(strncmp(SHARED, line, 8) == 0)
+			if(strncmp(SHARED, line, 7) == 0)
 			{
-				sscanf(line, "%*s %f", &shared);
+				sscanf(line, "%*[ \n\t]%s %f", &shared);
 			}
 			
 			if(strncmp(CACHED, line, 7) == 0)
 			{
-				sscanf(line, "%*s %f", &cached);
+				sscanf(line, "%*[ \n\t]%s %f", &cached);
 			}
 		}
-		
-		printf("%f %f %f", mem_total, shared, cached);
 		
 		fclose(fp);
 		
