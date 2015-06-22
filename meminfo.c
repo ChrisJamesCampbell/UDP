@@ -9,14 +9,14 @@ int main(void)
 {
 	
 	FILE *fp;
-	char *line;
+	char line[256];
 	
 	double mem_total, shared, cached = 0;
 	
 	
 	fp = fopen("/proc/meminfo","r");
 	
-	while(getline(line,255, fp) > 0)
+	while(getline(&line,255, fp) > 0)
 		{
 			line[255] = '\0';
 			
