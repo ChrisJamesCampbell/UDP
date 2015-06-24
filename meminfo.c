@@ -21,17 +21,17 @@ int main(void)
 			
 			if(strncmp(MEMTOTAL, line, 9) == 0)
 			{
-				sscanf(line+9,"%*[ ]%1f", &mem_total);
+				sscanf(line+9,"%*[ ]%lf", &mem_total);
 			}
 			
 			if(strncmp(SHARED, line, 7) == 0)
 			{
-				sscanf(line+7,"%*[ ]%1f",&shared);
+				sscanf(line+7,"%*[ ]%lf",&shared);
 			}
 			
 			if(strncmp(CACHED, line, 7) == 0)
 			{
-				sscanf(line+7,"%*[ ]%1f", &cached);
+				sscanf(line+7,"%*[ ]%lf", &cached);
 			}
 			
 			
