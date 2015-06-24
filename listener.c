@@ -108,7 +108,7 @@ int main(void)
                 continue;
             }
         
-        if(numbytes != (sizeof(struct sysinfo)))
+        if(numbytes != (sizeof(struct sysinfo *new_packet)))
         {
             sleep(1);
             continue;
