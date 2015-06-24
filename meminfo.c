@@ -31,14 +31,14 @@ int main(void)
 			
 			if(strncmp(CACHED, line, 7) == 0)
 			{
-				sscanf(line+8,"%*[ ]%1f", &cached);
+				sscanf(line+7,"%*[ ]%1f", &cached);
 			}
 			
 			
 		}
 		
-		printf("%f %f %f \n", mem_total, shared, cached);
-		
+		printf("Total Memory: %f Shared: %f Cached: %f \n", mem_total, shared, cached);
+
 		fclose(fp);
 		
 		return 0;
