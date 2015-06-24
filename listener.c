@@ -27,6 +27,24 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+//the struct that will conatin metrics which will be used
+//to calculate state of system
+struct sysinfo_type     
+{
+    char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
+    double free_mem;
+};
+
+
+static void initialise_sysinfo(struct sysinfo_type *sysinfo) 
+{
+    
+    sysinfo->cpu_load = 0;
+    sysinfo->free_mem = 0.0;
+    return;
+    
+}
+
 int main(void)
 {
     int sockfd;
@@ -35,9 +53,11 @@ int main(void)
     int numbytes;
     struct sockaddr_storage their_addr;
     char buf[MAXBUFLEN];
-    double free_mem;
     socklen_t addr_len;
     char s[INET6_ADDRSTRLEN];
+    
+    struct sysinfo *new_packet = (struct sysinfo *)buf;
+
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC; // set to AF_INET to force IPv4
@@ -81,10 +101,20 @@ int main(void)
     {
         
         if ((numbytes = recvfrom(sockfd, buf, MAXBUFLEN-1 , 0,
-            (struct sockaddr *)&their_addr, &addr_len)) == -1) {
-            perror("recvfrom");
-            exit(1);
+            (struct sockaddr *)&their_addr, &addr_len)) == -1) 
+            {
+                perror("recvfrom");
+                sleep(1);
+                continue;
+            }
+        
+        if(numbytes != (sizeof(struct sysinfo))
+        {
+            sleep(1);
+            continue;
         }
+        
+        
 
         printf("listener: got packet from %s\n",
             inet_ntop(their_addr.ss_family,
@@ -92,7 +122,7 @@ int main(void)
                 s, sizeof s));
         printf("listener: packet is %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("listener: packet contains \"%d\" and %f \n", (int)(*buf), (double)(*(buf+1)));
+        printf("listener: packet contains \"%d\" and %f \n", (int)new_packet->cpu_load, (double)new_packet->free_mem);
 
     }
     close(sockfd);
