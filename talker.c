@@ -110,7 +110,7 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 			
 		}
 		
-		actual_mem_free = &mem_free + &buffers + &cached; //gives us the real total available free memory
+		actual_mem_free = mem_free + buffers + cached; //gives us the real total available free memory
 		
 		sysinfo->free_mem = actual_mem_free; //update the free_mem double within sysinfo struct
 		
@@ -135,7 +135,9 @@ int main(int argc, char *argv[])
         struct sysinfo_type sysinfo;
         initialise_sysinfo(&sysinfo);
         
+        //calls the methods to extrapolate the metrics
         monitor_cpu_load(&sysinfo);
+        find_free_memory(&sysinfo);
         
     
         if (argc != 2) {
