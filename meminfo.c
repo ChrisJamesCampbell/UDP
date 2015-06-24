@@ -37,7 +37,7 @@ int main(void)
 			
 		}
 		
-		printf("Total Memory: %f Shared: %f Cached: %f \n", mem_total, shared, cached);
+		printf("Total Memory:%f Shared:%f Cached:%f \n", mem_total, shared, cached);
 
 		fclose(fp);
 		
