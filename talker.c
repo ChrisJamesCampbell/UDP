@@ -92,17 +92,17 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 	while(fgets(line,256, fp))
 		{
 			
-			if(strncmp(MEMFREE, line, 8) == 0)
+			if(strncmp("MemFree:", line, 8) == 0)
 			{
 				sscanf(line+8,"%*[ ]%lf", &mem_free);
 			}
 			
-			if(strncmp(BUFFERS, line, 8) == 0)
+			if(strncmp("Buffers:", line, 8) == 0)
 			{
 				sscanf(line+8,"%*[ ]%lf",&buffers);
 			}
 			
-			if(strncmp(CACHED, line, 7) == 0)
+			if(strncmp("Cached:", line, 7) == 0)
 			{
 				sscanf(line+7,"%*[ ]%lf", &cached);
 			}
