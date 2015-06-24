@@ -92,7 +92,7 @@ int main(void)
                 s, sizeof s));
         printf("listener: packet is %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("listener: packet contains \"%d\" and %f \n", (int)(*buf), (double)(*buf+1));
+        printf("listener: packet contains \"%d\" and %f \n", (int)(*buf), (double)(*(buf+1)));
 
     }
     close(sockfd);
