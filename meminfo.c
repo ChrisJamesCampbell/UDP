@@ -34,10 +34,10 @@ int main(void)
 				sscanf(line+8,"%*[ ]%1f", &cached);
 			}
 			
-			printf("%f %f %f", mem_total, shared, cached);
+			
 		}
 		
-		printf("%f %f %f", mem_total, shared, cached);
+		printf("%f %f %f \n", mem_total, shared, cached);
 		
 		fclose(fp);
 		
