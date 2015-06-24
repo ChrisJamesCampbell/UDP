@@ -109,7 +109,7 @@ int main(void)
                 continue;
             }
         
-        if(numbytes != (sizeof(struct sysinfo)))
+        if(numbytes != (sizeof(struct sysinfo_type)))
         {
             sleep(1);
             continue;
