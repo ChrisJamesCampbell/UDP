@@ -176,7 +176,8 @@ int main(int argc, char *argv[])
     
         freeaddrinfo(servinfo);
     
-        printf("talker: sent %d bytes to %s containing %d\n", numbytes, argv[1], sysinfo.cpu_load);
+        printf("talker: sent %d bytes to %s containing %d and %f\n", numbytes, argv[1], 
+        sysinfo.cpu_load, sysinfo.free_mem);
         close(sockfd);
     
         
