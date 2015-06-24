@@ -21,18 +21,20 @@ int main(void)
 			
 			if(strncmp(MEMTOTAL, line, 9) == 0)
 			{
-				sscanf(line+8,"%*[ ]%f",mem_total);
+				sscanf(line+8,"%*[ ]%1f",mem_total);
 			}
 			
 			if(strncmp(SHARED, line, 7) == 0)
 			{
-				sscanf(line+7,"%*[ ]%f",&shared);;
+				sscanf(line+7,"%*[ ]%1f",&shared);;
 			}
 			
 			if(strncmp(CACHED, line, 7) == 0)
 			{
-				sscanf(line+8,"%*[ ]%f", &cached);
+				sscanf(line+8,"%*[ ]%1f", &cached);
 			}
+			
+			printf("%f %f %f", mem_total, shared, cached);
 		}
 		
 		printf("%f %f %f", mem_total, shared, cached);
