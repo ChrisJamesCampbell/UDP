@@ -35,6 +35,7 @@ int main(void)
     int numbytes;
     struct sockaddr_storage their_addr;
     char buf[MAXBUFLEN];
+    double free_mem;
     socklen_t addr_len;
     char s[INET6_ADDRSTRLEN];
 
@@ -91,7 +92,7 @@ int main(void)
                 s, sizeof s));
         printf("listener: packet is %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("listener: packet contains \"%d\"\n", (int)(*buf));
+        printf("listener: packet contains \"%d\" and %f \n", (int)(*buf), free_mem);
 
     }
     close(sockfd);
