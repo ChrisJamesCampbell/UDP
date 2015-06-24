@@ -123,7 +123,7 @@ int main(void)
                 s, sizeof s));
         printf("listener: packet is %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("listener: packet contains \%d %% and %f KB \n", (int)new_packet->cpu_load, (double)new_packet->free_mem);
+        printf("listener: packet contains \%d%% and %fKB \n", (int)new_packet->cpu_load, (double)new_packet->free_mem);
 
     }
     close(sockfd);
