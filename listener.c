@@ -12,6 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <math.h>
 
 #define MYPORT "4950"    // the port users will be connecting to
 
