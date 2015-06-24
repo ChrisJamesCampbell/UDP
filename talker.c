@@ -22,6 +22,7 @@
 struct sysinfo_type     
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
+    double free_mem;
 };
 
 
@@ -75,6 +76,47 @@ static void monitor_cpu_load(struct sysinfo_type *sysinfo)
     
     
     
+}
+
+static void find_free_memory(struct sysinfo_type *sysinfo)
+{
+    FILE *fp;
+	char line[256];
+	
+	double mem_free, buffers, cached = 0.0;
+	double actual_mem_free = 0.0;
+	
+	
+	fp = fopen("/proc/meminfo","r");
+	
+	while(fgets(line,256, fp))
+		{
+			
+			if(strncmp(MEMFREE, line, 8) == 0)
+			{
+				sscanf(line+8,"%*[ ]%lf", &mem_free);
+			}
+			
+			if(strncmp(BUFFERS, line, 8) == 0)
+			{
+				sscanf(line+8,"%*[ ]%lf",&buffers);
+			}
+			
+			if(strncmp(CACHED, line, 7) == 0)
+			{
+				sscanf(line+7,"%*[ ]%lf", &cached);
+			}
+			
+			
+		}
+		
+		actual_mem_free = mem_free + buffers + cached; //gives us the real total available free memory
+		
+		sysinfo->free_mem = actual_mem_free; //update the free_mem double within sysinfo struct
+		
+		//printf("Free Memory:%f Buffers:%f Cached:%f \n", mem_free, buffers, cached);
+
+		fclose(fp);
 }
 
 
