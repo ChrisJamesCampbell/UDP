@@ -108,7 +108,7 @@ int main(void)
                 continue;
             }
         
-        if(numbytes != (sizeof(struct sysinfo->cpu_load) + sizeof(struct sysinfo->free_mem) ))
+        if(numbytes != (sizeof(struct sysinfo))
         {
             sleep(1);
             continue;
