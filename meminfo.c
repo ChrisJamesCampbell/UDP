@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MEMTOTAL "MemTotal:"
+#define MEMFREE "MemFree:"
 #define SHARED "Shared:"
 #define CACHED "Cached:"
 
@@ -11,7 +11,7 @@ int main(void)
 	FILE *fp;
 	char line[256];
 	
-	double mem_total, shared, cached = 0.0;
+	double mem_free, shared, cached = 0.0;
 	
 	
 	fp = fopen("/proc/meminfo","r");
@@ -19,9 +19,9 @@ int main(void)
 	while(fgets(line,256, fp))
 		{
 			
-			if(strncmp(MEMTOTAL, line, 9) == 0)
+			if(strncmp(MEMFREE, line, 8) == 0)
 			{
-				sscanf(line+9,"%*[ ]%lf", &mem_total);
+				sscanf(line+8,"%*[ ]%lf", &mem_free);
 			}
 			
 			if(strncmp(SHARED, line, 7) == 0)
@@ -37,7 +37,7 @@ int main(void)
 			
 		}
 		
-		printf("Total Memory:%f Shared:%f Cached:%f \n", mem_total, shared, cached);
+		printf("Free Memory:%f Shared:%f Cached:%f \n", mem_free, shared, cached);
 
 		fclose(fp);
 		
