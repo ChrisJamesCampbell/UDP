@@ -70,6 +70,7 @@ static void initialise_new_sys_info(struct new_sys_info *new_sys_info)
     
     new_sys_info->cpu_load = 0;
     new_sys_info->free_mem = 0.0;
+    new_sys_info->packet_time_stamp = unix_time_now();
     return;
     
 }
