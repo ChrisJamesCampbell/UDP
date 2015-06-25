@@ -9,12 +9,23 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <math.h>
+#include <time.h>
 
 #define MYPORT "4950"    // the port users will be connecting to
 
 #define MAXBUFLEN 100
 
 #define ALPHA 0.5
+
+time_t unix_time_now()
+{
+   time_t now;
+
+   /* Get current time */
+   time(&now);
+
+  return now;
+}
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
