@@ -4,7 +4,6 @@
 /*!
 \file utility-array-builder.c
 \brief Contains methods for building, get values from and freeing a sparse array
-
 usage example:
 void *array = NULL;
 int x = 5,y = 10;
@@ -12,7 +11,6 @@ double value = 3.142;
 *( set_array_builder_2d( &array , x , y ) ) = value;
 printf( "%f" , ( get_array_builder_2d( &array , x , y ) ? *( get_array_builder_2d( &array , x , y ) ) : 0.0 ) );
 free_array_builder( &array );
-
 */
 
 struct array_builder_node 
@@ -374,6 +372,63 @@ void free_array_builder( void *array_location )
         free_array_builder( &( (*array)->next_tier ) );
         free( *array );
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    
+    double *set_array_builder_4d( void *array_location , int x , int y , int z, int w )
+{
+        struct array_builder_node **array = (struct array_builder_node **)array_location;
+    
+    struct array_builder_node *x_tier = add_single_tier_node( array , x );
+    x_tier->is_node = 0;
+    struct array_builder_node *y_tier = add_single_tier_node( &( x_tier->next_tier ) , y );
+    y_tier->is_node = 0;
+    struct array_builder_node *z_tier = add_single_tier_node( &( y_tier->next_tier ) , z );
+    z_tier->is_node = 0;
+    struct array_builder_node *w_tier = add_single_tier_node( &( z_tier->next_tier ) , w );
+    
+    return &( w_tier->value );
+}
+
+/*return the address of a double in a 4d array, it will return NULL if not present*/
+double *get_array_builder_4d( void *array_location , int x , int y , int z, int w )
+{
+    struct array_builder_node **array = (struct array_builder_node **)array_location;
+    
+    struct array_builder_node *x_tier = seek_single_tier_node( array , x );
+    if( ! x_tier ) return NULL;
+    
+    struct array_builder_node *y_tier = seek_single_tier_node( &( x_tier->next_tier ) , y );
+    if( ! y_tier ) return NULL;
+    
+    struct array_builder_node *z_tier = seek_single_tier_node( &( y_tier->next_tier ) , z );
+    if( !z_tier ) return NULL;
+    
+    struct array_builder_node *w_tier = seek_single_tier_node( &( z_tier->next_tier ) , w );
+    if( !w_tier ) return NULL;
+    
+    return &( w_tier->value );
+}
+
+double *itterate_array_builder_4d( void *array_location , int *x , int *y , int *z , int *w )
+{
+    struct array_builder_node **array = (struct array_builder_node **)array_location;
+    
+    if( ! itterate_array( array ) ) return NULL;
+    
+    /*make sure it found a 4d result*/
+    if( !(*array) || !(*array)->next_tier || !(*array)->next_tier->next_tier || 
+        !(*array)->next_tier->next_tier->next_tier ) return NULL;
+        
+    /*itterate told us it found another result*/
+    *x = (*array)->index;
+    *y = (*array)->next_tier->index;
+    *z = (*array)->next_tier->next_tier->index;
+    *w = (*array)->next_tier->next_tier->next_tier->index;
+    double *result = &( (*array)-_next_tier->next_tier->next_tier->value );
+    return result;
+
+}
     
     return;
 }
