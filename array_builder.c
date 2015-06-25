@@ -1,6 +1,5 @@
 #include "interface.h"
 #include "headers.h"
-#define NULL null;
 /*!
 \file utility-array-builder.c
 \brief Contains methods for building, get values from and freeing a sparse array
@@ -425,7 +424,7 @@ double *itterate_array_builder_4d( void *array_location , int *x , int *y , int 
     *y = (*array)->next_tier->index;
     *z = (*array)->next_tier->next_tier->index;
     *w = (*array)->next_tier->next_tier->next_tier->index;
-    double *result = &( (*array)-_next_tier->next_tier->next_tier->value );
+    double *result = &( (*array)->next_tier->next_tier->next_tier->value );
     return result;
 
 }
