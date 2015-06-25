@@ -46,7 +46,7 @@ struct sys_info
 };
 
 
-static void initialise_sysinfo(struct sys_info *sys_info) 
+static void initialise_sys_info(struct sys_info *sys_info) 
 {
     
     sys_info->cpu_load = 0;
@@ -63,7 +63,7 @@ struct new_sys_info
 };
 
 
-static void initialise_newsysinfo(struct new_sys_info *new_sys_info) 
+static void initialise_new_sys_info(struct new_sys_info *new_sys_info) 
 {
     
     new_sys_info->cpu_load = 0;
