@@ -1,7 +1,3 @@
-*
-** listener.c -- a datagram sockets "server" demo
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,6 +13,8 @@
 #define MYPORT "4950"    // the port users will be connecting to
 
 #define MAXBUFLEN 100
+
+#define ALPHA 0.5
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
