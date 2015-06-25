@@ -61,9 +61,9 @@ static void initialise_newsysinfo(struct new_sys_info *new_sys_info)
     
 }
 
-static void save_data(struct sys_info *old, struct new_sys_info *new)
+static void save_data(struct sys_info *old, struct new_sys_info *new_data)
 {
-    sys_info->cpu_load = sys_info->cpu_load * ALPHA + double new_sys_info->cpu_load * (1 - ALPHA);
+    old->cpu_load = old->cpu_load * ALPHA + double new_data->cpu_load * (1 - ALPHA);
 }
 
 int main(void)
