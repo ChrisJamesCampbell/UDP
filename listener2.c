@@ -152,15 +152,15 @@ int main(void)
         
         
 
-        printf("listener: got packet from %s\n",
+        printf("Recieved packet from IP address %s\n",
             inet_ntop(their_addr.ss_family,
                 get_in_addr((struct sockaddr *)&their_addr),
                 s, sizeof s));
-        printf("listener: packet is %d bytes long\n", numbytes);
+        printf("The Packet was %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("\n listener: Packet contains: \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
+        printf("The Packet contains: \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
-        printf("\n Packet was recieved at: %f \n", (double)new_packet->packet_time_stamp);
+        printf("It was recieved at: %f \n \n", (double)new_packet->packet_time_stamp);
 
     }
     close(sockfd);
