@@ -92,7 +92,7 @@ int main(void)
     
     struct sys_info *new_packet = (struct sys_info *)buf;
     
-    save_data(&sys_info, &new_sys_info);
+    //save_data(&sys_info, &new_sys_info);
 
 
     memset(&hints, 0, sizeof hints);
