@@ -1,3 +1,6 @@
+//Taken from
+//https://gist.github.com/mycodeschool/7429492
+
 /* Doubly Linked List implementation */
 #include<stdio.h>
 #include<stdlib.h>
