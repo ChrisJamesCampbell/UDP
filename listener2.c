@@ -43,6 +43,7 @@ struct sys_info
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
+    time_t packet_time_stamp;
 };
 
 
@@ -51,6 +52,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
+    sys_info->packet_time_stamp = unix_time_now();
     return;
     
 }
