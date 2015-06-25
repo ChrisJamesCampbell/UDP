@@ -1,6 +1,7 @@
 #include "interface.h"
 #include "headers.h"
 #include <stdio.h>
+#include <stdlib.h>
 /*!
 \file utility-array-builder.c
 \brief Contains methods for building, get values from and freeing a sparse array
