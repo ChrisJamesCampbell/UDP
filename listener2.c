@@ -160,7 +160,7 @@ int main(void)
         buf[numbytes] = '\0';
         printf("listener: packet contains \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
-        printf("Packet was recieved at: %f", new_packet->packet_time_stamp);
+        printf("Packet was recieved at: %f", (double)new_packet->packet_time_stamp);
 
     }
     close(sockfd);
