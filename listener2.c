@@ -144,11 +144,11 @@ int main(void)
                 continue;
             }
         
-        if(numbytes != (sizeof(struct sys_info)))
+       /* if(numbytes != (sizeof(struct sys_info)))
         {
             sleep(1);
             continue;
-        }
+        }*/
         
         
 
