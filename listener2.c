@@ -156,11 +156,11 @@ int main(void)
             inet_ntop(their_addr.ss_family,
                 get_in_addr((struct sockaddr *)&their_addr),
                 s, sizeof s));
-        printf("listener: packet is %d bytes long\n", numbytes);
+        printf("\n listener: packet is %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("listener: packet contains \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
+        printf("\n listener: packet contains \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
-        printf("Packet was recieved at: %f", (double)new_packet->packet_time_stamp);
+        printf("\n Packet was recieved at: %f \n", (double)new_packet->packet_time_stamp);
 
     }
     close(sockfd);
