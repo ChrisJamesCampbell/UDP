@@ -1,6 +1,6 @@
 #include "interface.h"
 #include "headers.h"
-
+#define NULL null;
 /*!
 \file utility-array-builder.c
 \brief Contains methods for building, get values from and freeing a sparse array
