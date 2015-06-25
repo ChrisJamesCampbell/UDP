@@ -92,7 +92,7 @@ int main(void)
     
     struct sys_info *new_packet = (struct sys_info *)buf;
     
-    save_data(&sys_info, &new_sys_inf0);
+    save_data(&sys_info, &new_sys_info);
 
 
     memset(&hints, 0, sizeof hints);
@@ -160,7 +160,7 @@ int main(void)
         buf[numbytes] = '\0';
         printf("listener: packet contains \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
-        printf("Packet was recieved at: %f" new_packet->packet_time_stamp);
+        printf("Packet was recieved at: %f", new_packet->packet_time_stamp);
 
     }
     close(sockfd);
