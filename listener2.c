@@ -177,6 +177,8 @@ int main(void)
         printf("The Packet contains: \n[ \%d%% CPU Usage and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
         printf("It was recieved at: %f \n \n", (double)new_packet->packet_time_stamp);
+        
+        printf("Packets arriving per minute is:  %f", new_packet.packets_per_minute)
 
     }
     close(sockfd);
