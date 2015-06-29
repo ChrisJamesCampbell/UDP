@@ -103,7 +103,7 @@ int main(void)
     socklen_t addr_len;
     char s[INET6_ADDRSTRLEN];
     
-   struct sys_info *new_packet = (struct sys_info *)buf;
+   struct new_sys_info *new_packet = (struct new_sys_info *)buf;
    
    struct sys_info old_data;
    initialise_sys_info(&old_data);
