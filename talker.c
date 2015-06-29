@@ -153,10 +153,14 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		count++;
 		}
 		
-		fclose(fp);
+		
+		
+		
 	}
 	
 	sysinfo->disk_activity = disk_writes + disk_reads;
+	
+	fclose(fp);
 }
 
 
