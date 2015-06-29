@@ -28,6 +28,7 @@ struct sysinfo_type
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
     char machine_type;
+    double disk_activity;
 };
 
 
@@ -154,6 +155,8 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		
 		fclose(fp);
 	}
+	
+	sysinfo->disk_activity = disk_writes + disk_reads;
 }
 
 
@@ -175,6 +178,7 @@ int main(int argc, char *argv[])
         //calls the methods to extrapolate the metrics
         monitor_cpu_load(&sysinfo);
         find_free_memory(&sysinfo);
+        find_disk_info(&sysinfo);
         
     
         if (argc != 2) {
@@ -215,8 +219,8 @@ int main(int argc, char *argv[])
     
         freeaddrinfo(servinfo);
     
-        printf("talker: sent %d bytes to %s containing %d and %f\n", numbytes, argv[1], 
-        sysinfo.cpu_load, sysinfo.free_mem);
+        printf("talker: sent %d bytes to %s containing %d and %f and %f\n", numbytes, argv[1], 
+        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity);
         close(sockfd);
     
         
