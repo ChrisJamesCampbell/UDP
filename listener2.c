@@ -55,7 +55,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
     sys_info->packet_time_stamp = unix_time_now();
-    sys_info->packets_per_minute = 0 .0;
+    sys_info->packets_per_minute = 0.0;
     return;
     
 }
@@ -86,7 +86,7 @@ static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
     
     //calculates packets per minute with the BETA constant smoother
     old_data->packets_per_minute = old_data->packets_per_minute * BETA + (1 - BETA) * 
-    (60 / (unix_time_now() - old_data->time_packet_stamp));
+    (60 / (unix_time_now() - old_data->packet_time_stamp));
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
