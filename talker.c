@@ -145,12 +145,12 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		{
 			if(count == 4)
 			{
-				fscanf(fp, "%f", disk_writes);//extract contents of line 4
+				fscanf(fp, "%f", &disk_writes);//extract contents of line 4
 			}
 			
 			if(count == 8)
 			{
-				fscanf(fp, "%f", disk_reads);	//extract contents of line 8
+				fscanf(fp, "%f", &disk_reads);	//extract contents of line 8
 			}
 		count++;
 		}
