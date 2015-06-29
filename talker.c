@@ -128,7 +128,7 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 
 		fclose(fp);
 }
-
+/*
 static void find_disk_info(struct sysinfo_type *sysinfo)
 {
 	FILE *fp;
@@ -165,7 +165,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 	fclose(fp);
 }
-
+*/
 
 
 int main(int argc, char *argv[])
@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
         //calls the methods to extrapolate the metrics
         monitor_cpu_load(&sysinfo);
         find_free_memory(&sysinfo);
-        find_disk_info(&sysinfo);
+        //find_disk_info(&sysinfo);
         
     
         if (argc != 2) {
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
     
         freeaddrinfo(servinfo);
     
-        printf("talker: sent %d bytes to %s containing %d and %f and %f\n", numbytes, argv[1], 
+        printf("talker: sent %d bytes to %s containing %d and %f\n", numbytes, argv[1], 
         sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity);
         close(sockfd);
     
