@@ -18,7 +18,7 @@ int main(void)
 		{
 			if(strncmp("sda", line, 256) == 0)
 			{
-				sscanf(line, "%d %*[ ]%d", &disk_writes);//sadfgad
+				sscanf(line, "%*d %*[ ]%d", &disk_writes);//sadfgad
 			}
 			
 			if(count == 8)
