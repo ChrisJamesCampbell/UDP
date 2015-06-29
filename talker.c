@@ -128,9 +128,11 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 static void find_disk_info(struct sysinfo_type *sysinfo)
 {
 	FILE *fp;
+	char line[256];
 	double disk_writes = 0.0;
 	double disk_reads = 0.0;
 	int count = 0;
+	
 	
 	fp = fopen("/proc/diskstats","r");
 	
