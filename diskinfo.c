@@ -30,7 +30,7 @@ int main(void)
 		
 	disk_activity = disk_writes + disk_reads;
 	
-	printf("The disk activity was: %d ", disk_activity);
+	printf("The disk activity was: %d \n", disk_activity);
 	
 	fclose(fp);
 }
