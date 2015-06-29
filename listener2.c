@@ -178,12 +178,12 @@ int main(void)
         printf("The Packet was %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
         printf("The Packet contains: \n[ \%d%% instantaneous CPU Load and %fKB Memory Free ]\n", 
-        (int)old_data.cpu_load, (double)new_packet->free_mem);
+        (int)new_packet->cpu_load, (double)new_packet->free_mem);
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
         
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
         
-        printf("Average CPU load is: %f \n", new_packet->cpu_load);
+        printf("Average CPU load is: %f \n", old_data.cpu_load);
 
     }
     close(sockfd);
