@@ -104,11 +104,10 @@ int main(void)
     char s[INET6_ADDRSTRLEN];
     
    struct sys_info *new_packet = (struct sys_info *)buf;
+   
+   struct sys_info old_data;
+   initialise_sys_info(&old_data);
     
-   save_data(struct sys_info *old_data, struct new_sys_info *new_data);
-   //save_data(&old_data, &new_data);
- 
-
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC; // set to AF_INET to force IPv4
     hints.ai_socktype = SOCK_DGRAM;
@@ -167,7 +166,7 @@ int main(void)
         //set time received
         new_packet->packet_time_stamp = unix_time_now();
         
-        
+        save_data(&old_data, new_packet);
 
         printf("Recieved packet from IP address %s\n",
             inet_ntop(their_addr.ss_family,
