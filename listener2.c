@@ -16,6 +16,7 @@
 #define MAXBUFLEN 100
 
 #define ALPHA 0.5
+#define BETA 0.5
 
 time_t unix_time_now()
 {
@@ -44,6 +45,7 @@ struct sys_info
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
     time_t packet_time_stamp;
+    double packets_per_minute;
 };
 
 
@@ -53,6 +55,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
     sys_info->packet_time_stamp = unix_time_now();
+    sys_info->packets_per_minute = 0 .0;
     return;
     
 }
@@ -76,9 +79,17 @@ static void initialise_new_sys_info(struct new_sys_info *new_sys_info)
     
 }
 
-static void save_data(struct sys_info *old, struct new_sys_info *new_data)
+static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
 {
-    old->cpu_load = old->cpu_load * ALPHA + (double)new_data->cpu_load * (1 - ALPHA);
+   //calculates cpu_load avaerage with ALPHA constant smoother
+    old_data->cpu_load = old_data->cpu_load * ALPHA + (double)new_data->cpu_load * (1 - ALPHA);
+    
+    //calculates packets per minute with the BETA constant smoother
+    old_data->packets_per_minute = old_data->packets_per_minute * BETA + (1 - BETA) * 
+    (60 / (unix_time_now() - old_data->time_packet_stamp));
+    
+    //updates packet time stamp
+    old_data->packet_time_stamp = unix_time_now();
 }
 
 int main(void)
