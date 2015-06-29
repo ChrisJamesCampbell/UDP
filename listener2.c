@@ -105,8 +105,8 @@ int main(void)
     
     struct sys_info *new_packet = (struct sys_info *)buf;
     
-    save_data(struct sys_info *old_data, struct new_sys_info *new_data);
-    
+   // save_data(struct sys_info *old_data, struct new_sys_info *new_data);
+   save_data(&old_data, &new_data);
 
 
     memset(&hints, 0, sizeof hints);
