@@ -182,6 +182,8 @@ int main(void)
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
         
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
+        
+        printf("Average CPU load is: %f \n", old_data.cpu_load);
 
     }
     close(sockfd);
