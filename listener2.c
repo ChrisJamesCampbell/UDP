@@ -183,7 +183,7 @@ int main(void)
         
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
         
-        printf("Average CPU load is: %f \n", new_data.cpu_load);
+        printf("Average CPU load is: %f \n", old_data.cpu_load);
 
     }
     close(sockfd);
