@@ -1,9 +1,13 @@
-int main()
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
 {
   FILE *fp;
 	char line[256];
 	double disk_writes = 0.0;
 	double disk_reads = 0.0;
+	double disk_activity = 0.0;
 	int count = 0;
 	
 	
@@ -24,7 +28,9 @@ int main()
 		count++;
 		}
 		
-	sysinfo->disk_activity = disk_writes + disk_reads;
+	disk_activity = disk_writes + disk_reads;
+	
+	printf("The disk activity was: %f ", disk_activity);
 	
 	fclose(fp);
 }
