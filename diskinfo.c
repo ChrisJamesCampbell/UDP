@@ -16,9 +16,9 @@ int main(void)
 	
 		while(fgets(line,256, fp))
 		{
-			if(count == 4)
+			if(strncmp("8", line, 1) == 0)
 			{
-				fscanf(fp, "%d", &disk_writes);//extract contents of line 4
+				sscanf(line+12, "%*[ ]%d", &disk_writes);//sadfgad
 			}
 			
 			if(count == 8)
