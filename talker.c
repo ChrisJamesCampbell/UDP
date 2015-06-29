@@ -28,7 +28,7 @@ struct sysinfo_type
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
     char machine_type;
-    double disk_activity;
+    long disk_activity;
 };
 
 
@@ -38,7 +38,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->cpu_load = 0;
     sysinfo->free_mem = 0.0;
     sysinfo->machine_type = 0;
-    sysinfo->disk_activity = 0.0;
+    sysinfo->disk_activity = 0;
     return;
     
     
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
     
         freeaddrinfo(servinfo);
     
-        printf("talker: sent %d bytes to %s containing %d and %f and %f\n", numbytes, argv[1], 
+        printf("talker: sent %d bytes to %s containing %d and %f and %d\n", numbytes, argv[1], 
         sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity);
         close(sockfd);
     
