@@ -16,6 +16,10 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
+#define BATCH_ROBOT "0"
+#define WEB_SERVER "1"
+#define DATABASE_SERVER "2"
+#define APPLICATION_SERVER "3"
 
 //the struct that will conatin metrics which will be used
 //to calculate state of system
@@ -23,6 +27,7 @@ struct sysinfo_type
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
+    char machine_type;
 };
 
 
@@ -89,9 +94,10 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 	
 	fp = fopen("/proc/meminfo","r");
 	
+	//scans file by looking at each indiviudal line which ends at the 256th character of each line
 	while(fgets(line,256, fp))
 		{
-			
+			/
 			if(strncmp("MemFree:", line, 8) == 0)
 			{
 				sscanf(line+8,"%*[ ]%lf", &mem_free);
@@ -117,6 +123,35 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 		//printf("Free Memory:%f Buffers:%f Cached:%f \n", mem_free, buffers, cached);
 
 		fclose(fp);
+}
+
+static void find_disk_info(struct sysinfo_type *sysinfo)
+{
+	FILE *fp;
+	double disk_writes = 0.0;
+	double disk_reads = 0.0;
+	int count = 0;
+	
+	fp = fopen("/proc/diskstats","r");
+	
+	if(FILE != NULL)
+	{
+		while(fgets(line,256, fp))
+		{
+			if(count == 4)
+			{
+				fscanf(FILE, "%f", disk_writes);//extract contents of line 4
+			}
+			
+			if(count == 8)
+			{
+				fscanf(FILE, "%f", disk_reads);	//extract contents of line 8
+			}
+		count++;
+		}
+		
+		fclose(FILE);
+	}
 }
 
 
