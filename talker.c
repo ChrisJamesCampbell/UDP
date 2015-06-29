@@ -97,7 +97,7 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 	//scans file by looking at each indiviudal line which ends at the 256th character of each line
 	while(fgets(line,256, fp))
 		{
-			/
+			
 			if(strncmp("MemFree:", line, 8) == 0)
 			{
 				sscanf(line+8,"%*[ ]%lf", &mem_free);
@@ -134,23 +134,23 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 	fp = fopen("/proc/diskstats","r");
 	
-	if(FILE != NULL)
+	if(fp != NULL)
 	{
 		while(fgets(line,256, fp))
 		{
 			if(count == 4)
 			{
-				fscanf(FILE, "%f", disk_writes);//extract contents of line 4
+				fscanf(fp, "%f", disk_writes);//extract contents of line 4
 			}
 			
 			if(count == 8)
 			{
-				fscanf(FILE, "%f", disk_reads);	//extract contents of line 8
+				fscanf(fp, "%f", disk_reads);	//extract contents of line 8
 			}
 		count++;
 		}
 		
-		fclose(FILE);
+		fclose(fp);
 	}
 }
 
