@@ -37,7 +37,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     
     sysinfo->cpu_load = 0;
     sysinfo->free_mem = 0.0;
-    sysinfo->machine_type = '0';
+    sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0.0;
     return;
     
