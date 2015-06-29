@@ -15,8 +15,8 @@
 
 #define MAXBUFLEN 100
 
-#define ALPHA 0.5
-#define BETA 0.5
+#define CPU_LOAD__AVG_SMOOTHER 0.5
+#define PACKETS_PM_SMOOTHER 0.5
 
 time_t unix_time_now()
 {
@@ -83,12 +83,13 @@ static void initialise_new_sys_info(struct new_sys_info *new_sys_info)
 
 static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
 {
-   //calculates cpu_load avaerage with ALPHA constant smoother
-    old_data->cpu_load = old_data->cpu_load * ALPHA + (double)new_data->cpu_load * (1 - ALPHA);
+   //calculates cpu_load avaerage with cpu load average smoother
+    old_data->cpu_load = old_data->cpu_load * CPU_LOAD__AVG_SMOOTHER + 
+    (double)new_data->cpu_load * (1 - CPU_LOAD__AVG_SMOOTHER);
     
     //calculates packets per minute with the BETA constant smoother
-    old_data->packets_per_minute = old_data->packets_per_minute * BETA + (1 - BETA) * 
-    (60 / (unix_time_now() - old_data->packet_time_stamp));
+    old_data->packets_per_minute = old_data->packets_per_minute * PACKETS_PM_SMOOTHER
+    + (1 - PACKETS_PM_SMOOTHER) * (60 / (unix_time_now() - old_data->packet_time_stamp));
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
