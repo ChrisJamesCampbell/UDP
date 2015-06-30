@@ -18,10 +18,10 @@ int main(void)
 	int relative_activity = 0;
 	
 	
-	fp = fopen("/proc/diskstats","r");
 	
 		while(count < 3)
 			{
+			    fp = fopen("/proc/diskstats","r");
 			
 			    while(fgets(line,256, fp))
 			
@@ -39,7 +39,8 @@ int main(void)
 			
 			disk_activity[count] = disk_reads_total + disk_writes_total;
 			count++;
-			sleep(30);
+			fclose(fp);
+			sleep(5);
 		
 		}
 		
@@ -50,5 +51,4 @@ int main(void)
 	printf("The relative disk activity in the first instance was: %d \n", disk_activity[1]);
 	printf("The relative disk activity in the second instance was: %d \n \n", disk_activity[2]);
 	
-	fclose(fp);
 }
