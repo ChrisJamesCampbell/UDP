@@ -39,7 +39,7 @@ int main(void)
 			
 			disk_activity[count] = disk_reads_total + disk_writes_total;
 			count++;
-			sleep(5);
+			sleep(30);
 		
 		}
 		
