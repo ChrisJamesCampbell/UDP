@@ -196,7 +196,10 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 	//proportional activity is the proportion of the relative activity
 	//against the highest recorded activity so far
-	sysinfo->proportional_activity = (relative_activity/ highest_activity) * 100;
+	if(highest_activity > 0)
+	{
+		sysinfo->proportional_activity = (relative_activity/ highest_activity) * 100;
+	}
 	
 
 }
