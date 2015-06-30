@@ -144,7 +144,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	int count = 1;
 	
 	int disk_activity[2];
-	int highest_activity = 0;
+	static int highest_activity = 0;
 	int relative_activity = 0;
 	
 	
@@ -186,7 +186,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	{	
 		if(highest_activity > 0)
 		{
-			sysinfo->proportional_activity = (relative_activity/ highest_activity);
+			sysinfo->proportional_activity = (relative_activity/ highest_activity) * 100;
 		}
 		
 	    highest_activity = relative_activity;
