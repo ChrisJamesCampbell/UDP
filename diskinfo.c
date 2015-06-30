@@ -17,22 +17,19 @@ int main(void)
 	
 		while(fgets(line,256, fp))
 		{
-			if(count == 18)
+		
+			if(strncmp("sda", line, 3) == 0)
 			{
-				fscanf(fp, "%d", &disk_writes);
-			}
-			/*if(strncmp("8", line, 1) == 0)
-			{
-				fscanf(fp, "%*d %*[  s] %*d %d", &disk_writes);
+				sscanf(line+12, "%*[  s] %d", &disk_writes);
 				//(fp, "%*d %*[ ] %*d %*[ ] %*s %*d %*[ ] %d", &disk_writes);//sadfgad
-			}*/
+			}
 			
 			if(count == 19)
 			{
 				fscanf(fp, "%d", &disk_writes2);
 			}
 			
-			if(count == 29)
+			if(count == 20)
 			{
 				fscanf(fp, "%d", &disk_reads);	//extract contents of line 8
 			}
