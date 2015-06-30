@@ -131,7 +131,7 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 
 static void find_disk_info(struct sysinfo_type *sysinfo)
 {
-	FILE *fp;
+  	FILE *fp;
 	char line[256];
 	
 	int disk_reads;
@@ -139,31 +139,42 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 	int disk_writes;
 	int disk_writes_total;
+	int count = 1;
 	
-	int disk_activity = 0.0;
+	int disk_activity[2];
+	
+	int relative_activity = 0;
 	
 	
-	fp = fopen("/proc/diskstats","r");
 	
+	while(count < 3)
+	{
+	    fp = fopen("/proc/diskstats","r");
 	
-		while(fgets(line,256, fp))
+	    while(fgets(line,256, fp))
+		
 		{
-			{
-				//pulls the 'Reads Completed' successfully column for an sda and adds to total
-				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
-				disk_reads_total = disk_reads_total + disk_reads;
-				
-				//pulls the 'Writes Completed' successfully column for an sda and adds to total
-				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
-				disk_writes_total = disk_writes_total + disk_writes;
-			}
+			//pulls the 'Reads Completed' successfully column for an sda and adds to total
+			sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
+			disk_reads_total = disk_reads_total + disk_reads;
 			
+			//pulls the 'Writes Completed' successfully column for an sda and adds to total
+			sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
+			disk_writes_total = disk_writes_total + disk_writes;
 			
+	
 		}
 		
-	sysinfo->disk_activity = disk_reads_total + disk_writes_total;
+	   disk_activity[count] = disk_reads_total + disk_writes_total;
+	   count++;
+	   fclose(fp);
+	   sleep(5);
 	
-	fclose(fp);
+	}
+		
+	relative_activity = disk_activity[2] - disk_activity[1];
+	sysinfo->disk_activity = relative_activity;
+
 }
 
 
