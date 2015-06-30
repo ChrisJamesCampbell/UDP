@@ -13,7 +13,7 @@ int main(void)
 	int disk_writes_total;
 	int count = 1;
 	
-	int[] disk_activity[2];
+	int disk_activity[2];
 	
 	int relative_activity = 0;
 	
