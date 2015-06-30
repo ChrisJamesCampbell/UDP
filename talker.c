@@ -183,8 +183,8 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 	if(relative_activity > highest_activity)
 	{
-		sysinfo->proportional_activity = (relative_activity/ highest_activity)
-		highest_activity = relative_activity
+		sysinfo->proportional_activity = (relative_activity/ highest_activity);
+		highest_activity = relative_activity;
 	}
 	
 	
