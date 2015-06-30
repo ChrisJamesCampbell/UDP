@@ -20,7 +20,7 @@ int main(void)
 		
 			if(strncmp("   8", line, 4) == 0)
 			{
-				sscanf(line," %*[ ] %*d %*[ ] %*s %*[ ] %d" ,&disk_writes);
+				sscanf(line,"%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_writes);
 				//(fp, "%*d %*[ ] %*d %*[ ] %*s %*d %*[ ] %d", &disk_writes);//sadfgad
 			}
 			
