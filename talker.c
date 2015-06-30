@@ -167,6 +167,10 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		
 	   disk_activity[count] = disk_reads_total + disk_writes_total;
 	   count++;
+	   if(count == 3)
+	   {
+	   	break;
+	   }
 	   disk_reads_total = 0;
 	   disk_writes_total = 0;
 	   fclose(fp);
