@@ -24,7 +24,7 @@ int main(void)
 				//(fp, "%*d %*[ ] %*d %*[ ] %*s %*d %*[ ] %d", &disk_writes);//sadfgad
 			}
 			
-			if(count == 19)
+			/*if(count == 19)
 			{
 				fscanf(fp, "%d", &disk_writes2);
 			}
@@ -32,7 +32,7 @@ int main(void)
 			if(count == 20)
 			{
 				fscanf(fp, "%d", &disk_reads);	//extract contents of line 8
-			}
+			}*/
 		count++;
 		}
 		
