@@ -168,12 +168,11 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	   disk_activity[count] = disk_reads_total + disk_writes_total;
 	   count++;
 	   fclose(fp);
-	   sleep(5);
-	
+
 	}
 		
 	relative_activity = disk_activity[2] - disk_activity[1];
-	sysinfo->disk_activity = relative_activity - sysinfo->disk_activity;
+	sysinfo->disk_activity = relative_activity;
 
 }
 
