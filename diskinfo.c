@@ -18,7 +18,8 @@ int main(void)
 		{
 			if(strncmp("8", line, 1) == 0)
 			{
-				fscanf(fp, "%*d %*[ ] %*d %*[ ] %*s %*d %*[ ] %d", &disk_writes);//sadfgad
+				fscanf(fp, "%*d %*d %*d %d", &disk_writes);
+				//(fp, "%*d %*[ ] %*d %*[ ] %*s %*d %*[ ] %d", &disk_writes);//sadfgad
 			}
 			
 			if(count == 8)
