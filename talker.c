@@ -144,7 +144,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	int count = 1;
 	
 	int disk_activity[2];
-	static int highest_activity = 0;
+	static int highest_activity;
 	int relative_activity = 0;
 	
 	
