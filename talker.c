@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
         freeaddrinfo(servinfo);
     
         printf("talker: sent %d bytes to %s containing %d and %f and %d\n", numbytes, argv[1], 
-        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.proportional);
+        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.proportional_activity);
         close(sockfd);
     
         
