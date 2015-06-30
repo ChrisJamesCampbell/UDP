@@ -3,7 +3,7 @@
 
 int main(void)
 {
-  FILE *fp;
+  	FILE *fp;
 	char line[256];
 	
 	int disk_reads;
@@ -21,25 +21,25 @@ int main(void)
 	fp = fopen("/proc/diskstats","r");
 	
 		while(count < 3)
-		{
-			
-		while(fgets(line,256, fp))
-		
 			{
-				//pulls the 'Reads Completed' successfully column for an sda and adds to total
-				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
-				disk_reads_total = disk_reads_total + disk_reads;
-				
-				//pulls the 'Writes Completed' successfully column for an sda and adds to total
-				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
-				disk_writes_total = disk_writes_total + disk_writes;
-				
-		
-			}
 			
-		disk_activity[count] = disk_reads_total + disk_writes_total;
-		count++;
-		sleep(5);
+			    while(fgets(line,256, fp))
+			
+				{
+					//pulls the 'Reads Completed' successfully column for an sda and adds to total
+					sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
+					disk_reads_total = disk_reads_total + disk_reads;
+					
+					//pulls the 'Writes Completed' successfully column for an sda and adds to total
+					sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
+					disk_writes_total = disk_writes_total + disk_writes;
+					
+			
+				}
+			
+			disk_activity[count] = disk_reads_total + disk_writes_total;
+			count++;
+			sleep(5);
 		
 		}
 		
