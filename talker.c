@@ -29,6 +29,7 @@ struct sysinfo_type
     double free_mem;
     char machine_type;
     long disk_activity;
+    long proportional_activity;
 };
 
 
@@ -39,6 +40,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->free_mem = 0.0;
     sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0;
+    sysinfo->proportional_activity = 0;
     return;
     
     
@@ -178,7 +180,15 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	}
 		
 	relative_activity = disk_activity[2] - disk_activity[1];
-	sysinfo->disk_activity = relative_activity;
+	
+	if(relative_activity > sysinfo->disk_activity)
+	{
+		sysinfo->proportional_activity = (relative_activity / sysinfo->disk_activity) * 100;
+	}
+	else
+	{
+		sysinfo->disk_activity = relative_activity;
+	}
 
 }
 
@@ -243,7 +253,7 @@ int main(int argc, char *argv[])
         freeaddrinfo(servinfo);
     
         printf("talker: sent %d bytes to %s containing %d and %f and %d\n", numbytes, argv[1], 
-        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity);
+        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.proportional);
         close(sockfd);
     
         
