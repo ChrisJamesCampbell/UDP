@@ -45,7 +45,7 @@ int main(void)
 	
 	printf("\nThe total number of disk reads was: %d \n", disk_reads_total);
 	printf("The total number of disk writes was: %d \n", disk_writes_total);
-	printf("The total disk activity was: %d \n", disk_activity);
+	printf("The total disk activity was: %d \n \n", disk_activity);
 	
 	fclose(fp);
 }
