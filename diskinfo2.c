@@ -43,7 +43,7 @@ int main(void)
 	
 	disk_activity = disk_reads_total + disk_writes_total;
 	
-	printf("The total number of disk reads was: %d \n", disk_reads_total);
+	printf("\nThe total number of disk reads was: %d \n", disk_reads_total);
 	printf("The total number of disk writes was: %d \n", disk_writes_total);
 	printf("The total disk activity was: %d \n", disk_activity);
 	
