@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
         close(sockfd);
     
         
-        sleep(10);
+        sleep(2);
     }
     return 0;
 }
