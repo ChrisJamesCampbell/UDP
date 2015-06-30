@@ -173,8 +173,11 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	   {
 	   	break;
 	   }
+	   
+	   //resets temporary totals to 0 for the next loop
 	   disk_reads_total = 0;
 	   disk_writes_total = 0;
+	   
 	   fclose(fp);
 
 	}
@@ -191,14 +194,13 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	{	
 		highest_activity = relative_activity;
 	
-			
 	}
 	
 	//proportional activity is the proportion of the relative activity
 	//against the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-		sysinfo->proportional_activity = (relative_activity/ highest_activity) * 100;
+		sysinfo->proportional_activity = (int) ((double)relative_activity/ (double)highest_activity * 100.0);
 	}
 	
 
