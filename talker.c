@@ -180,6 +180,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	}
 		
 	relative_activity = disk_activity[2] - disk_activity[1];
+	sysinfo->disk_activity = relative_activity;
 	
 	if(relative_activity > highest_activity)
 	{
@@ -187,8 +188,6 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		highest_activity = relative_activity;
 	}
 	
-	
-	sysinfo->disk_activity = relative_activity;
 
 }
 
