@@ -133,9 +133,14 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 {
 	FILE *fp;
 	char line[256];
-	long disk_writes = 0;
-	long disk_reads = 0;
-	int count = 0;
+	
+	int disk_reads;
+	int disk_reads_total;
+	
+	int disk_writes;
+	int disk_writes_total;
+	
+	int disk_activity = 0.0;
 	
 	
 	fp = fopen("/proc/diskstats","r");
@@ -143,19 +148,20 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 		while(fgets(line,256, fp))
 		{
-			if(count == 4)
 			{
-				fscanf(fp, "%d", &disk_writes);//extract contents of line 4
+				//pulls the 'Reads Completed' successfully column for an sda and adds to total
+				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
+				disk_reads_total = disk_reads_total + disk_reads;
+				
+				//pulls the 'Writes Completed' successfully column for an sda and adds to total
+				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
+				disk_writes_total = disk_writes_total + disk_writes;
 			}
 			
-			if(count == 8)
-			{
-				fscanf(fp, "%d", &disk_reads);	//extract contents of line 8
-			}
-		count++;
+			
 		}
 		
-	sysinfo->disk_activity = disk_writes + disk_reads;
+	sysinfo->disk_activity = disk_reads_total + disk_writes_total;
 	
 	fclose(fp);
 }
