@@ -181,14 +181,8 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		
 	relative_activity = disk_activity[2] - disk_activity[1];
 	
-	if(relative_activity > sysinfo->disk_activity)
-	{
-		sysinfo->proportional_activity = (relative_activity / sysinfo->disk_activity) * 100;
-	}
-	else
-	{
-		sysinfo->disk_activity = relative_activity;
-	}
+	
+	sysinfo->disk_activity = relative_activity;
 
 }
 
@@ -253,7 +247,7 @@ int main(int argc, char *argv[])
         freeaddrinfo(servinfo);
     
         printf("talker: sent %d bytes to %s containing %d and %f and %d\n", numbytes, argv[1], 
-        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.proportional_activity);
+        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.relative_activity);
         close(sockfd);
     
         
