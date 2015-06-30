@@ -134,11 +134,11 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
   	FILE *fp;
 	char line[256];
 	
-	int disk_reads;
-	int disk_reads_total;
+	int disk_reads = 0;
+	int disk_reads_total = 0;
 	
-	int disk_writes;
-	int disk_writes_total;
+	int disk_writes = 0;
+	int disk_writes_total = 0;
 	int count = 1;
 	
 	int disk_activity[2];
