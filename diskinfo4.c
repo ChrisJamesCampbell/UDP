@@ -37,18 +37,17 @@ int main(void)
 			
 				}
 			
-			disk_activity[count] = disk_reads_total + disk_writes_total;
-			count++;
-			fclose(fp);
-			sleep(5);
+			   disk_activity[count] = disk_reads_total + disk_writes_total;
+			   count++;
+			   fclose(fp);
+			   sleep(5);
 		
 		}
 		
-	relative_activity = disk_activity[2] + disk_activity[1];
+	relative_activity = disk_activity[2] - disk_activity[1];
 	
-	/*printf("\nThe total number of disk reads was: %d \n", disk_reads_total);
+	printf("\nThe total number of disk reads was: %d \n", disk_reads_total);
 	printf("The total number of disk writes was: %d \n", disk_writes_total);*/
-	printf("The relative disk activity in the first instance was: %d \n", disk_activity[1]);
-	printf("The relative disk activity in the second instance was: %d \n \n", disk_activity[2]);
-	
+	printf("The relative disk activity was: %d \n", relative_activity);
+
 }
