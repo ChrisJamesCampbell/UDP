@@ -20,20 +20,15 @@ int main(void)
 	
 		while(fgets(line,256, fp))
 		{
-		
-			if(strncmp("   8", line, 4) == 0)
-				//need to insert some form of while() loop
-				//in order to add up all reads and writes across all sda's
-				while()
-				{
-					//pulls the 'Reads Completed' successfully column for an sda and adds to total
-					sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
-					disk_reads_total = disk_reads_total + disk_reads;
-					
-					//pulls the 'Writes Completed' successfully column for an sda and adds to total
-					sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
-					disk_writes_total = disk_writes_total + disk_writes;
-				}
+			{
+				//pulls the 'Reads Completed' successfully column for an sda and adds to total
+				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
+				disk_reads_total = disk_reads_total + disk_reads;
+				
+				//pulls the 'Writes Completed' successfully column for an sda and adds to total
+				sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%*d%*[ ]%d", &disk_writes);
+				disk_writes_total = disk_writes_total + disk_writes;
+			}
 			
 			
 		}
