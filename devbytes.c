@@ -52,18 +52,22 @@ int main(void)
 	   	break;
 	   }
 	    
-	    //resets total for next loop
-	    total_received_bytes = 0.0;
-	    total_transmitted_bytes = 0.0;
+	   //resets total for next loop
+	   total_received_bytes = 0.0;
+	   total_transmitted_bytes = 0.0;
 		
-		sleep(1);
+	   //sleep for one second in order to give us 
+	   //network activity in terms of bytes/second
+	sleep(1);
 	}
 	
 	double relative_network_activity = network_activity[2] - network_activity[1];
+	double bandwidth = relative_network_activity / 8;
 	
 	printf("\n The total number of bytes received was: %lf", total_received_bytes);
 	printf("\n The total number of bytes transmitted was: %lf", total_transmitted_bytes);
-	printf("\n The relative network activity was: %lf\n", relative_network_activity);
+	printf("\n The relative network activity was: %lf Bytes\n", relative_network_activity);
+	printf("\n The bandwidth was: %lf bps", bandwidth);
 	
 	
 	
