@@ -4,7 +4,12 @@
 int main(void)
 {
 	
-	double received_bytes = 0.0;
+
+		
+	while(1)
+		
+	{
+		double received_bytes = 0.0;
 		double transmitted_bytes = 0.0;
 		
 		double total_received_bytes = 0.0;
@@ -15,10 +20,6 @@ int main(void)
 		double bandwidth = 0.0;
 		double proportional_bandwidth = 0.0;
 		static double peak_bandwidth;
-		
-	while(1)
-		
-	{
 	
 		
 		int count = 1;
@@ -72,6 +73,16 @@ int main(void)
 		//converts the relative network activity given in bytes per second into BITS per second
 		bandwidth = relative_network_activity * 8;
 		
+		if(bandwidth > peak_bandwidth)
+		{
+			peak_bandwidth = bandwidth;
+		}
+		
+		if(peak_bandwidth > 0)
+		{
+			proportional_bandwidth = (bandwidth/peak_bandwidth);
+		}
+		
 		printf("\n The total number of bytes received was: %lf", total_received_bytes);
 		printf("\n The total number of bytes transmitted was: %lf", total_transmitted_bytes);
 		printf("\n The relative network activity was: %lf Bytes", relative_network_activity);
@@ -81,14 +92,7 @@ int main(void)
 	
 	}
 	
-	if(bandwidth > peak_bandwidth)
-	{
-		peak_bandwidth = bandwidth;
-	}
+	return 0;
 	
-	if(peak_bandwidth > 0)
-	{
-		proportional_bandwidth = (bandwidth/peak_bandwidth);
-	}
-	
+
 }
