@@ -29,7 +29,8 @@ struct sysinfo_type
     double free_mem;
     char machine_type;
     long disk_activity;
-    long proportional_activity;
+    long proportional_activity; //disk activity
+    double proportional_bandwidth;
 };
 
 
@@ -41,6 +42,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0;
     sysinfo->proportional_activity = 0;
+    sysinfo->proportional_bandwidth = 0.0;
     return;
     
     
@@ -206,6 +208,85 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 
 }
 
+static void find_bandwidth(struct sysinfo_type *sysinfo)
+{
+	    double received_bytes = 0.0;
+		double transmitted_bytes = 0.0;
+		
+		double total_received_bytes = 0.0;
+		double total_transmitted_bytes = 0.0;
+		
+		double network_activity[2];
+		
+		double bandwidth = 0.0;
+		static double peak_bandwidth;
+	
+		
+		int count = 1;
+		
+		FILE *fp;
+		char line[256];
+		
+		
+		
+		while(count < 3)
+			{
+			    fp = fopen("/proc/net/dev","r");
+			    
+				while(fgets(line,256, fp))
+				{
+					//pulls the receieved bytes information which is the first column of integers
+					//within net/dev
+					sscanf(line, "%*[ ]%*s%*[ ]%lf", &received_bytes);
+					total_received_bytes = total_received_bytes + received_bytes;
+					
+					
+					//pulls the transmitted bytes information which is represented by the 9th column of 
+					//integers within net/dev
+					sscanf(line, "%*[ ]%*s%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%lf",
+					&transmitted_bytes);
+					total_transmitted_bytes = total_transmitted_bytes + transmitted_bytes;
+					
+					
+				}
+			
+		    network_activity[count] = total_received_bytes + total_transmitted_bytes;
+		    count++;
+		    fclose(fp);
+		    
+		   if(count == 3)
+		   {
+		   	break;
+		   }
+		    
+		  
+		  
+		   //resets total for next loop
+		   total_received_bytes = 0.0;
+		   total_transmitted_bytes = 0.0;
+			
+		   /*
+		   //sleep for one second in order to give us 
+		   //network activity in terms of bytes/second
+		sleep(1);*/
+		}
+		
+		double relative_network_activity = network_activity[2] - network_activity[1];
+		
+		//converts the relative network activity given in bytes per second into BITS per second
+		bandwidth = relative_network_activity * 8;
+		
+		if(bandwidth > peak_bandwidth)
+		{
+			peak_bandwidth = bandwidth;
+		}
+		
+		if(peak_bandwidth > 0)
+		{
+			sysinfo->proportional_bandwidth = (bandwidth/peak_bandwidth);
+		}
+}
+
 
 
 int main(int argc, char *argv[])
@@ -226,6 +307,7 @@ int main(int argc, char *argv[])
         monitor_cpu_load(&sysinfo);
         find_free_memory(&sysinfo);
         find_disk_info(&sysinfo);
+        find_bandwidth(&sysinfo);
         
     
         if (argc != 2) {
@@ -266,8 +348,9 @@ int main(int argc, char *argv[])
     
         freeaddrinfo(servinfo);
     
-        printf("talker: sent %d bytes to %s containing %d and %f and %d and %d\n", numbytes, argv[1], 
-        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity, sysinfo.proportional_activity);
+        printf("talker: sent %d bytes to %s containing %d and %f and %d and %d and %lf\n", numbytes, argv[1], 
+        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity, sysinfo.proportional_activity,
+        sysinfo.proportional_bandwidth);
         close(sockfd);
     
         
