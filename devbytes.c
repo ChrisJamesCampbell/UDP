@@ -25,7 +25,7 @@ int main(void)
 		sscanf(line, "%*[ ]%*s%*[ ]%lf", &received_bytes);
 		total_received_bytes = total_received_bytes + received_bytes;
 		
-		sscanf(line, "%*[ ]%*s%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%lf",
+		sscanf(line, "%*[ ]%*s%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%lf",
 		&transmitted_bytes);
 		total_transmitted_bytes = total_transmitted_bytes + transmitted_bytes;
 		
