@@ -66,8 +66,8 @@ int main(void)
 	
 	printf("\n The total number of bytes received was: %lf", total_received_bytes);
 	printf("\n The total number of bytes transmitted was: %lf", total_transmitted_bytes);
-	printf("\n The relative network activity was: %lf Bytes\n", relative_network_activity);
-	printf("\n The bandwidth was: %lf bps", bandwidth);
+	printf("\n The relative network activity was: %lf Bytes", relative_network_activity);
+	printf("\n The bandwidth was: %lf bits per second\n", bandwidth);
 	
 	
 	
