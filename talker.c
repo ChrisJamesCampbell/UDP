@@ -290,6 +290,20 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		}
 }
 
+static void find_ip_address()
+{
+	FILE *fp;
+	char line[256];
+	char[40] random_ip;
+	
+	fp = fopen("/UDP/ip_addresses.txt","r");
+	
+	while(fgets(line,256, fp))
+	{
+		sscanf(line, "%s", random_ip);
+	}
+}
+
 
 
 int main(int argc, char *argv[])
