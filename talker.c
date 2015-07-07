@@ -359,7 +359,7 @@ int main(int argc, char *argv[])
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d", sysinfo.disk_activity);
-        printf("\nProportional Disk activity was: %d %%"", sysinfo.proportional_activity);
+        printf("\nProportional Disk activity was: %d %%", sysinfo.proportional_activity);
         printf("\nProportional bandwidth was: %d %% \n", sysinfo.proportional_bandwidth);
         
         close(sockfd);
