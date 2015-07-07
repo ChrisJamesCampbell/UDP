@@ -283,7 +283,9 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		
 		if(peak_bandwidth > 0)
 		{
-			sysinfo->proportional_bandwidth = (bandwidth/peak_bandwidth);
+			//gives the proportional bandwidth of the instantaneous bandwidth in 
+			//terms of percentage of the known peak bandwidth
+			sysinfo->proportional_bandwidth = (bandwidth/peak_bandwidth) * 100;
 		}
 }
 
