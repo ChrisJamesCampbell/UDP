@@ -16,7 +16,7 @@ int main(void)
 		double network_activity[2];
 		
 		double bandwidth = 0.0;
-		double proportional_bandiwdth = 0.0;
+		double proportional_bandwidth = 0.0;
 		static double peak_bandwidth;
 		
 		
