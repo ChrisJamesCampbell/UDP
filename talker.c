@@ -277,11 +277,11 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		double relative_network_activity = network_activity[2] - network_activity[1];
 		
 		//converts the relative network activity given in bytes per second into BITS per second
-		sysinfo->insantaneous_bandwidth = relative_network_activity * 8;
+		sysinfo->instantaneous_bandwidth = relative_network_activity * 8;
 		
-		if(sysinfo->insantaneous_bandwidth > peak_bandwidth)
+		if(sysinfo->instantaneous_bandwidth > peak_bandwidth)
 		{
-			peak_bandwidth = bandwidth;
+			peak_bandwidth = sysinfo-instantaneous_bandwidth;
 		}
 		
 		if(peak_bandwidth > 0)
