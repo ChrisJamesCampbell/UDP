@@ -350,9 +350,18 @@ int main(int argc, char *argv[])
     
         freeaddrinfo(servinfo);
     
-        printf("talker: sent %d bytes to %s containing %d and %f and %d and %d and %lf\n", numbytes, argv[1], 
+        /*printf("talker: sent %d bytes to %s containing %d and %f and %d and %d and %lf\n", numbytes, argv[1], 
         sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity, sysinfo.proportional_activity,
         sysinfo.proportional_bandwidth);
+        close(sockfd);*/
+        
+        printf("\nTalker: sent %d bytes to %s", numbytes, argv[1]);
+        printf("\nInsantaneous CPU load was: %d", sysinfo.cpu_load);
+        printf("\nFree memory on this machine is: %f", sysinfo.free_mem,);
+        printf("\nInstantaneous Disk activity was:  %d", sysinfo.disk_activity);
+        printf("\nProportional Disk activity was: %d", sysinfo.proportional_activity);
+        printf("\nProportional bandwidth was: %lf\n", sysinfo.proportional_bandwidth);
+        
         close(sockfd);
     
         
