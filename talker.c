@@ -281,7 +281,7 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		
 		if(sysinfo->instantaneous_bandwidth > peak_bandwidth)
 		{
-			peak_bandwidth = sysinfo-instantaneous_bandwidth;
+			peak_bandwidth = sysinfo->instantaneous_bandwidth;
 		}
 		
 		if(peak_bandwidth > 0)
