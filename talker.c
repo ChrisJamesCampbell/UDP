@@ -384,9 +384,7 @@ int main(int argc, char *argv[])
         printf("\nProportional bandwidth was: %d %% \n", sysinfo.proportional_bandwidth);
         
         close(sockfd);
-        
-        find_ip_addresses();
-        
+       
         sleep(5);
     }
     return 0;
