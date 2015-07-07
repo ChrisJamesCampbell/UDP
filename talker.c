@@ -290,17 +290,21 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		}
 }
 
-static void find_ip_address()
+static void find_ip_addresses()
 {
 	FILE *fp;
 	char line[256];
-	char random_ip[40];
+	char ip_address_list[5][40]; //max ipv6 address is 39 characters long, ipv4 is 19
 	
 	fp = fopen("/UDP/ip_addresses.txt","r");
 	
 	while(fgets(line,256, fp))
 	{
-		sscanf(line, "%s", random_ip);
+		for(int i = 1; i < 6; i++ )
+		{
+			sscanf(line, "%s", ip_address_list[count]);
+			printf("IP address %d is: %s", ip_address_list[count]);
+		}
 	}
 }
 
@@ -379,6 +383,9 @@ int main(int argc, char *argv[])
         printf("\nProportional bandwidth was: %d %% \n", sysinfo.proportional_bandwidth);
         
         close(sockfd);
+        
+        find_ip_addresses();
+        
     
         
         sleep(5);
