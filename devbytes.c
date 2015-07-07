@@ -33,7 +33,7 @@ int main(void)
 	}
 	
 	printf("\n The total number of bytes received was: %lf", total_received_bytes);
-	printf("\n The total number of bytes transmitted was: %lf\n");
+	printf("\n The total number of bytes transmitted was: %lf\n", total_transmitted_bytes);
 	
 	
 	
