@@ -25,6 +25,9 @@ int main(void)
 		sscanf(line, "%*[ ]%*s%*[ ]%lf", &received_bytes);
 		total_received_bytes = total_received_bytes + received_bytes;
 		
+		
+		//pulls the transmitted bytes information which is represented by the 9th column of 
+		//integers within net/dev
 		sscanf(line, "%*[ ]%*s%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%lf",
 		&transmitted_bytes);
 		total_transmitted_bytes = total_transmitted_bytes + transmitted_bytes;
