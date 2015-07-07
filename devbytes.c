@@ -65,7 +65,9 @@ int main(void)
 		}
 		
 		double relative_network_activity = network_activity[2] - network_activity[1];
-		double bandwidth = relative_network_activity / 8;
+		
+		//converts the relative network activity given in bytes per second into BITS per second
+		double bandwidth = relative_network_activity * 8;
 		
 		printf("\n The total number of bytes received was: %lf", total_received_bytes);
 		printf("\n The total number of bytes transmitted was: %lf", total_transmitted_bytes);
