@@ -42,9 +42,18 @@ int main(void)
 			
 		}
 		
-		network_activity[count] = total_received_bytes + total_transmitted_bytes;
-		count++;
+	    network_activity[count] = total_received_bytes + total_transmitted_bytes;
+	    count++;
 	    fclose(fp);
+	    
+	   if(count == 3)
+	   {
+	   	break;
+	   }
+	    
+	    //resets total for next loop
+	    total_received_bytes = 0.0;
+	    total_transmitted_bytes = 0.0;
 		
 		sleep(1);
 	}
