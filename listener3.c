@@ -44,8 +44,16 @@ struct sys_info
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
+    char machine_type;
+    long disk_activity;
+    long proportional_activity; //disk activity
+    double instantaneous_bandwidth;
+    int proportional_bandwidth;
+    
+    
     time_t packet_time_stamp;
     double packets_per_minute;
+    
 };
 
 
@@ -54,6 +62,12 @@ static void initialise_sys_info(struct sys_info *sys_info)
     
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
+    sys_info->machine_type = 0;
+    sysinfo->disk_activity = 0;
+    sysinfo->proportional_activity = 0; //disk activity
+    sysinfo->instantaneous_bandwidth = 0.0;
+    sysinfo->proportional_bandwidth = 0;
+    
     sys_info->packet_time_stamp = unix_time_now();
     sys_info->packets_per_minute = 0.0;
     return;
@@ -65,6 +79,11 @@ struct new_sys_info
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
+    char machine_type;
+    long disk_activity;
+    long proportional_activity; //disk activity
+    double instantaneous_bandwidth;
+    int proportional_bandwidth;
     time_t packet_time_stamp;
     double packets_per_minute;
 };
@@ -75,6 +94,11 @@ static void initialise_new_sys_info(struct new_sys_info *new_sys_info)
     
     new_sys_info->cpu_load = 0;
     new_sys_info->free_mem = 0.0;
+    new_sys_info->machine_type = 0;
+    new_sys_info->disk_activity = 0;
+    new_sys_info->proportional_activity = 0; //disk activity
+    new_sys_info->instantaneous_bandwidth = 0.0;
+    new_sys_info->proportional_bandwidth = 0;
     new_sys_info->packet_time_stamp = unix_time_now();
     new_sys_info->packets_per_minute = 0.0;
     return;
@@ -184,6 +208,11 @@ int main(void)
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
         
         printf("Average CPU load is: %d%% \n \n", (int)old_data.cpu_load);
+        
+        printf("\nInstantaneous Disk activity was:  %d (reads/writes)", new_packet->disk_activity);
+        printf("\nProportional Disk activity was: %d %%", new_packet->proportional_activity);
+        printf("\nInstantaneous bandwidth was:  %lf bps)", new_packet->instantaneous_bandwidth);
+        printf("\nProportional bandwidth was: %d %% \n", new_packet->proportional_bandwidth);
 
     }
     close(sockfd);
