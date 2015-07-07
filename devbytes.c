@@ -88,6 +88,9 @@ int main(void)
 		printf("\n The relative network activity was: %lf Bytes", relative_network_activity);
 		printf("\n The bandwidth was: %lf bits per second\n", bandwidth);
 		
+		printf("\n The PEAK bandwidth was: %lf \n ", peak_bandwidth);
+		printf("\n The proprortional bandwidth of the peak is: ", proportional_bandwidth);
+		
 	
 	
 	}
