@@ -367,7 +367,7 @@ int main(int argc, char *argv[])
         close(sockfd);
     
         
-        sleep(2);
+        sleep(5);
     }
     return 0;
 }
