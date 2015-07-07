@@ -3,11 +3,8 @@
 
 int main(void)
 {
-	while(1)
-		
-	{
-		
-		double received_bytes = 0.0;
+	
+	double received_bytes = 0.0;
 		double transmitted_bytes = 0.0;
 		
 		double total_received_bytes = 0.0;
@@ -19,9 +16,10 @@ int main(void)
 		double proportional_bandwidth = 0.0;
 		static double peak_bandwidth;
 		
+	while(1)
 		
-		
-		
+	{
+	
 		
 		int count = 1;
 		
