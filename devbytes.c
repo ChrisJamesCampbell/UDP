@@ -20,11 +20,11 @@ int main(void)
 	FILE *fp;
 	char line[256];
 	
-	fp = fopen("/proc/net/dev","r");
 	
 	
 	while(count < 3)
 		{
+			
 		while(fgets(line,256, fp))
 		{
 			//pulls the receieved bytes information which is the first column of integers
