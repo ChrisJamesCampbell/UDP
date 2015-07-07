@@ -358,7 +358,7 @@ int main(int argc, char *argv[])
         printf("\nTalker: sent %d bytes to %s", numbytes, argv[1]);
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
-        printf("\nInstantaneous Disk activity was:  %d", sysinfo.disk_activity);
+        printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
         printf("\nProportional Disk activity was: %d %%", sysinfo.proportional_activity);
         printf("\nProportional bandwidth was: %d %% \n", sysinfo.proportional_bandwidth);
         
