@@ -80,7 +80,7 @@ int main(void)
 		
 		if(peak_bandwidth > 0)
 		{
-			proportional_bandwidth = (bandwidth/peak_bandwidth);
+			proportional_bandwidth = (bandwidth/peak_bandwidth) * 100;
 		}
 		
 		printf("\n The total number of bytes received was: %lf", total_received_bytes);
@@ -89,7 +89,7 @@ int main(void)
 		printf("\n The bandwidth was: %lf bits per second\n", bandwidth);
 		
 		printf("\n The PEAK bandwidth was: %lf ", peak_bandwidth);
-		printf("\n The proprortional bandwidth of the peak is: %lf\n", proportional_bandwidth);
+		printf("\n The proprortional bandwidth of the peak is: %lf %%\n", proportional_bandwidth);
 		
 	
 	
