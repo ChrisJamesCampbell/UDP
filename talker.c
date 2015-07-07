@@ -295,12 +295,13 @@ static void find_ip_addresses()
 	FILE *fp;
 	char line[256];
 	char ip_address_list[5][40]; //max ipv6 address is 39 characters long, ipv4 is 19
+	int i = 1;
 	
 	fp = fopen("/UDP/ip_addresses.txt","r");
 	
 	while(fgets(line,256, fp))
 	{
-		for(int i = 1; i < 6; i++ )
+		for(i; i < 6; i++ )
 		{
 			sscanf(line, "%s", ip_address_list[i]);
 			printf("IP address %d is: %s", ip_address_list[i]);
