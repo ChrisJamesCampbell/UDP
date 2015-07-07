@@ -302,8 +302,8 @@ static void find_ip_addresses()
 	{
 		for(int i = 1; i < 6; i++ )
 		{
-			sscanf(line, "%s", ip_address_list[count]);
-			printf("IP address %d is: %s", ip_address_list[count]);
+			sscanf(line, "%s", ip_address_list[i]);
+			printf("IP address %d is: %s", ip_address_list[i]);
 		}
 	}
 }
