@@ -207,12 +207,12 @@ int main(void)
         
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
         
-        printf("Average CPU load is: %d%% \n \n", (int)old_data.cpu_load);
+        printf("Average CPU load is: %d%% ", (int)old_data.cpu_load);
         
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", new_packet->disk_activity);
         printf("\nProportional Disk activity was: %d %%", new_packet->proportional_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", new_packet->instantaneous_bandwidth);
-        printf("\nProportional bandwidth was: %d %% \n", new_packet->proportional_bandwidth);
+        printf("\nProportional bandwidth was: %d %% \n \n", new_packet->proportional_bandwidth);
 
     }
     close(sockfd);
