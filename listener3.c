@@ -63,10 +63,10 @@ static void initialise_sys_info(struct sys_info *sys_info)
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
     sys_info->machine_type = 0;
-    sysinfo->disk_activity = 0;
-    sysinfo->proportional_activity = 0; //disk activity
-    sysinfo->instantaneous_bandwidth = 0.0;
-    sysinfo->proportional_bandwidth = 0;
+    sys_info->disk_activity = 0;
+    sys_info->proportional_activity = 0; //disk activity
+    sys_info->instantaneous_bandwidth = 0.0;
+    sys_info->proportional_bandwidth = 0;
     
     sys_info->packet_time_stamp = unix_time_now();
     sys_info->packets_per_minute = 0.0;
