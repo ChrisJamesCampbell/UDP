@@ -294,7 +294,7 @@ static void find_ip_address()
 {
 	FILE *fp;
 	char line[256];
-	char[40] random_ip;
+	char random_ip[40];
 	
 	fp = fopen("/UDP/ip_addresses.txt","r");
 	
