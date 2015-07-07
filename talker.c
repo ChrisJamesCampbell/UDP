@@ -32,6 +32,7 @@ struct sysinfo_type
     char machine_type;
     long disk_activity;
     long proportional_activity; //disk activity
+    double instantaneous_bandwidth;
     int proportional_bandwidth;
 };
 
@@ -44,6 +45,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0;
     sysinfo->proportional_activity = 0;
+    sysinfo->instantaneous_bandwidth = 0.0;
     sysinfo->proportional_bandwidth = 0;
     return;
     
@@ -212,7 +214,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 
 static void find_bandwidth(struct sysinfo_type *sysinfo)
 {
-	    double received_bytes = 0.0;
+	        double received_bytes = 0.0;
 		double transmitted_bytes = 0.0;
 		
 		double total_received_bytes = 0.0;
@@ -220,7 +222,6 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		
 		double network_activity[2];
 		
-		double bandwidth = 0.0;
 		static double peak_bandwidth;
 	
 		
@@ -276,9 +277,9 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		double relative_network_activity = network_activity[2] - network_activity[1];
 		
 		//converts the relative network activity given in bytes per second into BITS per second
-		bandwidth = relative_network_activity * 8;
+		sysinfo->insantaneous_bandwidth = relative_network_activity * 8;
 		
-		if(bandwidth > peak_bandwidth)
+		if(sysinfo->insantaneous_bandwidth > peak_bandwidth)
 		{
 			peak_bandwidth = bandwidth;
 		}
@@ -287,7 +288,7 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		{
 			//gives the proportional bandwidth of the instantaneous bandwidth in 
 			//terms of percentage of the known peak bandwidth
-			sysinfo->proportional_bandwidth = (int) (bandwidth/peak_bandwidth) * 100;
+			sysinfo->proportional_bandwidth = (int) ((sysinfo->instantaneous_bandwidth/peak_bandwidth) * 100);
 		}
 }
 
@@ -362,6 +363,7 @@ int main(int argc, char *argv[])
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
         printf("\nProportional Disk activity was: %d %%", sysinfo.proportional_activity);
+        printf("\nInstantaneous bandwidth was:  %lf bps)", sysinfo.instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %d %% \n", sysinfo.proportional_bandwidth);
         
         close(sockfd);
