@@ -62,7 +62,8 @@ int main(void)
 	double relative_network_activity = network_activity[2] - network_activity[1];
 	
 	printf("\n The total number of bytes received was: %lf", total_received_bytes);
-	printf("\n The total number of bytes transmitted was: %lf\n", total_transmitted_bytes);
+	printf("\n The total number of bytes transmitted was: %lf", total_transmitted_bytes);
+	printf("\n The relative network activity was: %lf\n", relative_network_activity);
 	
 	
 	
