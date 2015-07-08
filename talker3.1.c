@@ -304,7 +304,7 @@ int main()
         find_bandwidth(&sysinfo);
         
         //temporary assignment of mahcine type
-        sysinfo->machine_type = BATCH_ROBOT;
+        sysinfo.machine_type = BATCH_ROBOT;
         
         
 
