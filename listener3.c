@@ -18,7 +18,7 @@
 #define CPU_LOAD__AVG_SMOOTHER 0.5
 #define PACKETS_PM_SMOOTHER 0.5
 
-static char machine[20];
+static char *machine;
 
 time_t unix_time_now()
 {
