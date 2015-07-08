@@ -267,9 +267,9 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		   total_transmitted_bytes = 0.0;
 			
 		   
-		   //sleep for one second in order to give us 
+		   /*//sleep for one second in order to give us 
 		   //network activity in terms of bytes/second
-		sleep(1);
+		sleep(1);*/
 		}
 		
 		double relative_network_activity = network_activity[2] - network_activity[1];
