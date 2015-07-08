@@ -365,12 +365,7 @@ int main()
 	            return 2;
 	        }
 	        
-	        fclose(fp);
-	    
-
-	    }
-	    
-	         if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
+	        	         if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
              p->ai_addr, p->ai_addrlen)) == -1) 
 	         {
 	            perror("talker: sendto");
@@ -378,7 +373,13 @@ int main()
 	         }
 	    
 	        freeaddrinfo(servinfo);
-    
+	        
+	        fclose(fp);
+	    
+
+	    }
+	    
+
         
     
         /*printf("talker: sent %d bytes to %s containing %d and %f and %d and %d and %lf\n", numbytes, argv[1], 
