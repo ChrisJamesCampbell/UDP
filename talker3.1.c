@@ -16,10 +16,10 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
-#define BATCH_ROBOT "0"
-#define WEB_SERVER "1"
-#define DATABASE_SERVER "2"
-#define APPLICATION_SERVER "3"
+#define BATCH_ROBOT "1"
+#define WEB_SERVER "2"
+#define DATABASE_SERVER "3"
+#define APPLICATION_SERVER "4"
 
 //a signal counter which will be incremented at the end of the
 //main method to signal that the program has run more than once
@@ -304,7 +304,7 @@ int main()
         find_bandwidth(&sysinfo);
         
         //temporary assignment of machine type
-        sysinfo.machine_type = (char)BATCH_ROBOT;
+        sysinfo.machine_type = BATCH_ROBOT;
         
         
 
