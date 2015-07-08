@@ -282,27 +282,6 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 			sysinfo->proportional_bandwidth = ((sysinfo->instantaneous_bandwidth/peak_bandwidth) * 100);
 		}
 }
- /*
-static void find_ip_addresses()
-{
-	FILE *fp;
-	char line[256];
-	char ip_address_list[5][40]; //max ipv6 address is 39 characters long, ipv4 is 19
-	int i = 1;
-	
-	fp = fopen("/UDP/ip_addresses.txt","r");
-	
-	while(fgets(line,256, fp))
-	{
-		for(i =1; i < 6; i++ )
-		{
-			sscanf(line, "%s", ip_address_list[i]);
-			printf("IP address %d is: %s", ip_address_list[i]);
-		}
-	}
-}
-*/
-
 
 int main()
 {
@@ -324,15 +303,14 @@ int main()
         find_disk_info(&sysinfo);
         find_bandwidth(&sysinfo);
         
-    
-        /*if (argc != 2) {
-            fprintf(stderr,"usage: talker hostname message\n");
-            exit(1);
-        }*/
+        //temporary assignment of mahcine type
+        sysinfo->machine_type = BATCH_ROBOT
         
-            FILE *fp;
-            char line[256];
-            char ip_to_send[9];
+        
+
+        FILE *fp;
+        char line[256];
+        char ip_to_send[9];
 		
 	    fp = fopen("/root/UDP/ip_addresses.txt","r");
 	
@@ -381,13 +359,9 @@ int main()
 	        
 	        fclose(fp);
         
-    
-        /*printf("talker: sent %d bytes to %s containing %d and %f and %d and %d and %lf\n", numbytes, argv[1], 
-        sysinfo.cpu_load, sysinfo.free_mem, sysinfo.disk_activity, sysinfo.proportional_activity,
-        sysinfo.proportional_bandwidth);
-        close(sockfd);*/
-        
+
         printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
+        printf("\nThe machine which sent the packet was of type: %s", sysinfo.machine_type);
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
