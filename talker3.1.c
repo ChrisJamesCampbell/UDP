@@ -31,7 +31,7 @@ struct sysinfo_type
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
-    char machine_type;
+    int machine_type;
     long disk_activity;
     double proportional_activity; //disk activity
     double instantaneous_bandwidth;
