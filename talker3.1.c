@@ -234,6 +234,10 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 			    
 				while(fgets(line,256, fp))
 				{
+					if(strncmp("lo", line, 2) == 0)
+					{
+						continue;
+					}
 					
 					//pulls the receieved bytes information which is the first column of integers
 					//within net/dev
