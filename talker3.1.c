@@ -325,10 +325,10 @@ int main(int argc, char *argv[])
         find_bandwidth(&sysinfo);
         
     
-        if (argc != 2) {
+        /*if (argc != 2) {
             fprintf(stderr,"usage: talker hostname message\n");
             exit(1);
-        }
+        }*/
         
         FILE *fp;
 		char line[256];
@@ -381,7 +381,7 @@ int main(int argc, char *argv[])
         sysinfo.proportional_bandwidth);
         close(sockfd);*/
         
-        printf("\nTalker: sent %d bytes to %s", numbytes, argv[1]);
+        printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
