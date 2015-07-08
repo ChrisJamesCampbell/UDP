@@ -330,11 +330,11 @@ int main()
             exit(1);
         }*/
         
-        FILE *fp;
-		char line[256];
-		char ip_to_send[9];
+            FILE *fp;
+            char line[256];
+            char ip_to_send[9];
 		
-		fp = fopen("/root/UDP/ip_addresses.txt","r");
+	    fp = fopen("/root/UDP/ip_addresses.txt","r");
 	
 	    while(fgets(line,256, fp))
 	    {
@@ -372,14 +372,14 @@ int main()
 	            exit(1);
 	         }
 	    
-	        freeaddrinfo(servinfo);
 	        
-	        fclose(fp);
 	    
 
 	    }
 	    
-
+		freeaddrinfo(servinfo);
+	        
+	        fclose(fp);
         
     
         /*printf("talker: sent %d bytes to %s containing %d and %f and %d and %d and %lf\n", numbytes, argv[1], 
