@@ -184,6 +184,11 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		sysinfo->disk_activity = (new_disk_activity - old_disk_activity);
 	}
 	
+	//stores the most recently read disk activity in the static old disk activity
+	//so we can use it on the next call to this method to find what the difference has 
+	//been in disk activity
+	old_disk_activity = new_disk_activity;
+	
 	//as soon as relative activity has been monitored, highest activity
 	//will be set as the first reading and then after that will only
 	//be replaced if the relative activity is greater than the highest recorded activity
