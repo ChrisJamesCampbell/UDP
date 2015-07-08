@@ -334,7 +334,7 @@ int main()
 		char line[256];
 		char ip_to_send[9];
 		
-		fp = fopen("/UDP/ip_addresses.txt","r");
+		fp = fopen("/root/UDP/ip_addresses.txt","r");
 	
 	    while(fgets(line,256, fp))
 	    {
