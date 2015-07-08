@@ -17,6 +17,8 @@
 
 #define CPU_LOAD__AVG_SMOOTHER 0.5
 #define PACKETS_PM_SMOOTHER 0.5
+#define PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER 0.5
+#define PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER 0.5
 
 static char *machine;
 
@@ -121,6 +123,14 @@ static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
+    
+    //calculates proportional disk activity average
+    old_data->proportional_disk_activity = old_data->proportional_disk_activity * PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER +
+    new_data->proportional_disk_activity * (1 - PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER);
+    
+    //calculates proportional bandwidth average
+    old_data->proportional_bandwidth = old_data->proportional_bandwidth * PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER + 
+    new_data->proportional_bandwidth * (1 - PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER);
 }
 
 //method for determining which machine the packet has been received from
