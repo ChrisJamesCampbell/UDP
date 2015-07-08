@@ -21,6 +21,10 @@
 #define DATABASE_SERVER "2"
 #define APPLICATION_SERVER "3"
 
+//a signal counter which will be incremented at the end of the
+//main method to signal that the program has run more than once
+static int first_time = 0;
+
 //the struct that will conatin metrics which will be used
 //to calculate state of system
 struct sysinfo_type     
@@ -223,6 +227,7 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 
 		//keeps a record of the highest recorded bandwidth
 		static double peak_bandwidth;
+		
 	
 
 		FILE *fp;
@@ -253,11 +258,17 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 			fclose(fp);
 		    new_network_activity = total_received_bytes + total_transmitted_bytes;
 		   
-  
-
-		//takes the difference between network activity and 
-		//converts the network activity given to us in bytes into BITS
-		sysinfo->instantaneous_bandwidth = (new_network_activity - old_network_activity) * 8;
+		   //if the prgram has been run more than once,update instantaneous bandwidth.
+		   //we do this to account for the fact the first reading would produce erroneous results
+		   //and so bandwidth results are only accurate after the second run of this method
+		   if(first_time > 0)
+		  	{
+		
+				//takes the difference between network activity and 
+				//converts the network activity given to us in bytes into BITS
+				sysinfo->instantaneous_bandwidth = (new_network_activity - old_network_activity) * 8;
+				
+		  	}
 		
 		//stores the network activity JUST read in this call into the static double
 		//old network activity so we can use the value to find the difference in total activity
@@ -373,6 +384,10 @@ int main(int argc, char *argv[])
         close(sockfd);
        
         sleep(5);
+        
+        //increments the signal counter to say that the program has been 
+        //run at least once
+        first_time++;
     }
     return 0;
 }
