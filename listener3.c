@@ -79,11 +79,11 @@ struct new_sys_info
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
-    char machine_type;
-    long disk_activity;
+    char machine_type; // batch robot/(web|database|application) server
+    long disk_activity; //(reads/writes)
     long proportional_activity; //disk activity
-    double instantaneous_bandwidth;
-    double proportional_bandwidth;
+    double instantaneous_bandwidth; //bits per second
+    double proportional_bandwidth; //proportion of instantaneous over highest known peak bandwidth
     time_t packet_time_stamp;
     double packets_per_minute;
 };
