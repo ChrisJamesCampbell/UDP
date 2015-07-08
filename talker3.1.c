@@ -16,7 +16,7 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
-#define BATCH_ROBOT "0"
+#define BATCH_ROBOT 0
 #define WEB_SERVER "1"
 #define DATABASE_SERVER "2"
 #define APPLICATION_SERVER "3"
@@ -303,7 +303,7 @@ int main()
         find_disk_info(&sysinfo);
         find_bandwidth(&sysinfo);
         
-        //temporary assignment of mahcine type
+        //temporary assignment of machine type
         sysinfo.machine_type = BATCH_ROBOT;
         
         
