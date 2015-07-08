@@ -16,10 +16,10 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
-#define BATCH_ROBOT "1"
-#define WEB_SERVER "2"
-#define DATABASE_SERVER "3"
-#define APPLICATION_SERVER "4"
+#define BATCH_ROBOT 1
+#define WEB_SERVER 2
+#define DATABASE_SERVER 3
+#define APPLICATION_SERVER 4
 
 //a signal counter which will be incremented at the end of the
 //main method to signal that the program has run more than once
@@ -211,7 +211,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 
 static void find_bandwidth(struct sysinfo_type *sysinfo)
 {
-	    double received_bytes = 0.0; //holds the value of each received bytes for each row 
+	        double received_bytes = 0.0; //holds the value of each received bytes for each row 
 		double transmitted_bytes = 0.0; //holds the value of each transmitted bytes for each row 
 		
 		double total_received_bytes = 0.0; //holds the total of the recieved bytes column
@@ -250,7 +250,7 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 					
 				}
 			
-			fclose(fp);
+	            fclose(fp);
 		    new_network_activity = total_received_bytes + total_transmitted_bytes;
 		   
 		   //if the prgram has been run more than once,update instantaneous bandwidth.
@@ -361,7 +361,7 @@ int main()
         
 
         printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
-        printf("\nThe machine which sent the packet was of type: %s", sysinfo.machine_type);
+        printf("\nThe machine which sent the packet was of type: %d", sysinfo.machine_type);
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
