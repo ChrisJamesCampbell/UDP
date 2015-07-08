@@ -158,10 +158,23 @@ int main(void)
     socklen_t addr_len;
     char s[INET6_ADDRSTRLEN];
     
+   //sets the received buffer as type new_sys_info and names it as a packet
    struct new_sys_info *new_packet = (struct new_sys_info *)buf;
    
-   struct sys_info old_data;
+   struct sys_info old_data; //struct that stores data about all machines 
    initialise_sys_info(&old_data);
+   
+   struct sys_info old_br_data; //struct that will store batch robot specific data
+   initialise_sys_info(&old_br_data);
+   
+   struct sys_info old_ws_data; //struct that will store web server specific data
+   initialise_sys_info(&old_ws_data);
+   
+   struct sys_info old_ds_data; //struct that will store database server specific data
+   initialise_sys_info(&old_ds_data);
+   
+   struct sys_info old_as_data; //struct that will store application server specific data
+   initialise_sys_info(&old_as_data);
    
    
     
@@ -226,7 +239,26 @@ int main(void)
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
         
+        //finds out which type of machine sent the packet
         determine_machine(new_packet);
+        
+        //saves the information to the relevant specific machine struct 
+        switch(machine)
+        {
+           case "Batch Robot":
+               save_data(&old_br_data, new_packet);
+               break;
+            case "Web Server":
+               save_data(&old_ws_data, new_packet);
+               break;
+            case "Database Server":
+               save_data(&old_ds_data, new_packet);
+               break;
+            case "Application Server":
+               save_data(&old_as_data, new_packet);
+               break;
+               
+        }
         
         
 
