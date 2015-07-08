@@ -253,18 +253,18 @@ int main(void)
         determine_machine(new_packet);
         
         //saves the information to the relevant specific machine struct 
-        switch(machine)
+        switch(new_packet->machine_type)
         {
-           case "Batch Robot":
+           case 1
                save_data(&old_br_data, new_packet);
                break;
-            case "Web Server":
+            case 2:
                save_data(&old_ws_data, new_packet);
                break;
-            case "Database Server":
+            case 3:
                save_data(&old_ds_data, new_packet);
                break;
-            case "Application Server":
+            case 4:
                save_data(&old_as_data, new_packet);
                break;
                
