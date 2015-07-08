@@ -111,11 +111,11 @@ static void initialise_new_sys_info(struct new_sys_info *new_sys_info)
 
 static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
 {
-   //calculates cpu_load avaerage with cpu load average smoother
+   //calculates cpu_load avaerage with cpu load average smoother  constant
     old_data->cpu_load = old_data->cpu_load * CPU_LOAD__AVG_SMOOTHER + 
     (double)new_data->cpu_load * (1 - CPU_LOAD__AVG_SMOOTHER);
     
-    //calculates packets per minute with the BETA constant smoother
+    //calculates packets per minute with the packets per minute smoother constant
     old_data->packets_per_minute = old_data->packets_per_minute * PACKETS_PM_SMOOTHER
     + (1 - PACKETS_PM_SMOOTHER) * (60 / (unix_time_now() - old_data->packet_time_stamp));
     
@@ -162,6 +162,8 @@ int main(void)
    
    struct sys_info old_data;
    initialise_sys_info(&old_data);
+   
+   
     
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC; // set to AF_INET to force IPv4
