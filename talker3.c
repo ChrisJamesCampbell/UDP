@@ -175,7 +175,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 		fclose(fp);
 	    new_disk_activity = disk_reads_total + disk_writes_total;
 	    
-	  }
+	 
 	
 	//if the program has run at least once, update disk_activity
 	//(avoids erroneous disk activity results by missing first reading)
