@@ -332,7 +332,7 @@ int main()
         
         FILE *fp;
 		char line[256];
-		char ip_to_send[40];
+		char ip_to_send[9];
 		
 		fp = fopen("/UDP/ip_addresses.txt","r");
 	
