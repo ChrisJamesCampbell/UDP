@@ -124,7 +124,7 @@ static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
 }
 
 //method for determining which machine the packet has been received from
-static void determine_machine(struct sys_info *sys_info) 
+static void determine_machine(struct new_sys_info *sys_info) 
 {
    if(sys_info->machine_type == 1)
       {
@@ -224,17 +224,17 @@ int main(void)
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
         
-        determine_machine(&old_data);
+        determine_machine(&new_packet);
         
         
 
-        printf("Recieved packet from IP address %s\n",
+        printf("\nRecieved packet from IP address %s\n",
             inet_ntop(their_addr.ss_family,
                 get_in_addr((struct sockaddr *)&their_addr),
                 s, sizeof s));
         printf("The Packet was %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("The packet was sent by a: %s", machine);
+        printf("The packet was sent by a: %s\n", machine);
         printf("The Packet contains: \n[ \%d%% instantaneous CPU Load and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
