@@ -202,7 +202,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//against the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-		sysinfo->proportional_activity = (double) ((double)new_disk_activity/ (double)highest_activity * 100.0);
+		sysinfo->proportional_activity =  (new_disk_activity/ highest_activity) * 100);
 	}
 	
 
