@@ -58,7 +58,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
 
 //function that calculates the load average of the CPU
 //and updates cpu_load within the struct sysinfo 
-static void monitor_cpu_load(struct sysinfo_type *sysinfo) 
+static void find_cpu_load(struct sysinfo_type *sysinfo) 
 {
     long double newvalue[4], loadavg;
     static long double oldvalue[4];
@@ -264,8 +264,8 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		  	{
 		
 				//takes the difference between network activity and 
-				//converts the network activity given to us in bytes into BITS
-				sysinfo->instantaneous_bandwidth = (new_network_activity - old_network_activity) * 8;
+				//converts the network activity given to us in bytes into BITS per second
+				sysinfo->instantaneous_bandwidth = ((new_network_activity - old_network_activity) * 8) / 5;
 				
 		  	}
 		
@@ -302,7 +302,7 @@ int main()
         initialise_sysinfo(&sysinfo);
         
         //calls the methods to extrapolate the metrics
-        monitor_cpu_load(&sysinfo);
+        find_cpu_load(&sysinfo);
         find_free_memory(&sysinfo);
         find_disk_info(&sysinfo);
         find_bandwidth(&sysinfo);
