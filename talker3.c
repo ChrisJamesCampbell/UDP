@@ -192,9 +192,9 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//as soon as relative activity has been monitored, highest activity
 	//will be set as the first reading and then after that will only
 	//be replaced if the relative activity is greater than the highest recorded activity
-	if(new_disk_activity > highest_activity)
+	if(sysinfo->disk_activity > highest_activity)
 	{	
-		highest_activity = new_disk_activity;
+		highest_activity = sysinfo->disk_activity;
 	
 	}
 	
@@ -202,8 +202,9 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//against the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-		sysinfo->proportional_activity =  (new_disk_activity/ highest_activity) * 100;
+		sysinfo->proportional_activity =  (sysinfo->disk_activity/ (double)highest_activity) * 100;
 	}
+	
 	
 
 }
