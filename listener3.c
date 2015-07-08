@@ -224,7 +224,7 @@ int main(void)
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
         
-        determine_machine(&new_packet);
+        determine_machine(new_packet);
         
         
 
