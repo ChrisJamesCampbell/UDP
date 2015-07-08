@@ -364,15 +364,20 @@ int main()
 	            fprintf(stderr, "talker: failed to bind socket\n");
 	            return 2;
 	        }
+	        
+	        fclose(fp);
 	    
-	        if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
-	                 p->ai_addr, p->ai_addrlen)) == -1) {
+
+	    }
+	    
+	         if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
+             p->ai_addr, p->ai_addrlen)) == -1) 
+	         {
 	            perror("talker: sendto");
 	            exit(1);
-	        }
+	         }
 	    
 	        freeaddrinfo(servinfo);
-	    }
     
         
     
