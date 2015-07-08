@@ -212,30 +212,29 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 
 static void find_bandwidth(struct sysinfo_type *sysinfo)
 {
-	        double received_bytes = 0.0;
-		double transmitted_bytes = 0.0;
+	    double received_bytes = 0.0; //holds the value of each received bytes for each row 
+		double transmitted_bytes = 0.0; //holds the value of each transmitted bytes for each row 
 		
-		double total_received_bytes = 0.0;
-		double total_transmitted_bytes = 0.0;
+		double total_received_bytes = 0.0; //holds the total of the recieved bytes column
+		double total_transmitted_bytes = 0.0; //holds the total of the transmitted bytes column
 		
-		double network_activity[2];
-		
+		static double old_network_activity;
+		double new_network_activity = 0.0;
+
+		//keeps a record of the highest recorded bandwidth
 		static double peak_bandwidth;
 	
-		
-		int count = 1;
-		
+
 		FILE *fp;
 		char line[256];
 		
 		
 		
-		while(count < 3)
-			{
 			    fp = fopen("/proc/net/dev","r");
 			    
 				while(fgets(line,256, fp))
 				{
+					
 					//pulls the receieved bytes information which is the first column of integers
 					//within net/dev
 					sscanf(line, "%*[ ]%*s%*[ ]%lf", &received_bytes);
@@ -251,31 +250,19 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 					
 				}
 			
-		    network_activity[count] = total_received_bytes + total_transmitted_bytes;
-		    count++;
-		    fclose(fp);
-		    
-		   if(count == 3)
-		   {
-		   	break;
-		   }
-		    
-		  
-		  
-		   //resets total for next loop
-		   total_received_bytes = 0.0;
-		   total_transmitted_bytes = 0.0;
-			
+			fclose(fp);
+		    new_network_activity = total_received_bytes + total_transmitted_bytes;
 		   
-		   /*//sleep for one second in order to give us 
-		   //network activity in terms of bytes/second
-		sleep(1);*/
-		}
+  
+
+		//takes the difference between network activity and 
+		//converts the network activity given to us in bytes into BITS
+		sysinfo->instantaneous_bandwidth = (new_network_activity - old_network_activity) * 8;
 		
-		double relative_network_activity = network_activity[2] - network_activity[1];
-		
-		//converts the relative network activity given in bytes per second into BITS per second
-		sysinfo->instantaneous_bandwidth = relative_network_activity * 8;
+		//stores the network activity JUST read in this call into the static double
+		//old network activity so we can use the value to find the difference in total activity
+		//between calls to this method
+		old_network_activity = new_network_activity;
 		
 		if(sysinfo->instantaneous_bandwidth > peak_bandwidth)
 		{
