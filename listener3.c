@@ -46,7 +46,7 @@ struct sys_info
     double free_mem;
     char machine_type;
     long disk_activity;
-    long proportional_activity; //disk activity
+    double proportional_activity; //disk activity
     double instantaneous_bandwidth;
     double proportional_bandwidth;
     
@@ -64,7 +64,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     sys_info->free_mem = 0.0;
     sys_info->machine_type = 0;
     sys_info->disk_activity = 0;
-    sys_info->proportional_activity = 0; //disk activity
+    sys_info->proportional_activity = 0.0; //disk activity
     sys_info->instantaneous_bandwidth = 0.0;
     sys_info->proportional_bandwidth = 0.0;
     
@@ -81,7 +81,7 @@ struct new_sys_info
     double free_mem;
     char machine_type; // batch robot/(web|database|application) server
     long disk_activity; //(reads/writes)
-    long proportional_activity; //disk activity
+    double proportional_activity; //disk activity
     double instantaneous_bandwidth; //bits per second
     double proportional_bandwidth; //proportion of instantaneous over highest known peak bandwidth
     time_t packet_time_stamp;
@@ -96,7 +96,7 @@ static void initialise_new_sys_info(struct new_sys_info *new_sys_info)
     new_sys_info->free_mem = 0.0;
     new_sys_info->machine_type = 0;
     new_sys_info->disk_activity = 0;
-    new_sys_info->proportional_activity = 0; //disk activity
+    new_sys_info->proportional_activity = 0.0; //disk activity
     new_sys_info->instantaneous_bandwidth = 0.0;
     new_sys_info->proportional_bandwidth = 0.0;
     new_sys_info->packet_time_stamp = unix_time_now();
@@ -210,7 +210,7 @@ int main(void)
         printf("Average CPU load is: %d%% ", (int)old_data.cpu_load);
         
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", new_packet->disk_activity);
-        printf("\nProportional Disk activity was: %d %%", new_packet->proportional_activity);
+        printf("\nProportional Disk activity was: %lf %%", new_packet->proportional_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", new_packet->instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %lf %% \n \n", new_packet->proportional_bandwidth);
 
