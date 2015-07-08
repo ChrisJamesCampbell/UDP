@@ -18,6 +18,8 @@
 #define CPU_LOAD__AVG_SMOOTHER 0.5
 #define PACKETS_PM_SMOOTHER 0.5
 
+static char machine[20];
+
 time_t unix_time_now()
 {
    time_t now;
@@ -38,13 +40,15 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+
+
 //the struct that will conatin metrics which will be used
 //to calculate state of system
 struct sys_info     
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
-    char machine_type;
+    int machine_type;
     long disk_activity;
     double proportional_activity; //disk activity
     double instantaneous_bandwidth;
@@ -79,7 +83,7 @@ struct new_sys_info
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
-    char machine_type; // batch robot/(web|database|application) server
+    int machine_type; // batch robot/(web|database|application) server
     long disk_activity; //(reads/writes)
     double proportional_activity; //disk activity
     double instantaneous_bandwidth; //bits per second
@@ -117,6 +121,30 @@ static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
+}
+
+//method for determining which machine the packet has been received from
+static void determine_machine(struct sys_info *sys_info) 
+{
+   if(sys_info->machine_type == 1)
+      {
+         machine = "Batch Robot";
+      }
+      
+   if(sys_info->machine_type == 2)
+      {
+         machine = "Web Server";
+      }
+      
+   if(sys_info->machine_type == 3)
+      {
+         machine = "Database Server";
+      }
+      
+   if(sys_info->machine_type == 4)
+      {
+         machine = "Application Server";
+      }
 }
 
 int main(void)
@@ -193,7 +221,12 @@ int main(void)
         //set time received
         new_packet->packet_time_stamp = unix_time_now();
         
+        //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
+        
+        determine_machine(new_packet);
+        
+        
 
         printf("Recieved packet from IP address %s\n",
             inet_ntop(their_addr.ss_family,
@@ -201,6 +234,7 @@ int main(void)
                 s, sizeof s));
         printf("The Packet was %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
+        printf("The packet was sent by a: %s", machine);
         printf("The Packet contains: \n[ \%d%% instantaneous CPU Load and %fKB Memory Free ]\n", 
         (int)new_packet->cpu_load, (double)new_packet->free_mem);
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
