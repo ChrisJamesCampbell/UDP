@@ -33,7 +33,7 @@ struct sysinfo_type
     double free_mem;
     char machine_type;
     long disk_activity;
-    long proportional_activity; //disk activity
+    double proportional_activity; //disk activity
     double instantaneous_bandwidth;
     double proportional_bandwidth;
 };
@@ -46,7 +46,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->free_mem = 0.0;
     sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0;
-    sysinfo->proportional_activity = 0;
+    sysinfo->proportional_activity = 0.0;
     sysinfo->instantaneous_bandwidth = 0.0;
     sysinfo->proportional_bandwidth = 0.0;
     return;
@@ -144,21 +144,18 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
   	FILE *fp;
 	char line[256];
 	
-	int disk_reads = 0;
-	int disk_reads_total = 0;
+	long disk_reads = 0;
+	long disk_reads_total = 0;
 	
-	int disk_writes = 0;
-	int disk_writes_total = 0;
-	int count = 1;
+	long disk_writes = 0;
+	long disk_writes_total = 0;
 	
-	int disk_activity[2];
-	static int highest_activity;
-	int relative_activity = 0;
-	
-	
-	
-	while(count < 3)
-	{
+	static long old_disk_activity;
+	long new_disk_activity = 0;
+
+	static long highest_activity;
+
+
 	    fp = fopen("/proc/diskstats","r");
 	
 	    while(fgets(line,256, fp))
@@ -175,32 +172,24 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	
 		}
 		
-	   disk_activity[count] = disk_reads_total + disk_writes_total;
-	   count++;
-	   if(count == 3)
-	   {
-	   	break;
-	   }
-	   
-	   //resets temporary totals to 0 for the next loop
-	   disk_reads_total = 0;
-	   disk_writes_total = 0;
-	   
-	   fclose(fp);
-
-	}
+		fclose(fp);
+	    new_disk_activity = disk_reads_total + disk_writes_total;
+	    
+	  }
 	
-	//relative_activity here represents the given monitored disk activity 
-	//of this sample period
-	relative_activity = disk_activity[2] - disk_activity[1];
-	sysinfo->disk_activity = relative_activity;
+	//if the program has run at least once, update disk_activity
+	//(avoids erroneous disk activity results by missing first reading)
+	if(first_time > 0)
+	{
+		sysinfo->disk_activity = (new_disk_activity - old_disk_activity);
+	}
 	
 	//as soon as relative activity has been monitored, highest activity
 	//will be set as the first reading and then after that will only
 	//be replaced if the relative activity is greater than the highest recorded activity
-	if(relative_activity > highest_activity)
+	if(new_disk_activity > highest_activity)
 	{	
-		highest_activity = relative_activity;
+		highest_activity = new_disk_activity;
 	
 	}
 	
@@ -208,7 +197,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//against the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-		sysinfo->proportional_activity = (int) ((double)relative_activity/ (double)highest_activity * 100.0);
+		sysinfo->proportional_activity = double ((double)new_disk_activity/ (double)highest_activity * 100.0);
 	}
 	
 
@@ -377,7 +366,7 @@ int main(int argc, char *argv[])
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
-        printf("\nProportional Disk activity was: %d %%", sysinfo.proportional_activity);
+        printf("\nProportional Disk activity was: %lf %%", sysinfo.proportional_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sysinfo.instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %lf %% \n", sysinfo.proportional_bandwidth);
         
