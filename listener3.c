@@ -243,16 +243,16 @@ int main(void)
         //saves the information to the relevant specific machine struct 
         switch(new_packet->machine_type)
         {
-            case 1:
+            case (1):
                 save_data(&old_br_data, new_packet);
                 break;
-            case 2:
+            case (2):
                 save_data(&old_ws_data, new_packet);
                 break;
-            case 3:
+            case (3):
                 save_data(&old_ds_data, new_packet);
                 break;
-            case 4:
+            case (4):
                 save_data(&old_as_data, new_packet);
                 break;
                
