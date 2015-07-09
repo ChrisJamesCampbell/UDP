@@ -19,6 +19,7 @@
 #define PACKETS_PM_SMOOTHER 0.5
 #define PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER 0.5
 #define PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER 0.5
+#define PROPORTIONAL_FREE_MEM_AVG_SMOOTHER 0.5
 
 //variable used to store the type of machine that sent
 //the incoming packet
@@ -51,9 +52,10 @@ void *get_in_addr(struct sockaddr *sa)
 //to calculate state of system
 struct sys_info     
 {
-	//all fields identical to talker struct sysinfo
+    //all fields identical to talker struct sysinfo
     char cpu_load; 
     double free_mem;
+    double proportional_free_mem;
     int machine_type;
     long disk_activity;
     double proportional_disk_activity; 
@@ -72,6 +74,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
+    sys_info->proportional_free_mem = 0.0;
     sys_info->machine_type = 0;
     sys_info->disk_activity = 0;
     sys_info->proportional_disk_activity = 0.0; //disk activity
@@ -105,6 +108,10 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     //calculates proportional bandwidth average
     old_data->proportional_bandwidth = old_data->proportional_bandwidth * PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER + 
     new_data->proportional_bandwidth * (1 - PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER);
+    
+    //calculates proportional free memory average
+    old_data->proportional_free_mem = old_data->proportional_free_mem * PROPORTIONAL_FREE_MEM_AVG_SMOOTHER +
+    new_data->proportional_free_mem * (1 - PROPORTIONAL_FREE_MEM_AVG_SMOOTHER);
 }
 
 //method for determining which machine the packet has been received from
@@ -265,6 +272,7 @@ int main(void)
         printf("\nThe packet conatins: \n");
         printf("Instantaneous CPU Load: %d %%", (int)new_packet->cpu_load);
         printf("\nThe Free Memory on this machine was: %lf", (double)new_packet->free_mem);
+        printf("\nThe Proportional Free Memory on this machine was: %lf %%", new_packet->proportional_free_mem);
         
         printf("\nAverage CPU load is: %d%% ", (int)old_data.cpu_load);
         
