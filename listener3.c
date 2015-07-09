@@ -263,12 +263,17 @@ int main(void)
         fp = fopen("/root/UDP/stored_sys_info", "w");
         
         fprintf(fp, "{\n \t \"CPU Load\" : \" %d \" "
-                  " \n \t \"Proportional Free Memory\" : \" %lf \" "
-                  " \n \t \"Proportional Disk Activity\" : \" %d \" \n"
-                  " \n \t \"Proportional Bandwidth\" : \" %lf \" " 
+                  " \n \t \"Proportional Free Memory\" : \"%lf\" "
+                  " \n \t \"Proportional Disk Activity\" : \"%d\" "
+                  " \n \t \"Proportional Bandwidth\" : \"%lf\" "
+                  " \n \t \"Roles\" : [ "
+                  " \n \t \t { \"Role ID\" : \"1\" , \"CPU Load\" : \"%d\" "
+                  " , \"Proportional Free Memory\" : \"%lf\" , \"Proportional Disk Activity\" : \"%lf\" "
+                  " , \"Proportional Bandwidth\" : \"%lf\" }"
                   "\n }", 
                (int)old_data.cpu_load, new_packet->proportional_free_mem,
-               new_packet->proportional_disk_activity, new_packet->proportional_bandwidth);
+               new_packet->proportional_disk_activity, new_packet->proportional_bandwidth,
+               old_br_data.cpu_load);
         
         fclose(fp);
         
