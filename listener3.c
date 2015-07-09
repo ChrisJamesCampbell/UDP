@@ -262,7 +262,7 @@ int main(void)
         
         fp = fopen("/root/UDP/stored_sys_info", "w");
         
-        fprintf(fp, "{\n \t \"cpu_load\" : \" %d \" ,"
+        fprintf(fp, "{\n \t \"cpu_load\" : %d  ,"
                   " \n \t \"proportional_free_mem\" : %lf ,"
                   " \n \t \"proportional_disk_activity\" : %d ,"
                   " \n \t \"proportional_bandwidth\" : %lf ,"
