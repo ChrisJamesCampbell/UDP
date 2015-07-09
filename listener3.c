@@ -257,22 +257,18 @@ int main(void)
                 break;
                
         }
-        /*
+        
         FILE *fp;
         
         fp = fopen("/root/UDP/stored_sys_info", "w");
         
-        fprintf(fp, "Packet received at: %lf\nRecieved from IP address: %s\n %d bytes long\nSent by a: %s", 
-        (double)new_packet->packet_time_stamp, inet_ntop(their_addr.ss_family,
-        get_in_addr((struct sockaddr *)&their_addr),s, sizeof s) numbytes, machine);
-        
         fprintf(fp, "{\n \t \"CPU Load\" : \" %d \" "
-                  " \n \t \"Proportional Free Memory\" : %lf}", 
-               (int)old_data.cpu_load, )
+                  " \n \t \"Proportional Free Memory\" : %lf \n}", 
+               (int)old_data.cpu_load, new_packet->proportional_free_mem);
         
         fclose(fp);
         
-        */
+        
 
         printf("\nRecieved packet from IP address %s\n",
             inet_ntop(their_addr.ss_family,
