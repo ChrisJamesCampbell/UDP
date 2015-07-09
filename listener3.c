@@ -267,10 +267,11 @@ int main(void)
                   " \n \t \"Proportional Disk Activity\" : \"%d\" ,"
                   " \n \t \"Proportional Bandwidth\" : \"%lf\" ,"
                   " \n \t \"Roles\" : [ "
-                  " \n \t \t { \"Role ID\" : \"1\" , \n \"CPU Load\" : \"%d\" "
-                  " \n , \"Proportional Free Memory\" : \"%lf\" "
-                  " \n , \"Proportional Disk Activity\" : \"%lf\" "
-                  " \n , \"Proportional Bandwidth\" : \"%lf\" }"
+                  " \n \t \t { \"Role ID\" : \"1\" , \n \"CPU Load\" : \"%d\" , "
+                  " \n  \t \t \"Proportional Free Memory\" : \"%lf\" ,"
+                  " \n  \t \t \"Proportional Disk Activity\" : \"%lf\" ,"
+                  " \n  \t \t \"Proportional Bandwidth\" : \"%lf\" }"
+                  " \n \t \t ]"
                   "\n }", 
                (int)old_data.cpu_load, new_packet->proportional_free_mem,
                new_packet->proportional_disk_activity, new_packet->proportional_bandwidth,
