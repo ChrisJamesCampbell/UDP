@@ -20,6 +20,8 @@
 #define PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER 0.5
 #define PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER 0.5
 
+//variable used to store the type of machine that sent
+//the incoming packet
 static char *machine;
 
 time_t unix_time_now()
