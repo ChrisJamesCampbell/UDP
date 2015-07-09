@@ -37,7 +37,8 @@ time_t unix_time_now()
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
 {
-    if (sa->sa_family == AF_INET) {
+    if (sa->sa_family == AF_INET) 
+    {
         return &(((struct sockaddr_in*)sa)->sin_addr);
     }
 
@@ -50,15 +51,16 @@ void *get_in_addr(struct sockaddr *sa)
 //to calculate state of system
 struct sys_info     
 {
-    char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
+	//all fields identical to talker struct sysinfo
+    char cpu_load; 
     double free_mem;
     int machine_type;
     long disk_activity;
-    double proportional_disk_activity; //disk activity
+    double proportional_disk_activity; 
     double instantaneous_bandwidth;
     double proportional_bandwidth;
     
-    
+    //fields unique to listener
     time_t packet_time_stamp;
     double packets_per_minute;
     
@@ -138,25 +140,25 @@ static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
 //method for determining which machine the packet has been received from
 static void determine_machine(struct new_sys_info *sys_info) 
 {
-   if(sys_info->machine_type == 1)
-      {
-         machine = "Batch Robot";
-      }
+    if(sys_info->machine_type == 1)
+    {
+        machine = "Batch Robot";
+    }
       
-   if(sys_info->machine_type == 2)
-      {
-         machine = "Web Server";
-      }
+    if(sys_info->machine_type == 2)
+    {
+        machine = "Web Server";
+    }
       
-   if(sys_info->machine_type == 3)
-      {
-         machine = "Database Server";
-      }
+    if(sys_info->machine_type == 3)
+    {
+        machine = "Database Server";
+    }
       
-   if(sys_info->machine_type == 4)
-      {
-         machine = "Application Server";
-      }
+    if(sys_info->machine_type == 4)
+    {
+        machine = "Application Server";
+    }
 }
 
 int main(void)
@@ -176,39 +178,45 @@ int main(void)
    struct sys_info old_data; //struct that stores data about all machines 
    initialise_sys_info(&old_data);
    
-   struct sys_info old_br_data; //struct that will store batch robot specific data
+   //structs that will store data for specific machines
+   //br = batch robot, ws = web server, ds = database server
+   //as = application server
+   struct sys_info old_br_data; 
    initialise_sys_info(&old_br_data);
    
-   struct sys_info old_ws_data; //struct that will store web server specific data
+   struct sys_info old_ws_data; 
    initialise_sys_info(&old_ws_data);
    
-   struct sys_info old_ds_data; //struct that will store database server specific data
+   struct sys_info old_ds_data; 
    initialise_sys_info(&old_ds_data);
    
-   struct sys_info old_as_data; //struct that will store application server specific data
+   struct sys_info old_as_data; 
    initialise_sys_info(&old_as_data);
    
    
-    
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC; // set to AF_INET to force IPv4
     hints.ai_socktype = SOCK_DGRAM;
     hints.ai_flags = AI_PASSIVE; // use my IP
 
-    if ((rv = getaddrinfo(NULL, MYPORT, &hints, &servinfo)) != 0) {
+    if ((rv = getaddrinfo(NULL, MYPORT, &hints, &servinfo)) != 0) 
+    {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
         return 1;
     }
 
     // loop through all the results and bind to the first we can
-    for(p = servinfo; p != NULL; p = p->ai_next) {
+    for(p = servinfo; p != NULL; p = p->ai_next) 
+    {
         if ((sockfd = socket(p->ai_family, p->ai_socktype,
-                p->ai_protocol)) == -1) {
+        	p->ai_protocol)) == -1) 
+        {
             perror("listener: socket");
             continue;
-        }
+    	}
 
-        if (bind(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
+        if (bind(sockfd, p->ai_addr, p->ai_addrlen) == -1) 
+        {
             close(sockfd);
             perror("listener: bind");
             continue;
@@ -217,7 +225,8 @@ int main(void)
         break;
     }
 
-    if (p == NULL) {
+    if (p == NULL) 
+    {
         fprintf(stderr, "listener: failed to bind socket\n");
         return 2;
     }
@@ -233,11 +242,11 @@ int main(void)
         
         if ((numbytes = recvfrom(sockfd, buf, MAXBUFLEN-1 , 0,
             (struct sockaddr *)&their_addr, &addr_len)) == -1) 
-            {
-                perror("recvfrom");
-                sleep(1);
-                continue;
-            }
+        {
+            perror("recvfrom");
+            sleep(1);
+            continue;
+        }
         
        /* if(numbytes != (sizeof(struct sys_info)))
         {
@@ -257,18 +266,18 @@ int main(void)
         //saves the information to the relevant specific machine struct 
         switch(new_packet->machine_type)
         {
-           case 1:
-               save_data(&old_br_data, new_packet);
-               break;
+            case 1:
+                save_data(&old_br_data, new_packet);
+                break;
             case 2:
-               save_data(&old_ws_data, new_packet);
-               break;
+                save_data(&old_ws_data, new_packet);
+                break;
             case 3:
-               save_data(&old_ds_data, new_packet);
-               break;
+                save_data(&old_ds_data, new_packet);
+                break;
             case 4:
-               save_data(&old_as_data, new_packet);
-               break;
+                save_data(&old_as_data, new_packet);
+                break;
                
         }
         
@@ -281,13 +290,13 @@ int main(void)
         printf("The Packet was %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
         printf("The packet was sent by a: %s\n", machine);
-        printf("The Packet contains: \n[ \%d%% instantaneous CPU Load and %fKB Memory Free ]\n", 
-        (int)new_packet->cpu_load, (double)new_packet->free_mem);
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
-        
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
+        printf("\nThe packet conatins: "\n);
+        printf("Instantaneous CPU Load: %d %%", (int)new_packet->cpu_load);
+        printf("\nThe Free Memory on this machine was: %lf", (double)new_packet->free_mem);
         
-        printf("Average CPU load is: %d%% ", (int)old_data.cpu_load);
+        printf("\nAverage CPU load is: %d%% ", (int)old_data.cpu_load);
         
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", new_packet->disk_activity);
         printf("\nProportional Disk activity was: %lf %%", new_packet->proportional_disk_activity);
