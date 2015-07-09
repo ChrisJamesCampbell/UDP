@@ -85,37 +85,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
 }
 
 
-struct new_sys_info     
-{
-    char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
-    double free_mem;
-    int machine_type; // batch robot/(web|database|application) server
-    long disk_activity; //(reads/writes)
-    double proportional_disk_activity; //disk activity
-    double instantaneous_bandwidth; //bits per second
-    double proportional_bandwidth; //proportion of instantaneous over highest known peak bandwidth
-    time_t packet_time_stamp;
-    double packets_per_minute;
-};
-
-
-static void initialise_new_sys_info(struct new_sys_info *new_sys_info) 
-{
-    
-    new_sys_info->cpu_load = 0;
-    new_sys_info->free_mem = 0.0;
-    new_sys_info->machine_type = 0;
-    new_sys_info->disk_activity = 0;
-    new_sys_info->proportional_disk_activity = 0.0; //disk activity
-    new_sys_info->instantaneous_bandwidth = 0.0;
-    new_sys_info->proportional_bandwidth = 0.0;
-    new_sys_info->packet_time_stamp = unix_time_now();
-    new_sys_info->packets_per_minute = 0.0;
-    return;
-    
-}
-
-static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
+static void save_data(struct sys_info *old_data, struct sys_info *new_data)
 {
    //calculates cpu_load avaerage with cpu load average smoother  constant
     old_data->cpu_load = old_data->cpu_load * CPU_LOAD__AVG_SMOOTHER + 
@@ -138,7 +108,7 @@ static void save_data(struct sys_info *old_data, struct new_sys_info *new_data)
 }
 
 //method for determining which machine the packet has been received from
-static void determine_machine(struct new_sys_info *sys_info) 
+static void determine_machine(struct sys_info *sys_info) 
 {
     if(sys_info->machine_type == 1)
     {
@@ -172,8 +142,8 @@ int main(void)
     socklen_t addr_len;
     char s[INET6_ADDRSTRLEN];
     
-   //sets the received buffer as type new_sys_info and names it as a packet
-   struct new_sys_info *new_packet = (struct new_sys_info *)buf;
+   //sets the received buffer as type sys_info and names it as a packet
+   struct sys_info *new_packet = (struct sys_info *)buf;
    
    struct sys_info old_data; //struct that stores data about all machines 
    initialise_sys_info(&old_data);
