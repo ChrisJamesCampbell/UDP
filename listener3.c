@@ -265,7 +265,7 @@ int main(void)
         fprintf(fp, "{\n \t \"CPU Load\" : \" %d \" "
                   " \n \t \"Proportional Free Memory\" : \" %lf \" "
                   " \n \t \"Proportional Disk Activity\" : \" %d \" \n"
-                  " \n \t \"Proportional Bandwidth\" : \" %lf \" "" 
+                  " \n \t \"Proportional Bandwidth\" : \" %lf \" " 
                   "\n }", 
                (int)old_data.cpu_load, new_packet->proportional_free_mem,
                new_packet->proportional_disk_activity, new_packet->proportional_bandwidth);
