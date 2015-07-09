@@ -258,6 +258,16 @@ int main(void)
                
         }
         
+        FILE *fp;
+        
+        fp = fopen("/root/UDP/stored_sys_info", "w");
+        
+        fprintf(fp, "Packet received at: %lf\nRecieved packet from IP address %s", 
+        (double)new_packet->packet_time_stamp, inet_ntop(their_addr.ss_family,
+        get_in_addr((struct sockaddr *)&their_addr),s, sizeof s));
+        
+        fclose(fp);
+        
         
 
         printf("\nRecieved packet from IP address %s\n",
