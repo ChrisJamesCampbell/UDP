@@ -271,13 +271,28 @@ int main(void)
                   " \n \t \t \"cpu_load\" : %d , "
                   " \n \t \t \"proportional_free_memory\" : %lf ,"
                   " \n \t \t \"proportional_disk_activity\" : %lf ,"
-                  " \n \t \t \"proportional_bandwidth\" : %lf }"
+                  " \n \t \t \"proportional_bandwidth\" : %lf } ,"
+                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_disk_activity\" : %lf ,"
+                  " \n \t \t \"proportional_bandwidth\" : %lf } ,"
+                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_disk_activity\" : %lf ,"
+                  " \n \t \t \"proportional_bandwidth\" : %lf } ,"
+                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_disk_activity\" : %lf ,"
+                  " \n \t \t \"proportional_bandwidth\" : %lf } ,"
                   " \n \t \t   ]"
                   "\n }", 
                (int)old_data.cpu_load, new_packet->proportional_free_mem,
                new_packet->proportional_disk_activity, new_packet->proportional_bandwidth,
                old_br_data.cpu_load, old_br_data.proportional_free_mem, 
-               old_br_data.proportional_disk_activity, old_br_data.proportional_bandwidth);
+               old_br_data.proportional_disk_activity, old_br_data.proportional_bandwidth,
+               old_ws_data.cpu_load, old_ws_data.proportional_free_mem, 
+               old_ws_data.proportional_disk_activity, old_ws_data.proportional_bandwidth,
+               old_ds_data.cpu_load, old_ds_data.proportional_free_mem, 
+               old_ds_data.proportional_disk_activity, old_ds_data.proportional_bandwidth,
+               old_as_data.cpu_load, old_as_data.proportional_free_mem, 
+               old_as_data.proportional_disk_activity, old_as_data.proportional_bandwidth);
         
         fclose(fp);
         
