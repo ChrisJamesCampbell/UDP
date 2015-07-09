@@ -168,7 +168,6 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	    new_disk_activity = disk_reads_total + disk_writes_total;
 	    
 	 
-	
 	//if the program has run at least once, update disk_activity
 	//(avoids erroneous disk activity results by missing first reading)
 	if(first_time > 0)
@@ -221,9 +220,9 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 	while(fgets(line,256, fp))
 	{
 		if(strncmp("lo", line, 2) == 0)
-			{
-				continue;
-			}
+		{
+			continue;
+		}
 					
 		//pulls the receieved bytes information which is the first column of integers
 		//within /proc/net/dev
