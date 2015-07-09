@@ -31,6 +31,7 @@ struct sysinfo_type
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
+    double proportional_used_mem;
     int machine_type;
     long disk_activity;
     double proportional_disk_activity; 
@@ -45,6 +46,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     
     sysinfo->cpu_load = 0;
     sysinfo->free_mem = 0.0;
+    sysinfo->proportional_used_mem = 0.0;
     sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0;
     sysinfo->proportional_disk_activity = 0.0;
@@ -92,7 +94,7 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
     FILE *fp;
 	char line[256];
 	
-	double mem_free, buffers, cached = 0.0;
+	double mem_total, mem_free, buffers, cached = 0.0;
 	double actual_mem_free = 0.0;
 	
 	
@@ -106,6 +108,11 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 			{
 				//ignore the following white space and scan in the float and save it
 				sscanf(line+8,"%*[ ]%lf", &mem_free);
+			}
+			
+			if(strncmp("MemTotal:", line, 9) == 0)
+			{
+				sscanf(line+9, "%*[ ]%lf", &mem_total);
 			}
 			
 			if(strncmp("Buffers:", line, 8) == 0)
@@ -123,6 +130,8 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 		
 		//gives us the real total available free memory
 		actual_mem_free = mem_free + buffers + cached; 
+		
+		sysinfo->proportional_used_memory = (actual_mem_free / mem_total) * 100;
 		
 		//update the free_mem double within sysinfo struct
 		sysinfo->free_mem = actual_mem_free; 
@@ -348,7 +357,8 @@ int main()
         printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
         printf("\nThe machine which sent the packet was of type: %d", sysinfo.machine_type);
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
-        printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
+        printf("\nFree memory on this machine is: %lf KB", sysinfo.free_mem);
+        printf("\nProportional used memory on this machine is: %lf %%", sysinfo.proportional_used_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
         printf("\nProportional Disk activity was: %lf %%", sysinfo.proportional_disk_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sysinfo.instantaneous_bandwidth);
