@@ -33,9 +33,10 @@ struct sysinfo_type
     double free_mem;
     int machine_type;
     long disk_activity;
-    double proportional_activity; //disk activity
+    double proportional_disk_activity; 
     double instantaneous_bandwidth;
     double proportional_bandwidth;
+    
 };
 
 
@@ -46,7 +47,7 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->free_mem = 0.0;
     sysinfo->machine_type = 0;
     sysinfo->disk_activity = 0;
-    sysinfo->proportional_activity = 0.0;
+    sysinfo->proportional_disk_activity = 0.0;
     sysinfo->instantaneous_bandwidth = 0.0;
     sysinfo->proportional_bandwidth = 0.0;
     return;
@@ -202,7 +203,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//against the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-		sysinfo->proportional_activity =  (sysinfo->disk_activity/ (double)highest_activity) * 100;
+		sysinfo->proportional_disk_activity =  (sysinfo->disk_activity/ (double)highest_activity) * 100;
 	}
 	
 	
@@ -369,7 +370,7 @@ int main()
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
         printf("\nFree memory on this machine is: %f KB", sysinfo.free_mem);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
-        printf("\nProportional Disk activity was: %lf %%", sysinfo.proportional_activity);
+        printf("\nProportional Disk activity was: %lf %%", sysinfo.proportional_disk_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sysinfo.instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %lf %% \n", sysinfo.proportional_bandwidth);
         
