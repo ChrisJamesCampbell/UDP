@@ -52,8 +52,6 @@ static void initialise_sysinfo(struct sysinfo_type *sysinfo)
     sysinfo->proportional_bandwidth = 0.0;
     return;
     
-    
-    
 }
 
 
@@ -66,13 +64,11 @@ static void find_cpu_load(struct sysinfo_type *sysinfo)
     FILE *fp;
     char dump[50];
 
-    
     //extrapolates CPU utilisation information
     fp = fopen("/proc/stat","r");
     fscanf(fp,"%*s %Lf %Lf %Lf %Lf",&newvalue[0],&newvalue[1],&newvalue[2],&newvalue[3]);
     fclose(fp);
-    
-    
+  
     //calculates the load average of the cpu
     loadavg = ((newvalue[0]+newvalue[1]+newvalue[2]) - (oldvalue[0]+oldvalue[1]+oldvalue[2])) / 
     ((newvalue[0]+newvalue[1]+newvalue[2]+newvalue[3]) - (oldvalue[0]+oldvalue[1]+oldvalue[2]+oldvalue[3]));
@@ -83,18 +79,11 @@ static void find_cpu_load(struct sysinfo_type *sysinfo)
     oldvalue[1] = newvalue[1];
     oldvalue[2] = newvalue[2];
     oldvalue[3] = newvalue[3];
-    
-    
+   
     //casting rounded double to char so as to only use 1 byte
     char cut_cpu_load = (char) (roundl(loadavg* 100));
-    
-    
-  
-    
     sysinfo->cpu_load = cut_cpu_load;
     return;
-    
-    
     
 }
 
@@ -112,9 +101,10 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 	//scans file by looking at each indiviudal line which ends at the 256th character of each line
 	while(fgets(line,256, fp))
 		{
-			
+			//if the first 8 characters on the line match this string
 			if(strncmp("MemFree:", line, 8) == 0)
 			{
+				//ignore the following white space and scan in the float and save it
 				sscanf(line+8,"%*[ ]%lf", &mem_free);
 			}
 			
@@ -131,18 +121,18 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 			
 		}
 		
-		actual_mem_free = mem_free + buffers + cached; //gives us the real total available free memory
+		//gives us the real total available free memory
+		actual_mem_free = mem_free + buffers + cached; 
 		
-		sysinfo->free_mem = actual_mem_free; //update the free_mem double within sysinfo struct
+		//update the free_mem double within sysinfo struct
+		sysinfo->free_mem = actual_mem_free; 
 		
-		//printf("Free Memory:%f Buffers:%f Cached:%f \n", mem_free, buffers, cached);
-
 		fclose(fp);
 }
 
 static void find_disk_info(struct sysinfo_type *sysinfo)
 {
-  	FILE *fp;
+    FILE *fp;
 	char line[256];
 	
 	long disk_reads = 0;
@@ -157,11 +147,12 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	static long highest_activity;
 
 
-	    fp = fopen("/proc/diskstats","r");
+	fp = fopen("/proc/diskstats","r");
 	
-	    while(fgets(line,256, fp))
+	//iterate over every line in the file
+	while(fgets(line,256, fp))
 		
-		{
+	    {
 			//pulls the 'Reads Completed' successfully column for an sda and adds to total
 			sscanf(line,"%*[ ]%*d%*[ ]%*d%*[ ]%*s%*[ ]%d" ,&disk_reads);
 			disk_reads_total = disk_reads_total + disk_reads;
@@ -190,102 +181,96 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//been in disk activity
 	old_disk_activity = new_disk_activity;
 	
-	//as soon as relative activity has been monitored, highest activity
+	//as soon as any activity has been monitored, highest activity
 	//will be set as the first reading and then after that will only
-	//be replaced if the relative activity is greater than the highest recorded activity
+	//be replaced if the last recorded activity is greater than the highest recorded activity
 	if(sysinfo->disk_activity > highest_activity)
 	{	
 		highest_activity = sysinfo->disk_activity;
 	
 	}
 	
-	//proportional activity is the proportion of the relative activity
-	//against the highest recorded activity so far
+	//proportional activity is the proportion of the monitored activity
+	//over the highest recorded activity so far
 	if(highest_activity > 0)
 	{
 		sysinfo->proportional_disk_activity =  (sysinfo->disk_activity/ (double)highest_activity) * 100;
 	}
 	
-	
-
 }
 
 static void find_bandwidth(struct sysinfo_type *sysinfo)
 {
-	        double received_bytes = 0.0; //holds the value of each received bytes for each row 
-		double transmitted_bytes = 0.0; //holds the value of each transmitted bytes for each row 
-		
-		double total_received_bytes = 0.0; //holds the total of the recieved bytes column
-		double total_transmitted_bytes = 0.0; //holds the total of the transmitted bytes column
-		
-		static double old_network_activity;
-		double new_network_activity = 0.0;
-
-		//keeps a record of the highest recorded bandwidth
-		static double peak_bandwidth;
-		
+    double received_bytes = 0.0; //holds the value of each received bytes for each row 
+	double transmitted_bytes = 0.0; //holds the value of each transmitted bytes for each row 
 	
+	double total_received_bytes = 0.0; //holds the total of the recieved bytes column
+	double total_transmitted_bytes = 0.0; //holds the total of the transmitted bytes column
+	
+	static double old_network_activity;
+	double new_network_activity = 0.0;
 
-		FILE *fp;
-		char line[256];
+	//keeps a record of the highest recorded bandwidth
+	static double peak_bandwidth;
+	
+	FILE *fp;
+	char line[256];
 		
-		
-		
-			    fp = fopen("/proc/net/dev","r");
+	fp = fopen("/proc/net/dev","r");
 			    
-				while(fgets(line,256, fp))
-				{
-					if(strncmp("lo", line, 2) == 0)
-					{
-						continue;
-					}
+	while(fgets(line,256, fp))
+	{
+		if(strncmp("lo", line, 2) == 0)
+			{
+				continue;
+			}
 					
-					//pulls the receieved bytes information which is the first column of integers
-					//within net/dev
-					sscanf(line, "%*[ ]%*s%*[ ]%lf", &received_bytes);
-					total_received_bytes = total_received_bytes + received_bytes;
+		//pulls the receieved bytes information which is the first column of integers
+		//within /proc/net/dev
+		sscanf(line, "%*[ ]%*s%*[ ]%lf", &received_bytes);
+		total_received_bytes = total_received_bytes + received_bytes;
+		
+		
+		//pulls the transmitted bytes information which is represented by the 9th column of 
+		//integers within net/dev
+		sscanf(line, "%*[ ]%*s%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%lf",
+		&transmitted_bytes);
+		total_transmitted_bytes = total_transmitted_bytes + transmitted_bytes;
 					
 					
-					//pulls the transmitted bytes information which is represented by the 9th column of 
-					//integers within net/dev
-					sscanf(line, "%*[ ]%*s%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%lf",
-					&transmitted_bytes);
-					total_transmitted_bytes = total_transmitted_bytes + transmitted_bytes;
-					
-					
-				}
+	}
 			
-	            fclose(fp);
-		    new_network_activity = total_received_bytes + total_transmitted_bytes;
-		   
-		   //if the prgram has been run more than once,update instantaneous bandwidth.
-		   //we do this to account for the fact the first reading would produce erroneous results
-		   //and so bandwidth results are only accurate after the second run of this method
-		   if(first_time > 0)
-		  	{
+    fclose(fp);
+    new_network_activity = total_received_bytes + total_transmitted_bytes;
+   
+    //if the prgram has been run more than once,update instantaneous bandwidth.
+    //we do this to account for the fact the first reading would produce erroneous results
+    //and so bandwidth results are only accurate after the second run of this method
+    if(first_time > 0)
+    {
+		//takes the difference between network activity and 
+		//converts the network activity given to us in bytes into BITS per second
+		//(divide by 5 since currently sending packets every 5 seconds)
+		sysinfo->instantaneous_bandwidth = ((new_network_activity - old_network_activity) * 8) / 5;
 		
-				//takes the difference between network activity and 
-				//converts the network activity given to us in bytes into BITS per second
-				sysinfo->instantaneous_bandwidth = ((new_network_activity - old_network_activity) * 8) / 5;
-				
-		  	}
+    }
 		
-		//stores the network activity JUST read in this call into the static double
-		//old network activity so we can use the value to find the difference in total activity
-		//between calls to this method
-		old_network_activity = new_network_activity;
-		
-		if(sysinfo->instantaneous_bandwidth > peak_bandwidth)
-		{
-			peak_bandwidth = sysinfo->instantaneous_bandwidth;
-		}
-		
-		if(peak_bandwidth > 0)
-		{
-			//gives the proportional bandwidth of the instantaneous bandwidth in 
-			//terms of percentage of the known peak bandwidth
-			sysinfo->proportional_bandwidth = ((sysinfo->instantaneous_bandwidth/peak_bandwidth) * 100);
-		}
+	//stores the network activity JUST read in this call into the static double
+	//old network activity so we can use the value to find the difference in total activity
+	//between calls to this method
+	old_network_activity = new_network_activity;
+	
+	if(sysinfo->instantaneous_bandwidth > peak_bandwidth)
+	{
+		peak_bandwidth = sysinfo->instantaneous_bandwidth;
+	}
+	
+	if(peak_bandwidth > 0)
+	{
+		//gives the proportional bandwidth of the instantaneous bandwidth in 
+		//terms of percentage of the known peak bandwidth
+		sysinfo->proportional_bandwidth = ((sysinfo->instantaneous_bandwidth/peak_bandwidth) * 100);
+	}
 }
 
 int main()
@@ -311,11 +296,9 @@ int main()
         //temporary assignment of machine type
         sysinfo.machine_type = BATCH_ROBOT;
         
-        
-
         FILE *fp;
         char line[256];
-        char ip_to_send[9];
+        char ip_to_send[40];
 		
 	    fp = fopen("/root/UDP/ip_addresses.txt","r");
 	
@@ -327,19 +310,21 @@ int main()
 	        hints.ai_family = AF_UNSPEC;
 	        hints.ai_socktype = SOCK_DGRAM;
 	    
-	        if ((rv = getaddrinfo(ip_to_send, SERVERPORT, &hints, &servinfo)) != 0) {
+	        if ((rv = getaddrinfo(ip_to_send, SERVERPORT, &hints, &servinfo)) != 0) 
+	        {
 	            fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
 	            return 1;
 	        }
 	    
 	        // loop through all the results and make a socket
-	        for(p = servinfo; p != NULL; p = p->ai_next) {
+	        for(p = servinfo; p != NULL; p = p->ai_next) 
+	        {
 	            if ((sockfd = socket(p->ai_family, p->ai_socktype,
-	                    p->ai_protocol)) == -1) {
-	                perror("talker: socket");
-	                continue;
-	            }
-	    
+	               p->ai_protocol)) == -1)
+	                    {
+	                		perror("talker: socket");
+	                		continue;
+	            		}
 	            break;
 	        }
 	    
@@ -348,23 +333,19 @@ int main()
 	            return 2;
 	        }
 	        
-	        	         if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
+	         if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
              p->ai_addr, p->ai_addrlen)) == -1) 
 	         {
 	            perror("talker: sendto");
 	            exit(1);
 	         }
 	    
-	        
-	    
-
-	    }
+	    } //end of reading ip addresses/making socket loop
 	    
 		freeaddrinfo(servinfo);
 	        
-	        fclose(fp);
+	    fclose(fp);
         
-
         printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
         printf("\nThe machine which sent the packet was of type: %d", sysinfo.machine_type);
         printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
