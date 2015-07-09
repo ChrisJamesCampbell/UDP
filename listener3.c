@@ -292,7 +292,7 @@ int main(void)
         printf("The packet was sent by a: %s\n", machine);
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
-        printf("\nThe packet conatins: "\n);
+        printf("\nThe packet conatins: \n");
         printf("Instantaneous CPU Load: %d %%", (int)new_packet->cpu_load);
         printf("\nThe Free Memory on this machine was: %lf", (double)new_packet->free_mem);
         
