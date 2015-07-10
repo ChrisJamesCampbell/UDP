@@ -294,25 +294,25 @@ int main()
 	{
 		if(strncmp("robot", line, 5) == 0)
 		{
-			sysinfo->machine_type = 1;
+			sysinfo.machine_type = 1;
 			break;
 		}
 		
 		if(strncmp("web, line, 3) == 0)
 		{
-			sysinfo->machine_type = 2;
+			sysinfo.machine_type = 2;
 			break;
 		}
 		
 		if(strncmp("galera", line, 6) == 0)
 		{
-			sysinfo->machine_type = 3;
+			sysinfo.machine_type = 3;
 			break;
 		}
 		
 		if(strncmp("fcgi", line, 4) == 0)
 		{
-			sysinfo->machine_type = 4;
+			sysinfo.machine_type = 4;
 			break;
 		}
 	}
