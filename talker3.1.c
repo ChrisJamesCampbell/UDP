@@ -298,7 +298,7 @@ int main()
 			break;
 		}
 		
-		if(strncmp("web, line, 3) == 0)
+		if(strncmp("web", line, 3) == 0)
 		{
 			sysinfo.machine_type = 2;
 			break;
