@@ -281,6 +281,45 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 	}
 }
 
+static void what_machine_type(struct sysinfo_type *sysinfo)
+{
+	     //opens the file which will tell us what kind of machine is
+	//sending the packet
+	FILE *fp2;
+	char line2[256];
+	
+	fopen("/etc/mantle/role", "r");
+	
+	while(fgets(line2,256, fp2))
+	{
+		if(strncmp("robot", line2, 5) == 0)
+		{
+			sysinfo->machine_type = 1;
+			break;
+		}
+		
+		if(strncmp("web", line2, 3) == 0)
+		{
+			sysinfo->machine_type = 2;
+			break;
+		}
+		
+		if(strncmp("galera", line2, 6) == 0)
+		{
+			sysinfo->machine_type = 3;
+			break;
+		}
+		
+		if(strncmp("fcgi", line2, 4) == 0)
+		{
+			sysinfo->machine_type = 4;
+			break;
+		}
+	}
+	
+	fclose(fp2);
+}
+
 int main()
 { 
 
@@ -301,41 +340,7 @@ int main()
         find_disk_info(&sysinfo);
         find_bandwidth(&sysinfo);
         
-     //opens the file which will tell us what kind of machine is
-	//sending the packet
-	FILE *fp2;
-	char line2[256];
-	
-	fopen("/etc/mantle/role", "r");
-	
-	while(fgets(line2,256, fp2))
-	{
-		if(strncmp("robot", line2, 5) == 0)
-		{
-			sysinfo.machine_type = 1;
-			break;
-		}
-		
-		if(strncmp("web", line2, 3) == 0)
-		{
-			sysinfo.machine_type = 2;
-			break;
-		}
-		
-		if(strncmp("galera", line2, 6) == 0)
-		{
-			sysinfo.machine_type = 3;
-			break;
-		}
-		
-		if(strncmp("fcgi", line2, 4) == 0)
-		{
-			sysinfo.machine_type = 4;
-			break;
-		}
-	}
-	
-	fclose(fp2);
+        what_machine_type(&sysinfo);
         
         FILE *fp;
         char line[256];
