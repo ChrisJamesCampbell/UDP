@@ -119,7 +119,7 @@ static void find_metric_average_smoothers()
 	FILE *fp;
 	char line[256];
 	
-	fopen("/etc/mantle/metric_average_smoothers.config.txt", "r");
+	fp = fopen("/etc/mantle/metric_average_smoothers.config.txt", "r");
 	while(fgets(line,256, fp))
 	{
 		if(strncmp("packets_per_minute_smoother: ", line, 29))
