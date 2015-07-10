@@ -21,7 +21,7 @@ static double packets_per_minute_smoother,
 			  cpu_load_average_smoother,
 			  proportional_free_memory_average_smoother, 
 			  proportional_disk_activity_average_smoother,
-			  proportional_bandwidth_average_smoother;
+			  proportional_bandwidth_average_smoother = 0.0;
 	
 
 time_t unix_time_now()
