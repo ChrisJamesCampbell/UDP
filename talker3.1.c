@@ -283,7 +283,25 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 
 int main()
 { 
-	//opens the file which will tell us what kind of machine is
+
+    while(1)
+    {
+    
+        int sockfd;
+        struct addrinfo hints, *servinfo, *p;
+        int rv;
+        int numbytes;
+        
+        struct sysinfo_type sysinfo;
+        initialise_sysinfo(&sysinfo);
+        
+        //calls the methods to extrapolate the metrics
+        find_cpu_load(&sysinfo);
+        find_free_memory(&sysinfo);
+        find_disk_info(&sysinfo);
+        find_bandwidth(&sysinfo);
+        
+     //opens the file which will tell us what kind of machine is
 	//sending the packet
 	FILE *fp;
 	char line[256];
@@ -318,29 +336,6 @@ int main()
 	}
 	
 	fclose(fp);
-	
-	 
-	
-	
-    while(1)
-    {
-    
-        int sockfd;
-        struct addrinfo hints, *servinfo, *p;
-        int rv;
-        int numbytes;
-        
-        struct sysinfo_type sysinfo;
-        initialise_sysinfo(&sysinfo);
-        
-        //calls the methods to extrapolate the metrics
-        find_cpu_load(&sysinfo);
-        find_free_memory(&sysinfo);
-        find_disk_info(&sysinfo);
-        find_bandwidth(&sysinfo);
-        
-        /*//temporary assignment of machine type
-        sysinfo.machine_type = BATCH_ROBOT;*/
         
         FILE *fp;
         char line[256];
