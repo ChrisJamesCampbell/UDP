@@ -310,25 +310,25 @@ int main()
 	
 	while(fgets(line2,256, fp2))
 	{
-		if(strncmp("robot", line, 5) == 0)
+		if(strncmp("robot", line2, 5) == 0)
 		{
 			sysinfo.machine_type = 1;
 			break;
 		}
 		
-		if(strncmp("web", line, 3) == 0)
+		if(strncmp("web", line2, 3) == 0)
 		{
 			sysinfo.machine_type = 2;
 			break;
 		}
 		
-		if(strncmp("galera", line, 6) == 0)
+		if(strncmp("galera", line2, 6) == 0)
 		{
 			sysinfo.machine_type = 3;
 			break;
 		}
 		
-		if(strncmp("fcgi", line, 4) == 0)
+		if(strncmp("fcgi", line2, 4) == 0)
 		{
 			sysinfo.machine_type = 4;
 			break;
