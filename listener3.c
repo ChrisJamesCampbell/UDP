@@ -289,8 +289,8 @@ int main(void)
                   " \n \t \t \"proportional_bandwidth\" : %lf } "
                   " \n \t \t   ]"
                   "\n }", 
-               (int)old_data.cpu_load, new_packet->proportional_free_mem,
-               new_packet->proportional_disk_activity, new_packet->proportional_bandwidth,
+               (int)old_data.cpu_load, old_data.proportional_free_mem,
+               old_data.proportional_disk_activity, old_data.proportional_bandwidth,
                old_br_data.cpu_load, old_br_data.proportional_free_mem, 
                old_br_data.proportional_disk_activity, old_br_data.proportional_bandwidth,
                old_ws_data.cpu_load, old_ws_data.proportional_free_mem, 
