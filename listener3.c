@@ -307,13 +307,13 @@ int main(void)
                   "\n }", 
                (int)old_data.cpu_load, old_data.proportional_free_mem,
                old_data.proportional_disk_activity, old_data.proportional_bandwidth,
-               old_br_data.cpu_load, old_br_data.proportional_free_mem, 
+               (int)old_br_data.cpu_load, old_br_data.proportional_free_mem, 
                old_br_data.proportional_disk_activity, old_br_data.proportional_bandwidth,
-               old_ws_data.cpu_load, old_ws_data.proportional_free_mem, 
+               (int)old_ws_data.cpu_load, old_ws_data.proportional_free_mem, 
                old_ws_data.proportional_disk_activity, old_ws_data.proportional_bandwidth,
-               old_ds_data.cpu_load, old_ds_data.proportional_free_mem, 
+               (int)old_ds_data.cpu_load, old_ds_data.proportional_free_mem, 
                old_ds_data.proportional_disk_activity, old_ds_data.proportional_bandwidth,
-               old_as_data.cpu_load, old_as_data.proportional_free_mem, 
+               (int)old_as_data.cpu_load, old_as_data.proportional_free_mem, 
                old_as_data.proportional_disk_activity, old_as_data.proportional_bandwidth);
         
         fclose(fp);
