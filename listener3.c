@@ -15,15 +15,14 @@
 
 #define MAXBUFLEN 100
 
-#define CPU_LOAD__AVG_SMOOTHER 0.5
-#define PACKETS_PM_SMOOTHER 0.5
-#define PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER 0.5
-#define PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER 0.5
-#define PROPORTIONAL_FREE_MEM_AVG_SMOOTHER 0.5
-
-//variable used to store the type of machine that sent
-//the incoming packet
-static char *machine;
+//constant smoothers than will be updated by the method 
+//find_average_smoothers by reading from file to be passed into main
+static double packets_per_minute_smoother, 
+			  cpu_load_average_smoother,
+			  proportional_free_memory_average_smoother, 
+			  proportional_disk_activity_average_smoother,
+			  proportional_bandwidth_average_smoother;
+	
 
 time_t unix_time_now()
 {
@@ -114,29 +113,45 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     new_data->proportional_free_mem * (1 - PROPORTIONAL_FREE_MEM_AVG_SMOOTHER);
 }
 
-//method for determining which machine the packet has been received from
-static void determine_machine(struct sys_info *sys_info) 
+//method for reading from a file on the fly what the smoothers are for the different metrics
+static void find_metric_average_smoothers() 
 {
-    if(sys_info->machine_type == 1)
-    {
-        machine = "Batch Robot";
-    }
-      
-    if(sys_info->machine_type == 2)
-    {
-        machine = "Web Server";
-    }
-      
-    if(sys_info->machine_type == 3)
-    {
-        machine = "Database Server";
-    }
-      
-    if(sys_info->machine_type == 4)
-    {
-        machine = "Application Server";
-    }
+	FILE *fp;
+	char line[256];
+	
+	fopen(fp, "/etc/mantle/metric_average_smoothers.config", "r");
+	while(fgets(line,256, fp))
+	{
+		if(strncmp("packets_per_minute_smoother: ", line, 29)
+		{
+			sscanf(line+29, "%lf", &packets_per_minute_smoother);
+		}
+		
+		if(strncmp("cpu_load_average_smoother: ", line, 27)
+		{
+			sscanf(line+27, "%lf", &cpu_load_average_smoother);
+		}
+		
+		if(strncmp("proportional_disk_activity_average_smoother: ", line, 45)
+		{
+			sscanf(line+45, "%lf", &proportional_disk_activity_average_smoother);
+		}
+		
+		if(strncmp("proportional_free_memory_average_smoother: ", line, 43)
+		{
+			sscanf(line+43, "%lf", &proportional_free_memory_average_smoother);
+		}
+		
+		if(strncmp("proportional_bandwidth_average_smoother: ", line, 41)
+		{
+			sscanf(line+41, "%lf", &proportional_bandwidth_average_smoother);
+		}
+	}
+	
+	fclose(fp);
+	
 }
+	
 
 int main(void)
 {
@@ -237,10 +252,8 @@ int main(void)
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
         
-        //finds out which type of machine sent the packet
-        determine_machine(new_packet);
-        
-        //saves the information to the relevant specific machine struct 
+
+        //saves the information to the relevant machine specific struct 
         switch(new_packet->machine_type)
         {
             case (1):
@@ -260,7 +273,7 @@ int main(void)
         
         FILE *fp;
         
-        fp = fopen("/root/UDP/stored_sys_info", "w");
+        fp = fopen("/var/mantle/stored_sys_info", "w");
         
         fprintf(fp, "{\n \t \"cpu_load\" : %d  ,"
                   " \n \t \"proportional_free_mem\" : %lf ,"
@@ -303,6 +316,8 @@ int main(void)
         fclose(fp);
         
         
+        
+        
 
         printf("\nRecieved packet from IP address %s\n",
             inet_ntop(their_addr.ss_family,
@@ -310,7 +325,7 @@ int main(void)
                 s, sizeof s));
         printf("The Packet was %d bytes long\n", numbytes);
         buf[numbytes] = '\0';
-        printf("The packet was sent by a: %s\n", machine);
+        printf("The packet was sent by a: %d\n", new_packet->machine_type);
         printf("It was recieved at: %f \n", (double)new_packet->packet_time_stamp);
         printf("Packets arriving per minute is:  %f \n", old_data.packets_per_minute);
         printf("\nThe packet conatins: \n");
