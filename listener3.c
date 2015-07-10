@@ -90,27 +90,27 @@ static void initialise_sys_info(struct sys_info *sys_info)
 static void save_data(struct sys_info *old_data, struct sys_info *new_data)
 {
    //calculates cpu_load avaerage with cpu load average smoother  constant
-    old_data->cpu_load = old_data->cpu_load * CPU_LOAD__AVG_SMOOTHER + 
-    (double)new_data->cpu_load * (1 - CPU_LOAD__AVG_SMOOTHER);
+    old_data->cpu_load = old_data->cpu_load * cpu_load__average_smoother + 
+    (double)new_data->cpu_load * (1 - cpu_load__average_smoother);
     
     //calculates packets per minute with the packets per minute smoother constant
-    old_data->packets_per_minute = old_data->packets_per_minute * PACKETS_PM_SMOOTHER
-    + (1 - PACKETS_PM_SMOOTHER) * (60 / (unix_time_now() - old_data->packet_time_stamp));
+    old_data->packets_per_minute = old_data->packets_per_minute * packets_per_minute_smoother
+    + (1 - packets_per_minute_smoother) * (60 / (unix_time_now() - old_data->packet_time_stamp));
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
     
     //calculates proportional disk activity average
-    old_data->proportional_disk_activity = old_data->proportional_disk_activity * PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER +
-    new_data->proportional_disk_activity * (1 - PROPORTIONAL_DISK_ACTIVITY_AVG_SMOOTHER);
+    old_data->proportional_disk_activity = old_data->proportional_disk_activity * proportional_disk_activity_average_smoother +
+    new_data->proportional_disk_activity * (1 - proportional_disk_activity_average_smoother);
     
     //calculates proportional bandwidth average
-    old_data->proportional_bandwidth = old_data->proportional_bandwidth * PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER + 
-    new_data->proportional_bandwidth * (1 - PROPORTIONAL_BANDWIDTH_AVG_SMOOTHER);
+    old_data->proportional_bandwidth = old_data->proportional_bandwidth * proportional_bandwidth_average_smoother + 
+    new_data->proportional_bandwidth * (1 - proportional_bandwidth_average_smoother);
     
     //calculates proportional free memory average
-    old_data->proportional_free_mem = old_data->proportional_free_mem * PROPORTIONAL_FREE_MEM_AVG_SMOOTHER +
-    new_data->proportional_free_mem * (1 - PROPORTIONAL_FREE_MEM_AVG_SMOOTHER);
+    old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_mem_average_smoother +
+    new_data->proportional_free_mem * (1 - proportional_free_mem_average_smoother);
 }
 
 //method for reading from a file on the fly what the smoothers are for the different metrics
