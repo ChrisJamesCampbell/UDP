@@ -16,10 +16,10 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
-#define BATCH_ROBOT 1
+/*#define BATCH_ROBOT 1
 #define WEB_SERVER 2
 #define DATABASE_SERVER 3
-#define APPLICATION_SERVER 4
+#define APPLICATION_SERVER 4*/
 
 //a signal counter which will be incremented at the end of the
 //main method to signal that the program has run more than once
@@ -282,8 +282,46 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 }
 
 int main()
-{
-    
+{ 
+	//opens the file which will tell us what kind of machine is
+	//sending the packet
+	FILE *fp;
+	char line[256];
+	
+	fopen(fp, "/etc/mantle/role", "r");
+	
+	while(fgets(line,256, fp))
+	{
+		if(strncmp("robot", line, 5) == 0)
+		{
+			sysinfo->machine_type = 1;
+			break;
+		}
+		
+		if(strncmp("web, line, 3) == 0)
+		{
+			sysinfo->machine_type = 2;
+			break;
+		}
+		
+		if(strncmp("galera", line, 6) == 0)
+		{
+			sysinfo->machine_type = 3;
+			break;
+		}
+		
+		if(strncmp("fcgi", line, 4) == 0)
+		{
+			sysinfo->machine_type = 4;
+			break;
+		}
+	}
+	
+	fclose(fp);
+	
+	 
+	
+	
     while(1)
     {
     
@@ -301,8 +339,8 @@ int main()
         find_disk_info(&sysinfo);
         find_bandwidth(&sysinfo);
         
-        //temporary assignment of machine type
-        sysinfo.machine_type = BATCH_ROBOT;
+        /*//temporary assignment of machine type
+        sysinfo.machine_type = BATCH_ROBOT;*/
         
         FILE *fp;
         char line[256];
