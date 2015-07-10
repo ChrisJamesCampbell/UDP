@@ -139,17 +139,19 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
     
+     //calculates proportional free memory average
+    old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_memory_average_smoother +
+    new_data->proportional_free_mem * (1.0 - proportional_free_memory_average_smoother);
+    
     //calculates proportional disk activity average
     old_data->proportional_disk_activity = old_data->proportional_disk_activity * proportional_disk_activity_average_smoother +
-    new_data->proportional_disk_activity * (1 - proportional_disk_activity_average_smoother);
+    new_data->proportional_disk_activity * (1.0 - proportional_disk_activity_average_smoother);
     
     //calculates proportional bandwidth average
     old_data->proportional_bandwidth = old_data->proportional_bandwidth * proportional_bandwidth_average_smoother + 
-    new_data->proportional_bandwidth * (1 - proportional_bandwidth_average_smoother);
+    new_data->proportional_bandwidth * (1.0 - proportional_bandwidth_average_smoother);
     
-    //calculates proportional free memory average
-    old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_memory_average_smoother +
-    new_data->proportional_free_mem * (1 - proportional_free_memory_average_smoother);
+
 }
 
 int main(void)
@@ -249,8 +251,7 @@ int main(void)
         //to be used in save_data
         find_metric_average_smoothers();
         
-        if(first_time > 0)
-        {
+        
         //set time received
         new_packet->packet_time_stamp = unix_time_now();
         
@@ -275,9 +276,7 @@ int main(void)
                 break;
                
         }
-        
-        }
-        
+    
         FILE *fp;
         
         fp = fopen("/var/mantle/stored_sys_info", "w");
@@ -309,15 +308,19 @@ int main(void)
                   " \n \t \t \"proportional_bandwidth\" : %lf } "
                   " \n \t \t   ]"
                   "\n }", 
-               (int)old_data.cpu_load, old_data.proportional_free_mem,
+               (int)old_data.cpu_load, old_data.proportional_free_mem, //first elements of json string
                old_data.proportional_disk_activity, old_data.proportional_bandwidth,
-               (int)old_br_data.cpu_load, old_br_data.proportional_free_mem, 
+               
+               (int)old_br_data.cpu_load, old_br_data.proportional_free_mem, //batch robot fields
                old_br_data.proportional_disk_activity, old_br_data.proportional_bandwidth,
-               (int)old_ws_data.cpu_load, old_ws_data.proportional_free_mem, 
+               
+               (int)old_ws_data.cpu_load, old_ws_data.proportional_free_mem, //web server fields
                old_ws_data.proportional_disk_activity, old_ws_data.proportional_bandwidth,
-               (int)old_ds_data.cpu_load, old_ds_data.proportional_free_mem, 
+               
+               (int)old_ds_data.cpu_load, old_ds_data.proportional_free_mem, //database server fields
                old_ds_data.proportional_disk_activity, old_ds_data.proportional_bandwidth,
-               (int)old_as_data.cpu_load, old_as_data.proportional_free_mem, 
+               
+               (int)old_as_data.cpu_load, old_as_data.proportional_free_mem, //application server fields
                old_as_data.proportional_disk_activity, old_as_data.proportional_bandwidth);
         
         fclose(fp);
