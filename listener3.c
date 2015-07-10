@@ -134,22 +134,22 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     
     //calculates packets per minute with the packets per minute smoother constant
     old_data->packets_per_minute = old_data->packets_per_minute * packets_per_minute_smoother
-    + (1 - packets_per_minute_smoother) * (60 / (unix_time_now() - old_data->packet_time_stamp));
+    + (1 - packets_per_minute_smoother) * (60.0 / (unix_time_now() - old_data->packet_time_stamp));
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
     
     //calculates proportional disk activity average
     old_data->proportional_disk_activity = old_data->proportional_disk_activity * proportional_disk_activity_average_smoother +
-    new_data->proportional_disk_activity * (1 - proportional_disk_activity_average_smoother);
+    new_data->proportional_disk_activity * (1.0 - proportional_disk_activity_average_smoother);
     
     //calculates proportional bandwidth average
     old_data->proportional_bandwidth = old_data->proportional_bandwidth * proportional_bandwidth_average_smoother + 
-    new_data->proportional_bandwidth * (1 - proportional_bandwidth_average_smoother);
+    new_data->proportional_bandwidth * (1.0 - proportional_bandwidth_average_smoother);
     
     //calculates proportional free memory average
     old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_memory_average_smoother +
-    new_data->proportional_free_mem * (1 - proportional_free_memory_average_smoother);
+    new_data->proportional_free_mem * (1.0 - proportional_free_memory_average_smoother);
 }
 
 int main(void)
