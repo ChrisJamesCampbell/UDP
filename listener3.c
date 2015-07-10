@@ -95,27 +95,27 @@ static void find_metric_average_smoothers()
 	fp = fopen("/etc/mantle/metric_average_smoothers.config.txt", "r");
 	while(fgets(line,256, fp))
 	{
-		if(strncmp("packets_per_minute_smoother: ", line, 29))
+		if(strncmp("packets_per_minute_smoother: ", line, 29) == 0)
 		{
 			sscanf(line+29, "%lf", &packets_per_minute_smoother);
 		}
 		
-		if(strncmp("cpu_load_average_smoother: ", line, 27))
+		if(strncmp("cpu_load_average_smoother: ", line, 27) == 0)
 		{
 			sscanf(line+27, "%lf", &cpu_load_average_smoother);
 		}
 		
-		if(strncmp("proportional_disk_activity_average_smoother: ", line, 45))
+		if(strncmp("proportional_disk_activity_average_smoother: ", line, 45) == 0)
 		{
 			sscanf(line+45, "%lf", &proportional_disk_activity_average_smoother);
 		}
 		
-		if(strncmp("proportional_free_memory_average_smoother: ", line, 43))
+		if(strncmp("proportional_free_memory_average_smoother: ", line, 43) == 0)
 		{
 			sscanf(line+43, "%lf", &proportional_free_memory_average_smoother);
 		}
 		
-		if(strncmp("proportional_bandwidth_average_smoother: ", line, 41))
+		if(strncmp("proportional_bandwidth_average_smoother: ", line, 41) == 0)
 		{
 			sscanf(line+41, "%lf", &proportional_bandwidth_average_smoother);
 		}
