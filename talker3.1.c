@@ -303,12 +303,12 @@ int main()
         
      //opens the file which will tell us what kind of machine is
 	//sending the packet
-	FILE *fp;
-	char line[256];
+	FILE *fp2;
+	char line2[256];
 	
 	fopen("/etc/mantle/role", "r");
 	
-	while(fgets(line,256, fp))
+	while(fgets(line2,256, fp2))
 	{
 		if(strncmp("robot", line, 5) == 0)
 		{
@@ -335,7 +335,7 @@ int main()
 		}
 	}
 	
-	fclose(fp);
+	fclose(fp2);
         
         FILE *fp;
         char line[256];
