@@ -90,8 +90,8 @@ static void initialise_sys_info(struct sys_info *sys_info)
 static void save_data(struct sys_info *old_data, struct sys_info *new_data)
 {
    //calculates cpu_load avaerage with cpu load average smoother  constant
-    old_data->cpu_load = old_data->cpu_load * cpu_load__average_smoother + 
-    (double)new_data->cpu_load * (1 - cpu_load__average_smoother);
+    old_data->cpu_load = old_data->cpu_load * cpu_load_average_smoother + 
+    (double)new_data->cpu_load * (1 - cpu_load_average_smoother);
     
     //calculates packets per minute with the packets per minute smoother constant
     old_data->packets_per_minute = old_data->packets_per_minute * packets_per_minute_smoother
@@ -109,8 +109,8 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     new_data->proportional_bandwidth * (1 - proportional_bandwidth_average_smoother);
     
     //calculates proportional free memory average
-    old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_mem_average_smoother +
-    new_data->proportional_free_mem * (1 - proportional_free_mem_average_smoother);
+    old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_memory_average_smoother +
+    new_data->proportional_free_mem * (1 - proportional_free_memory_average_smoother);
 }
 
 //method for reading from a file on the fly what the smoothers are for the different metrics
