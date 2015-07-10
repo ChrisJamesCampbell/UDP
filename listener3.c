@@ -246,6 +246,10 @@ int main(void)
             continue;
         }*/
         
+        //reads in from file what the metric average_smoother are
+        //to be used in save_data
+        find_metric_average_smoothers();
+        
         //set time received
         new_packet->packet_time_stamp = unix_time_now();
         
