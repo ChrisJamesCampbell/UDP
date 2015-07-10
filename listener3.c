@@ -249,6 +249,8 @@ int main(void)
         //to be used in save_data
         find_metric_average_smoothers();
         
+        if(first_time > 0)
+        {
         //set time received
         new_packet->packet_time_stamp = unix_time_now();
         
@@ -272,6 +274,8 @@ int main(void)
                 save_data(&old_as_data, new_packet);
                 break;
                
+        }
+        
         }
         
         FILE *fp;
