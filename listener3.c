@@ -117,7 +117,7 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
 static void find_metric_average_smoothers() 
 {
 	FILE *fp;
-	char line*;
+	char *line;
 	
 	fopen("/etc/mantle/metric_average_smoothers.config.txt", "r");
 	while(fgets(line,256, fp))
