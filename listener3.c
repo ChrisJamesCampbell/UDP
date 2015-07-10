@@ -264,7 +264,7 @@ int main(void)
         
         fprintf(fp, "{\n \t \"cpu_load\" : %d  ,"
                   " \n \t \"proportional_free_mem\" : %lf ,"
-                  " \n \t \"proportional_disk_activity\" : %d ,"
+                  " \n \t \"proportional_disk_activity\" : %lf ,"
                   " \n \t \"proportional_bandwidth\" : %lf ,"
                   " \n \t \"roles\" : [ "
                   " \n \t \t {\"role_id\" : 1 , "
