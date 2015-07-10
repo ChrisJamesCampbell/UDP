@@ -288,7 +288,7 @@ int main()
 	FILE *fp;
 	char line[256];
 	
-	fopen(fp, "/etc/mantle/role", "r");
+	fopen("/etc/mantle/role", "r");
 	
 	while(fgets(line,256, fp))
 	{
