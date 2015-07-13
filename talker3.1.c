@@ -392,7 +392,7 @@ int main()
 	        
 	    fclose(fp);
         
-        printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
+        printf("\nTalker: sent %d bytes to %s", numbytes, ip_to_send);
         printf("\nThe machine which sent the packet was of type: %d", sys_info.machine_type);
         printf("\nInsantaneous CPU load was: %d %%", sys_info.cpu_load);
         printf("\nFree memory on this machine is: %lf KB", sys_info.free_mem);
