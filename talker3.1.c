@@ -332,15 +332,15 @@ int main()
         int numbytes;
         
         struct sys_info_type sys_info;
-        initialise_sys_info(sys_info);
+        initialise_sys_info(&sys_info);
         
         //calls the methods to extrapolate the metrics
-        find_cpu_load(sys_info);
-        find_free_memory(sys_info);
-        find_disk_info(sys_info);
-        find_bandwidth(sys_info);
+        find_cpu_load(&sys_info);
+        find_free_memory(&sys_info);
+        find_disk_info(&sys_info);
+        find_bandwidth(&sys_info);
         
-        what_machine_type( sys_info);
+        what_machine_type(&sys_info);
         
         FILE *fp;
         char line[256];
@@ -379,7 +379,7 @@ int main()
 	            return 2;
 	        }
 	        
-	         if ((numbytes = sendto(sockfd,  sys_info, sizeof(struct sys_info_type), 0,
+	         if ((numbytes = sendto(sockfd, &sys_info, sizeof(struct sys_info_type), 0,
              p->ai_addr, p->ai_addrlen)) == -1) 
 	         {
 	            perror("talker: sendto");
