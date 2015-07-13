@@ -27,7 +27,7 @@ static int first_time = 0;
 
 //the struct that will conatin metrics which will be used
 //to calculate state of system
-struct sysinfo_type     
+struct sys_info_type     
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
@@ -41,25 +41,25 @@ struct sysinfo_type
 };
 
 
-static void initialise_sysinfo(struct sysinfo_type *sysinfo) 
+static void initialise sys_info(struct sys_info_type  sys_info) 
 {
     
-    sysinfo->cpu_load = 0;
-    sysinfo->free_mem = 0.0;
-    sysinfo->proportional_free_mem = 0.0;
-    sysinfo->machine_type = 0;
-    sysinfo->disk_activity = 0;
-    sysinfo->proportional_disk_activity = 0.0;
-    sysinfo->instantaneous_bandwidth = 0.0;
-    sysinfo->proportional_bandwidth = 0.0;
+    sys_info->cpu_load = 0;
+    sys_info->free_mem = 0.0;
+    sys_info->proportional_free_mem = 0.0;
+    sys_info->machine_type = 0;
+    sys_info->disk_activity = 0;
+    sys_info->proportional_disk_activity = 0.0;
+    sys_info->instantaneous_bandwidth = 0.0;
+    sys_info->proportional_bandwidth = 0.0;
     return;
     
 }
 
 
 //function that calculates the load average of the CPU
-//and updates cpu_load within the struct sysinfo 
-static void find_cpu_load(struct sysinfo_type *sysinfo) 
+//and updates cpu_load within the struct sys_info 
+static void find_cpu_load(struct sys_info_type  sys_info) 
 {
     long double newvalue[4], loadavg;
     static long double oldvalue[4];
@@ -84,12 +84,12 @@ static void find_cpu_load(struct sysinfo_type *sysinfo)
    
     //casting rounded double to char so as to only use 1 byte
     char cut_cpu_load = (char) (roundl(loadavg* 100));
-    sysinfo->cpu_load = cut_cpu_load;
+    sys_info->cpu_load = cut_cpu_load;
     return;
     
 }
 
-static void find_free_memory(struct sysinfo_type *sysinfo)
+static void find_free_memory(struct sys_info_type  sys_info)
 {
     FILE *fp;
 	char line[256];
@@ -131,15 +131,15 @@ static void find_free_memory(struct sysinfo_type *sysinfo)
 		//gives us the real total available free memory
 		actual_mem_free = mem_free + buffers + cached; 
 		
-		sysinfo->proportional_free_mem = (actual_mem_free / mem_total) * 100;
+	 sys_info->proportional_free_mem = (actual_mem_free / mem_total) * 100;
 		
-		//update the free_mem double within sysinfo struct
-		sysinfo->free_mem = actual_mem_free; 
+		//update the free_mem double within sys_info struct
+	 sys_info->free_mem = actual_mem_free; 
 		
 		fclose(fp);
 }
 
-static void find_disk_info(struct sysinfo_type *sysinfo)
+static void find_disk_info(struct sys_info_type  sys_info)
 {
     FILE *fp;
 	char line[256];
@@ -181,7 +181,7 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//(avoids erroneous disk activity results by missing first reading)
 	if(first_time > 0)
 	{
-		sysinfo->disk_activity = (new_disk_activity - old_disk_activity);
+	 sys_info->disk_activity = (new_disk_activity - old_disk_activity);
 	}
 	
 	//stores the most recently read disk activity in the static old disk activity
@@ -192,9 +192,9 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//as soon as any activity has been monitored, highest activity
 	//will be set as the first reading and then after that will only
 	//be replaced if the last recorded activity is greater than the highest recorded activity
-	if(sysinfo->disk_activity > highest_activity)
+	if sys_info->disk_activity > highest_activity)
 	{	
-		highest_activity = sysinfo->disk_activity;
+		highest_activity = sys_info->disk_activity;
 	
 	}
 	
@@ -202,12 +202,12 @@ static void find_disk_info(struct sysinfo_type *sysinfo)
 	//over the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-		sysinfo->proportional_disk_activity =  (sysinfo->disk_activity/ (double)highest_activity) * 100;
+	 sys_info->proportional_disk_activity =   sys_info->disk_activity/ (double)highest_activity) * 100;
 	}
 	
 }
 
-static void find_bandwidth(struct sysinfo_type *sysinfo)
+static void find_bandwidth(struct sys_info_type  sys_info)
 {
     double received_bytes = 0.0; //holds the value of each received bytes for each row 
 	double transmitted_bytes = 0.0; //holds the value of each transmitted bytes for each row 
@@ -259,7 +259,7 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 		//takes the difference between network activity and 
 		//converts the network activity given to us in bytes into BITS per second
 		//(divide by 5 since currently sending packets every 5 seconds)
-		sysinfo->instantaneous_bandwidth = ((new_network_activity - old_network_activity) * 8) / 5;
+	 sys_info->instantaneous_bandwidth = ((new_network_activity - old_network_activity) * 8) / 5;
 		
     }
 		
@@ -268,20 +268,20 @@ static void find_bandwidth(struct sysinfo_type *sysinfo)
 	//between calls to this method
 	old_network_activity = new_network_activity;
 	
-	if(sysinfo->instantaneous_bandwidth > peak_bandwidth)
+	if sys_info->instantaneous_bandwidth > peak_bandwidth)
 	{
-		peak_bandwidth = sysinfo->instantaneous_bandwidth;
+		peak_bandwidth = sys_info->instantaneous_bandwidth;
 	}
 	
 	if(peak_bandwidth > 0)
 	{
 		//gives the proportional bandwidth of the instantaneous bandwidth in 
 		//terms of percentage of the known peak bandwidth
-		sysinfo->proportional_bandwidth = ((sysinfo->instantaneous_bandwidth/peak_bandwidth) * 100);
+	 sys_info->proportional_bandwidth = ( sys_info->instantaneous_bandwidth/peak_bandwidth) * 100);
 	}
 }
 
-static void what_machine_type(struct sysinfo_type *sysinfo)
+static void what_machine_type(struct sys_info_type  sys_info)
 {
 	     //opens the file which will tell us what kind of machine is
 	//sending the packet
@@ -294,25 +294,25 @@ static void what_machine_type(struct sysinfo_type *sysinfo)
 	{
 		if(strncmp("robot", line2, 5) == 0)
 		{
-			sysinfo->machine_type = 1;
+		 sys_info->machine_type = 1;
 			break;
 		}
 		
 		if(strncmp("web", line2, 3) == 0)
 		{
-			sysinfo->machine_type = 2;
+		 sys_info->machine_type = 2;
 			break;
 		}
 		
 		if(strncmp("galera", line2, 6) == 0)
 		{
-			sysinfo->machine_type = 3;
+		 sys_info->machine_type = 3;
 			break;
 		}
 		
 		if(strncmp("fcgi", line2, 4) == 0)
 		{
-			sysinfo->machine_type = 4;
+		 sys_info->machine_type = 4;
 			break;
 		}
 	}
@@ -331,16 +331,16 @@ int main()
         int rv;
         int numbytes;
         
-        struct sysinfo_type sysinfo;
-        initialise_sysinfo(&sysinfo);
+        struct sys_info_type sys_info;
+        initialise sys_info( sys_info);
         
         //calls the methods to extrapolate the metrics
-        find_cpu_load(&sysinfo);
-        find_free_memory(&sysinfo);
-        find_disk_info(&sysinfo);
-        find_bandwidth(&sysinfo);
+        find_cpu_load( sys_info);
+        find_free_memory( sys_info);
+        find_disk_info( sys_info);
+        find_bandwidth( sys_info);
         
-        what_machine_type(&sysinfo);
+        what_machine_type( sys_info);
         
         FILE *fp;
         char line[256];
@@ -379,7 +379,7 @@ int main()
 	            return 2;
 	        }
 	        
-	         if ((numbytes = sendto(sockfd, &sysinfo, sizeof(struct sysinfo_type), 0,
+	         if ((numbytes = sendto(sockfd,  sys_info, sizeof(struct sys_info_type), 0,
              p->ai_addr, p->ai_addrlen)) == -1) 
 	         {
 	            perror("talker: sendto");
@@ -393,14 +393,14 @@ int main()
 	    fclose(fp);
         
         printf("\nTalker: sent %d bytes to %s", numbytes, "127.0.0.1");
-        printf("\nThe machine which sent the packet was of type: %d", sysinfo.machine_type);
-        printf("\nInsantaneous CPU load was: %d %%", sysinfo.cpu_load);
-        printf("\nFree memory on this machine is: %lf KB", sysinfo.free_mem);
-        printf("\nProportional free memory on this machine is: %lf %%", sysinfo.proportional_free_mem);
-        printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sysinfo.disk_activity);
-        printf("\nProportional Disk activity was: %lf %%", sysinfo.proportional_disk_activity);
-        printf("\nInstantaneous bandwidth was:  %lf bps)", sysinfo.instantaneous_bandwidth);
-        printf("\nProportional bandwidth was: %lf %% \n", sysinfo.proportional_bandwidth);
+        printf("\nThe machine which sent the packet was of type: %d", sys_info.machine_type);
+        printf("\nInsantaneous CPU load was: %d %%", sys_info.cpu_load);
+        printf("\nFree memory on this machine is: %lf KB", sys_info.free_mem);
+        printf("\nProportional free memory on this machine is: %lf %%", sys_info.proportional_free_mem);
+        printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sys_info.disk_activity);
+        printf("\nProportional Disk activity was: %lf %%", sys_info.proportional_disk_activity);
+        printf("\nInstantaneous bandwidth was:  %lf bps)", sys_info.instantaneous_bandwidth);
+        printf("\nProportional bandwidth was: %lf %% \n", sys_info.proportional_bandwidth);
         
         close(sockfd);
        
