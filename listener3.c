@@ -279,7 +279,7 @@ int main(void)
     
         FILE *fp;
         
-        fp = fopen("/var/www/html/stored_sys_info.html", "w");
+        fp = fopen("/var/www/html/stored_sys_info.json", "w");
         
         fprintf(fp, "{\n \t \"cpu_load\" : %d  ,"
                   " \n \t \"proportional_free_mem\" : %lf ,"
