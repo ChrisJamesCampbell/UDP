@@ -279,7 +279,7 @@ int main(void)
     
         FILE *fp;
         
-        fp = fopen("/var/mantle/stored_sys_info", "w");
+        fp = fopen("/var/www/html/stored_sys_info.html", "w");
         
         fprintf(fp, "{\n \t \"cpu_load\" : %d  ,"
                   " \n \t \"proportional_free_mem\" : %lf ,"
