@@ -192,7 +192,7 @@ static void find_disk_info(struct sys_info_type  sys_info)
 	//as soon as any activity has been monitored, highest activity
 	//will be set as the first reading and then after that will only
 	//be replaced if the last recorded activity is greater than the highest recorded activity
-	if sys_info->disk_activity > highest_activity)
+	if (sys_info->disk_activity > highest_activity)
 	{	
 		highest_activity = sys_info->disk_activity;
 	
@@ -202,7 +202,7 @@ static void find_disk_info(struct sys_info_type  sys_info)
 	//over the highest recorded activity so far
 	if(highest_activity > 0)
 	{
-	 sys_info->proportional_disk_activity =   sys_info->disk_activity/ (double)highest_activity) * 100;
+	 sys_info->proportional_disk_activity =   (sys_info->disk_activity/ (double)highest_activity) * 100;
 	}
 	
 }
@@ -277,7 +277,7 @@ static void find_bandwidth(struct sys_info_type  sys_info)
 	{
 		//gives the proportional bandwidth of the instantaneous bandwidth in 
 		//terms of percentage of the known peak bandwidth
-	 sys_info->proportional_bandwidth = ( sys_info->instantaneous_bandwidth/peak_bandwidth) * 100);
+	 sys_info->proportional_bandwidth = ((sys_info->instantaneous_bandwidth/peak_bandwidth) * 100);
 	}
 }
 
@@ -332,13 +332,13 @@ int main()
         int numbytes;
         
         struct sys_info_type sys_info;
-        initialise_sys_info( sys_info);
+        initialise_sys_info(sys_info);
         
         //calls the methods to extrapolate the metrics
-        find_cpu_load( sys_info);
-        find_free_memory( sys_info);
-        find_disk_info( sys_info);
-        find_bandwidth( sys_info);
+        find_cpu_load(sys_info);
+        find_free_memory(sys_info);
+        find_disk_info(sys_info);
+        find_bandwidth(sys_info);
         
         what_machine_type( sys_info);
         
