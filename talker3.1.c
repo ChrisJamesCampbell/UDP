@@ -41,7 +41,7 @@ struct sys_info_type
 };
 
 
-static void initialise sys_info(struct sys_info_type  sys_info) 
+static void initialise_sys_info(struct sys_info_type  sys_info) 
 {
     
     sys_info->cpu_load = 0;
@@ -332,7 +332,7 @@ int main()
         int numbytes;
         
         struct sys_info_type sys_info;
-        initialise sys_info( sys_info);
+        initialise_sys_info( sys_info);
         
         //calls the methods to extrapolate the metrics
         find_cpu_load( sys_info);
