@@ -268,7 +268,7 @@ static void find_bandwidth(struct sys_info_type  sys_info)
 	//between calls to this method
 	old_network_activity = new_network_activity;
 	
-	if sys_info->instantaneous_bandwidth > peak_bandwidth)
+	if(sys_info->instantaneous_bandwidth > peak_bandwidth)
 	{
 		peak_bandwidth = sys_info->instantaneous_bandwidth;
 	}
