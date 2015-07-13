@@ -41,7 +41,7 @@ struct sys_info_type
 };
 
 
-static void initialise_sys_info(struct sys_info_type  sys_info) 
+static void initialise_sys_info(struct sys_info_type *sys_info) 
 {
     
     sys_info->cpu_load = 0;
@@ -59,7 +59,7 @@ static void initialise_sys_info(struct sys_info_type  sys_info)
 
 //function that calculates the load average of the CPU
 //and updates cpu_load within the struct sys_info 
-static void find_cpu_load(struct sys_info_type  sys_info) 
+static void find_cpu_load(struct sys_info_type *sys_info) 
 {
     long double newvalue[4], loadavg;
     static long double oldvalue[4];
@@ -89,7 +89,7 @@ static void find_cpu_load(struct sys_info_type  sys_info)
     
 }
 
-static void find_free_memory(struct sys_info_type  sys_info)
+static void find_free_memory(struct sys_info_type *sys_info)
 {
     FILE *fp;
 	char line[256];
@@ -139,7 +139,7 @@ static void find_free_memory(struct sys_info_type  sys_info)
 		fclose(fp);
 }
 
-static void find_disk_info(struct sys_info_type  sys_info)
+static void find_disk_info(struct sys_info_type *sys_info)
 {
     FILE *fp;
 	char line[256];
@@ -207,7 +207,7 @@ static void find_disk_info(struct sys_info_type  sys_info)
 	
 }
 
-static void find_bandwidth(struct sys_info_type  sys_info)
+static void find_bandwidth(struct sys_info_type *sys_info)
 {
     double received_bytes = 0.0; //holds the value of each received bytes for each row 
 	double transmitted_bytes = 0.0; //holds the value of each transmitted bytes for each row 
@@ -281,7 +281,7 @@ static void find_bandwidth(struct sys_info_type  sys_info)
 	}
 }
 
-static void what_machine_type(struct sys_info_type  sys_info)
+static void what_machine_type(struct sys_info_type *sys_info)
 {
 	     //opens the file which will tell us what kind of machine is
 	//sending the packet
