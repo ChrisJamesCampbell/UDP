@@ -134,7 +134,7 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     
     //calculates packets per minute with the packets per minute smoother constant
     old_data->packets_per_minute = old_data->packets_per_minute * packets_per_minute_smoother
-    + (1 - packets_per_minute_smoother) * (60 / (unix_time_now() - old_data->packet_time_stamp));
+    + (1 - packets_per_minute_smoother) * (60.0 / (unix_time_now() - old_data->packet_time_stamp));
     
     //updates packet time stamp
     old_data->packet_time_stamp = unix_time_now();
@@ -152,7 +152,7 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     new_data->proportional_bandwidth * (1.0 - proportional_bandwidth_average_smoother);
     
     //possible bug fix
-    old_data->packet_time_stamp = new_data->packet_time_stamp;
+    //old_data->packet_time_stamp = new_data->packet_time_stamp;
     
 
 }
