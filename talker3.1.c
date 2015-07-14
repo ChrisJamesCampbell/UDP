@@ -418,7 +418,7 @@ int main()
         printf("\nInstantaneous bandwidth was:  %lf bps)", sys_info.instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %lf %% \n", sys_info.proportional_bandwidth);
         
-        printf("This packet was sent at: %lf unix time", (double)sys_info.packet_time_stamp;
+        printf("This packet was sent at: %lf unix time", (double)sys_info.packet_time_stamp);
         
         close(sockfd);
        
