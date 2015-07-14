@@ -13,6 +13,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <math.h>
+#include <time.h>
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
@@ -24,6 +25,17 @@
 //a signal counter which will be incremented at the end of the
 //main method to signal that the program has run more than once
 static int first_time = 0;
+
+//fetches the unix time given in seconds
+time_t unix_time_now()
+{
+   time_t now;
+
+   /* Get current time */
+   time(&now);
+
+  return now;
+}
 
 //the struct that will conatin metrics which will be used
 //to calculate state of system
@@ -37,6 +49,8 @@ struct sys_info_type
     double proportional_disk_activity; 
     double instantaneous_bandwidth;
     double proportional_bandwidth;
+    
+    double packet_time_stamp;
     
 };
 
@@ -52,6 +66,7 @@ static void initialise_sys_info(struct sys_info_type *sys_info)
     sys_info->proportional_disk_activity = 0.0;
     sys_info->instantaneous_bandwidth = 0.0;
     sys_info->proportional_bandwidth = 0.0;
+    sys_info->packet_time_stamp = unix_time_now();
     return;
     
 }
@@ -339,8 +354,9 @@ int main()
         find_free_memory(&sys_info);
         find_disk_info(&sys_info);
         find_bandwidth(&sys_info);
-        
         what_machine_type(&sys_info);
+        
+        unix_time_now();
         
         FILE *fp;
         char line[256];
@@ -401,6 +417,8 @@ int main()
         printf("\nProportional Disk activity was: %lf %%", sys_info.proportional_disk_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sys_info.instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %lf %% \n", sys_info.proportional_bandwidth);
+        
+        printf("This packet was sent at: %lf unix time", (double)sys_info.packet_time_stamp;
         
         close(sockfd);
        
