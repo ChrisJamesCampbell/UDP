@@ -416,9 +416,9 @@ int main()
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sys_info.disk_activity);
         printf("\nProportional Disk activity was: %lf %%", sys_info.proportional_disk_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sys_info.instantaneous_bandwidth);
-        printf("\nProportional bandwidth was: %lf %% \n", sys_info.proportional_bandwidth);
+        printf("\nProportional bandwidth was: %lf %% ", sys_info.proportional_bandwidth);
         
-        printf("This packet was sent at: %lf unix time", (double)sys_info.packet_time_stamp);
+        printf("\nThis packet was sent at: %lf unix time\n", (double)sys_info.packet_time_stamp);
         
         close(sockfd);
        
