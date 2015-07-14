@@ -80,7 +80,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     sys_info->instantaneous_bandwidth = 0.0;
     sys_info->proportional_bandwidth = 0.0;
     
-    sys_info->packet_time_stamp = unix_time_now();
+    sys_info->packet_time_stamp = 0.0;
     sys_info->packets_per_minute = 0.0;
     return;
     
@@ -256,7 +256,7 @@ int main(void)
         
         
         //set time received
-        new_packet->packet_time_stamp = unix_time_now();
+        //new_packet->packet_time_stamp = unix_time_now();
 
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
