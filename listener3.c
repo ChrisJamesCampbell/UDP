@@ -257,8 +257,7 @@ int main(void)
         
         //set time received
         new_packet->packet_time_stamp = unix_time_now();
-        new_packet->packets_per_minute = 0.0;
-        
+
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
         
