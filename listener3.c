@@ -341,7 +341,7 @@ int main(void)
         buf[numbytes] = '\0';
         printf("The packet was sent by a: %d\n", new_packet->machine_type);
         printf("It was recieved at: %f \n", new_packet->packet_time_stamp);
-        printf("Packets arriving per minute is:  %f \n", new_packet.packets_per_minute);
+        printf("Packets arriving per minute is:  %f \n", new_packet->packets_per_minute);
         printf("\nThe packet conatins: \n");
         printf("Instantaneous CPU Load: %d %%", (int)new_packet->cpu_load);
         printf("\nThe Free Memory on this machine was: %lf", (double)new_packet->free_mem);
