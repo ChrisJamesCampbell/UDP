@@ -151,6 +151,9 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     old_data->proportional_bandwidth = old_data->proportional_bandwidth * proportional_bandwidth_average_smoother + 
     new_data->proportional_bandwidth * (1.0 - proportional_bandwidth_average_smoother);
     
+    //possible bug fix
+    old_data->packet_time_stamp = new_data->packet_time_stamp;
+    
 
 }
 
