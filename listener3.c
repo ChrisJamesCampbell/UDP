@@ -137,7 +137,7 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     + (1 - packets_per_minute_smoother) * (60.0 / (unix_time_now() - old_data->packet_time_stamp));
     
     //updates packet time stamp
-    old_data->packet_time_stamp = unix_time_now();
+    //old_data->packet_time_stamp = unix_time_now();
     
      //calculates proportional free memory average
     old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_memory_average_smoother +
@@ -152,7 +152,7 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     new_data->proportional_bandwidth * (1.0 - proportional_bandwidth_average_smoother);
     
     //possible bug fix
-    //old_data->packet_time_stamp = new_data->packet_time_stamp;
+    old_data->packet_time_stamp = new_data->packet_time_stamp;
     
 
 }
@@ -256,7 +256,7 @@ int main(void)
         
         
         //set time received
-        //new_packet->packet_time_stamp = unix_time_now();
+        new_packet->packet_time_stamp = unix_time_now();
 
         //saves information into old_data struct and simultaneously produces metrics
         save_data(&old_data, new_packet);
