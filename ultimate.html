@@ -42,17 +42,25 @@
                             
                             shift = series.data.length > 20
                             
+                            if (!isVisible) series[0].show();
                             var y = data.roles[0].cpu_load;
                             series[0].addPoint([x,y], false, shift);
+                            if (!isVisible) series[0].hide();
                             
+                            if (!isVisible) series[1].show();
                             var a = data.roles[1].cpu_load;
                             series[1].addPoint([x,a], false, shift);
+                            if (!isVisible) series[1].hide();
                             
+                            if (!isVisible) series[2].show();
                             var b = data.roles[2].cpu_load;
                             series[2].addPoint([x,b], false, shift);
+                            if (!isVisible) series[2].hide();
                             
+                            if (!isVisible) series[3].show()
                             var c = data.roles[3].cpu_load;
                             series[3].addPoint([x,c], false, shift);
+                            if (!isVisible) series[3].hide();
                             
                             chart.redraw();
                           
