@@ -176,10 +176,7 @@
                 events: [{
                     load: function () {
 
-                     var series_pfr = this.series_pfr[0];
-                     var series_pda = this.series_pda[0];
-                     var series_pb = this.series_pb[0];
-                     
+                     var series = this.series;
 
                     setInterval(function(){
                     
@@ -187,14 +184,17 @@
                     
                             var x = (new Date()).getTime();
                             
-                            var y = data.roles[0].proportional_free_memory;
-                            series_pfr.addPoint([x,y], false,true);
+                            var y = data.roles[0].cpu_load;
+                            series[0].addPoint([x,y], false,true);
                             
-                            var a = data.roles[0].proportional_disk_activity;
-                            series_pda.addPoint([x,a], false, true);
+                            var a = data.roles[1].cpu_load;
+                            series[1].addPoint([x,a], false, true);
                             
-                            var b = data.roles[0].proportional_bandwidth;
-                            series_pb.addPoint([x,b], true, true);
+                            var b = data.roles[2].cpu_load;
+                            series[2].addPoint([x,b], false, true);
+                            
+                            var c = data.roles[3].cpu_load;
+                            series[3].addPoint([x,c]), true, true);
                           
                         });
                     
@@ -224,7 +224,7 @@
             },
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.series_pfr.name + '</b><br/>' +
+                    return '<b>' + this.series.name + '</b><br/>' +
                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
                         Highcharts.numberFormat(this.y, 2);
                 }
@@ -251,7 +251,59 @@
                     }
                     return data;
                 }())
-            }]
+            },
+            {
+                name: 'Random data 2',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            },
+            {
+                name: 'Random data 3',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            },
+            {
+                name: 'Random data 4',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            }
+            ]
         });
     });
 });</script>
