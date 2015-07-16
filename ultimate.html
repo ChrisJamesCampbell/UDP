@@ -248,7 +248,7 @@ $(function () {
 
                     setInterval(function(){
                     
-                        $.getJSON( "sys_info.json", function( data ) {
+                        $.getJSON( "stored_sys_info.json", function( data ) {
                     
                             var x = (new Date()).getTime();
                             var y = data.roles[0].proportional_free_memory;
