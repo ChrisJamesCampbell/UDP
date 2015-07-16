@@ -40,17 +40,19 @@
                     
                             var x = (new Date()).getTime();
                             
+                            shift = series.data.length > 20
+                            
                             var y = data.roles[0].cpu_load;
-                            series[0].addPoint([x,y], false,true);
+                            series[0].addPoint([x,y], false, shift;
                             
                             var a = data.roles[1].cpu_load;
-                            series[1].addPoint([x,a], false, true);
+                            series[1].addPoint([x,a], false, shift);
                             
                             var b = data.roles[2].cpu_load;
-                            series[2].addPoint([x,b], false, true);
+                            series[2].addPoint([x,b], false, shift);
                             
                             var c = data.roles[3].cpu_load;
-                            series[3].addPoint([x,c], false, true);
+                            series[3].addPoint([x,c], false, shift);
                             
                             chart.redraw();
                           
