@@ -180,7 +180,7 @@ window.addEvent('domready', function() {
                 type: 'spline',
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
-                events: {
+                events: [{
                     load: function () {
 
                      var series = this.series[0];
@@ -198,7 +198,25 @@ window.addEvent('domready', function() {
                     
                     },5000);
                     }
-                }
+                }, {
+                    load: function () {
+
+                     var series = this.series[0];
+
+                    setInterval(function(){
+                    
+                        $.getJSON( "stored_sys_info.json", function( data ) {
+                    
+                            var x = (new Date()).getTime();
+                            var y = data.roles[0].proportional_disk_activity;
+                            series.addPoint([x,y],true,true);
+                          
+                        });
+                    
+                    
+                    },5000);
+                    }
+                }]
             },
             title: {
                 text: 'Batch Robots Rolling Average Proportional Free Memory'
