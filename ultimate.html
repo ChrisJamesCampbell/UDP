@@ -191,10 +191,10 @@
                             series_pfr.addPoint([x,y], false,true);
                             
                             var a = data.roles[0].proportional_disk_activity;
-                            series_pda.addPoint([a,y]), false, true);
+                            series_pda.addPoint([x,a], false, true);
                             
                             var b = data.roles[0].proportional_bandwidth;
-                            series_pb.addPoint.([b,y], true, true);
+                            series_pb.addPoint.([x,b], true, true);
                           
                         });
                     
@@ -220,7 +220,7 @@
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }, {value : 0, width: 1, color "#00EE76"}, {value : 0, width: 1, color "#00EE76"}, {value : 0, width: 1, color "#00EE76"}]
+                }]
             },
             tooltip: {
                 formatter: function () {
