@@ -183,7 +183,7 @@ window.addEvent('domready', function() {
                 events: [{
                     load: function () {
 
-                     var series = this.series[0];
+                     var series = series[4];
 
                     setInterval(function(){
                     
@@ -191,13 +191,13 @@ window.addEvent('domready', function() {
                     
                             var x = (new Date()).getTime();
                             var y = data.roles[0].proportional_free_memory;
-                            series.addPoint([x,y], true,true);
+                            series.addPoint([x,y], false,true);
                             
                             var a = data.roles[0].proportional_disk_activity;
-                            series.addPoint([x,y]), true, true);
+                            series.addPoint([a,y]), false, true);
                             
                             var b = data.roles[0].proportional_bandwidth;
-                            series.addPoint.([x,y], true, true);
+                            series.addPoint.([b,y], false, true);
                           
                         });
                     
