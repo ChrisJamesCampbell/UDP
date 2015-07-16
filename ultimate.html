@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+	<head style = "font-size: 60px; color: maroon; font-family: Arial; text-align: center"> Stored Sys Info</head>
+	
+	<body>
+		<h1 style = "font-size: 40px; color: maroon; font-family: Impact; text-align: center">
+			The state of the <strong>overall</strong>  system:
+		</h1> <!--
+			<p>
+				<p style = "font-size: 20px; text-align: center">The Average CPU Load is:</p>
+				<p style = "font-size: 20px; text-align: center">The Average Proportional Free Memory is:</p>
+				<p style = "font-size: 20px; text-align: center">The Average Proportional Disk Activity is:</p>
+				<p style = "font-size: 20px; text-align: center">The Average Proportional Bandwidth is:</p>
+			</p>
+			<p> -->
+				<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+				
+				<div id="container" style="width:100%; height:600px;"></div>
+				
+				<script> 
+				$(function () { 
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Machine Overview'
+        },
+        xAxis: {
+            categories: ['CPU Load', 'Proportional Free Memory', 'Proportional Disk Activity', 'Proportional Bandwidth']
+        },
+        yAxis: {
+            title: {
+                text: 'System Comparison'
+            }
+        },
+        series: [{
+            name: 'System Average',
+            data: [24, 89.6, 5, 15]
+        }, {
+            name: 'Batch Robots',
+            data: [45, 86, 3, 30]
+        }, {
+            name: 'Web Servers',
+            data: [0, 50, 100, 42]
+        }, {
+            name: 'Database Servers',
+            data: [10, 78, 10, 0]
+        }, {
+            name: 'Application Servers',
+            data: [92, 64, 18, 13]
+        }]
+    });
+});
+
+window.addEvent('domready', function() {
+   var chart1 = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container',
+         type: 'bar'
+   ...
+});
+				
+				</script>
+                
+                <script src="http://code.highcharts.com/highcharts.js"></script>
+                <div id="container" style="height: 300px"></div>
+                
+                <script>$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'System Comparison'
+        },
+        xAxis: {
+            categories: ['CPU Load', 'Proportional Free Memory', 'Proportional Disk Activity', 'Proportional Bandwidth']
+        },
+        yAxis: {
+            title: {
+                text: '%'
+            }
+        },
+        series: [{
+            name: 'System Average',
+            data: [24, 89.6, 5, 15]
+        }, {
+            name: 'Batch Robots',
+            data: [45, 86, 3, 30]
+        }, {
+            name: 'Web Servers',
+            data: [0, 50, 100, 42]
+        }, {
+            name: 'Database Servers',
+            data: [10, 78, 10, 0]
+        }, {
+            name: 'Application Servers',
+            data: [92, 64, 18, 13]
+        }],
+    });
+});</script>
+
+
+
+<!--------------------------------------------------------------------------------------------------------------------->
+<!--
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container3" style="width:100%; height:600px;"></div>
+
+<script>
+$(function () {
+    $('#container3').highcharts({
+        title: {
+            text: 'Batch Robot Hourly Breakdown',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: MadeUpStats.com/MyHead',
+            x: -20
+        },
+        xAxis: {
+            categories: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+                '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+        },
+        yAxis: {
+            title: {
+                text: '%'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '&'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'CPU Load',
+            data: [70.0, 60.9, 63.5, 55.5, 18.2, 27.5, 33.2, 41.5, 44.3, 56.3, 51, 48.6]
+        }, {
+            name: 'Proportional Free Memory',
+            data: [90, 89, 87, 66, 65, 60, 55, 71, 80, 85, 88, 89.5]
+        }, {
+            name: 'Proportional Disk Activity',
+            data: [1, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+        }, {
+            name: 'Proportional Bandwidth,
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+});
+
+
+
+</script>
+
+-->
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container4" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script>
+    $(function () {
+    $('#container4').highcharts({
+        title: {
+            text: 'Batch Robot Hourly Breakdown',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: MyHead.com',
+            x: -20
+        },
+        xAxis: {
+            categories: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+                '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+        },
+        yAxis: {
+            title: {
+                text: 'Percentage (%)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'CPU Load',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'Proportional Free Memory',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+        }, {
+            name: 'Proprtional Disk Activity',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+        }, {
+            name: 'Proportional Bandwidth',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+});
+</script>
+
+<!--------------------------------------------------------------------------------------------------------------------->
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>$(function () {
+    $(document).ready(function () {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        $('#container2').highcharts({
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+
+                     var series = this.series[0];
+
+                    setInterval(function(){
+                    
+                        $.getJSON( "sys_info.json", function( data ) {
+                    
+                            var x = (new Date()).getTime();
+                            var y = data.roles[0].proportional_free_memory;
+                            series.addPoint([x,y],true,true);
+                          
+                        });
+                    
+                    
+                    },5000);
+                    }
+                }
+            },
+            title: {
+                text: 'Batch Robots Rolling Average CPU Load'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Percentage (%)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Random data',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        });
+    });
+});</script>
+				
+				
+			<!--	
+				<div id2="images"></div>
+
+				<script>
+							
+					(function(){
+					var stored_sys_info = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+					$.getJSON( stored_sys_info, { 
+						tags: "mount rainier", 
+						tagmode: "any", 
+						format: "json"})
+						.done(function( data ) {
+      $.each( data.items, function( i, item ) {
+        $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+        if ( i === 3 ) {
+          return false;
+        }
+      });
+    });
+})();
+				  
+// Using the core $.ajax() method
+$.ajax({
+ 
+    // The URL for the request
+    url: "http://192.168.56.103/stored_sys_info.json",
+ 
+    // The data to send (will be converted to a query string)
+    data: {
+        id: 123
+    },
+ 
+    // Whether this is a POST or GET request
+    type: "GET",
+ 
+    // The type of data we expect back
+    dataType : "json",
+	
+	 
+    // Code to run if the request succeeds;
+    // the response is passed to the function
+    success: function( json ) {
+        $( "<h1>" ).text( json.title ).appendTo( "body" );
+        $( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+    },
+ 
+    // Code to run if the request fails; the raw request and
+    // status codes are passed to the function
+    error: function( xhr, status, errorThrown ) {
+        alert( "Sorry, this page is still a work in progress!" );
+        console.log( "Error: " + errorThrown );
+        console.log( "Status: " + status );
+        console.dir( xhr );
+    },
+ 
+    // Code to run regardless of success or failure
+    complete: function( xhr, status ) {
+        alert( "The request is complete!" );
+    }
+});
+					
+				   
+				</script>-->
+				
+				
+	
+			</p>
+			
+		<h3 style = "font-size: 25px; color: maroon; font-family: Arial; text-align: left; background-color: yellow">Batch Robots:</h3>
+			<p>
+				<p style= "font-size: 15px">CPU Load is:</p>
+				<p>Proportional Free Memory is:</p>
+				<p>Proportional Disk Activity is:</p>
+				<p>Proportional Bandwidth is:</p>
+				
+			</p>
+		<h3 style = "font-size: 25px; color: maroon; font-family: Arial; text-align: left; background-color: yellow">Web Servers:</h3>
+			<p>
+				<p>CPU Load is:</p>
+				<p>Proportional Free Memory is:</p>
+				<p>Proportional Disk Activity is:</p>
+				<p>Proportional Bandwidth is:</p>
+				
+			</p>
+		<h3 style = "font-size: 25px; color: maroon; font-family: Arial; text-align: left; background-color: yellow">Database Servers:</h3>
+			<p>
+				<p>CPU Load is:</p>
+				<p>Proportional Free Memory is:</p>
+				<p>Proportional Disk Activity is:</p>
+				<p>Proportional Bandwidth is:</p>
+				
+			</p>
+		<h3 style = "font-size: 25px; color: maroon; font-family: Arial; text-align: left; background-color: yellow">Application Servers:</h3>
+			<p>
+				<p>CPU Load is:</p>
+				<p>Proportional Free Memory is:</p>
+				<p>Proportional Disk Activity is:</p>
+				<p>Proportional Bandwidth is:</p>
+				
+			</p>
+	</body>
+	
+
+
+</html> 
