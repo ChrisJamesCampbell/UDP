@@ -250,7 +250,96 @@ window.addEvent('domready', function() {
         });
     });
 });</script>
-				
+
+<!------------------------------------------------------------------------------------------------------------------------>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container10" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>$(function () {
+    $(document).ready(function () {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        $('#container10').highcharts({
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+
+                     var series = this.series[0];
+
+                    setInterval(function(){
+                    
+                        $.getJSON( "stored_sys_info.json", function( data ) {
+                    
+                            var x = (new Date()).getTime();
+                            var y = data.roles[1].proportional_disk_activity;
+                            series.addPoint([x,y],true,true);
+                          
+                        });
+                    
+                    
+                    },5000);
+                    }
+                }
+            },
+            title: {
+                text: 'Web Servers Proportional Disk Activity Rolling Average'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Percentage (%)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Random data',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        });
+    });
+});</script>				
 				
 			</p>
 
