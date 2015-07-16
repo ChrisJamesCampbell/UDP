@@ -197,10 +197,12 @@
                     setInterval(function(){
                     
                         $.getJSON( "stored_sys_info.json", function( data ) {
+                        	
+                        shift = series.data.length > 20
                     
                             var x = (new Date()).getTime();
                             var y = data.roles[1].proportional_disk_activity;
-                            series.addPoint([x,y],true,true);
+                            series.addPoint([x,y],true,shift);
                           
                         });
                     
