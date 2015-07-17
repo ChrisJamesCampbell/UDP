@@ -146,7 +146,7 @@ static void find_free_memory(struct sys_info_type *sys_info)
 		//gives us the real total available free memory
 		actual_mem_free = mem_free + buffers + cached; 
 		
-	 sys_info->proportional_used_memory = (1 - (actual_mem_free / mem_total) * 100);
+	 sys_info->proportional_used_memory = ((1.0 - (actual_mem_free / mem_total)) * 100);
 		
 		//update the free_mem double within sys_info struct
 	 sys_info->free_mem = actual_mem_free; 
