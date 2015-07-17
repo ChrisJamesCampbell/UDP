@@ -43,7 +43,7 @@ struct sys_info_type
 {
     char cpu_load; //1 byte which represents CPU load average, with values between 0 and 100
     double free_mem;
-    double proportional_free_mem;
+    double proportional_used_memory;
     int machine_type;
     long disk_activity;
     double proportional_disk_activity; 
@@ -60,7 +60,7 @@ static void initialise_sys_info(struct sys_info_type *sys_info)
     
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
-    sys_info->proportional_free_mem = 0.0;
+    sys_info->proportional_used_memory = 0.0;
     sys_info->machine_type = 0;
     sys_info->disk_activity = 0;
     sys_info->proportional_disk_activity = 0.0;
@@ -146,7 +146,7 @@ static void find_free_memory(struct sys_info_type *sys_info)
 		//gives us the real total available free memory
 		actual_mem_free = mem_free + buffers + cached; 
 		
-	 sys_info->proportional_free_mem = (actual_mem_free / mem_total) * 100;
+	 sys_info->proportional_used_memory = (1 - (actual_mem_free / mem_total) * 100);
 		
 		//update the free_mem double within sys_info struct
 	 sys_info->free_mem = actual_mem_free; 
@@ -412,7 +412,7 @@ int main()
         printf("\nThe machine which sent the packet was of type: %d", sys_info.machine_type);
         printf("\nInsantaneous CPU load was: %d %%", sys_info.cpu_load);
         printf("\nFree memory on this machine is: %lf KB", sys_info.free_mem);
-        printf("\nProportional free memory on this machine is: %lf %%", sys_info.proportional_free_mem);
+        printf("\nProportional free memory on this machine is: %lf %%", sys_info.proportional_used_memory);
         printf("\nInstantaneous Disk activity was:  %d (reads/writes)", sys_info.disk_activity);
         printf("\nProportional Disk activity was: %lf %%", sys_info.proportional_disk_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sys_info.instantaneous_bandwidth);
