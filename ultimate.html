@@ -33,6 +33,7 @@
                     load: function () {
 
                      var series = this.series;
+                     var this_chart = this;
 
                     setInterval(function(){
                     
@@ -58,7 +59,7 @@
                             var c = data.roles[3].cpu_load;
                             series[3].addPoint([x,c], true, shift);
                      
-                            chart.redraw();
+                            this_chart.redraw();
                           
                         });
                     
