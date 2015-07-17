@@ -29,7 +29,7 @@
                 type: 'spline',
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
-                events: [{
+                events: {
                     load: function () {
 
                      var series = this.series;
@@ -68,7 +68,7 @@
                     }
                 
                     
-                }]
+                }
             },
             title: {
                 text: 'Proportional Free Memory Rolling Average '
