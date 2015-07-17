@@ -71,7 +71,7 @@
                 }
             },
             title: {
-                text: 'Proportional Free Memory Rolling Average '
+                text: 'Proportional CPU Load Rolling Average '
             },
             xAxis: {
                 type: 'datetime',
@@ -141,27 +141,46 @@
                 events: {
                     load: function () {
 
-                     var series = this.series[0];
+                     var series = this.series;
+                     var this_chart = this;
 
                     setInterval(function(){
                     
                         $.getJSON( "stored_sys_info.json", function( data ) {
-                        	
-                        shift = series.data.length > 20
                     
                             var x = (new Date()).getTime();
-                            var y = data.roles[1].proportional_disk_activity;
-                            series.addPoint([x,y],true,shift);
+                            
+                            shift = series[0].data.length > 20;
+                            
+                            
+                            var y = data.roles[0].proportional_free_mem;
+                            series[0].addPoint([x,y], true, shift);
+               
+                            
+                            var a = data.roles[1].proportional_free_mem;
+                            series[1].addPoint([x,a], true, shift);
+                          
+                            
+                            var b = data.roles[2].proportional_free_mem;
+                            series[2].addPoint([x,b], true, shift);
+                            
+               
+                            var c = data.roles[3].proportional_free_mem;
+                            series[3].addPoint([x,c], true, shift);
+                     
+                            this_chart.redraw();
                           
                         });
                     
                     
                     },5000);
                     }
+                
+                    
                 }
             },
             title: {
-                text: 'Web Servers Proportional Disk Activity Rolling Average'
+                text: 'Proportional Free Memory Rolling Average '
             },
             xAxis: {
                 type: 'datetime',
@@ -191,9 +210,22 @@
                 enabled: false
             },
             series: [{
-                name: 'Proportional Disk Activity',
+                name: 'Batch Robots',
                 data: []
-            }]
+            },
+            {
+                name: 'Web Servers',
+                data: []
+            },
+            {
+                name: 'Database Servers',
+                data: []
+            },
+            {
+                name: 'Application Servers',
+                data: []
+            }
+            ]
         });
     });
 });</script>
@@ -218,25 +250,46 @@
                 events: {
                     load: function () {
 
-                     var series = this.series[0];
+                     var series = this.series;
+                     var this_chart = this;
 
                     setInterval(function(){
                     
                         $.getJSON( "stored_sys_info.json", function( data ) {
                     
                             var x = (new Date()).getTime();
-                            var y = data.roles[2].proportional_bandwidth;
-                            series.addPoint([x,y],true,true);
+                            
+                            shift = series[0].data.length > 20;
+                            
+                            
+                            var y = data.roles[0].proportional_disk_activity;
+                            series[0].addPoint([x,y], true, shift);
+               
+                            
+                            var a = data.roles[1].proportional_disk_activity;
+                            series[1].addPoint([x,a], true, shift);
+                          
+                            
+                            var b = data.roles[2].proportional_disk_activity;
+                            series[2].addPoint([x,b], true, shift);
+                            
+               
+                            var c = data.roles[3].proportional_disk_activity;
+                            series[3].addPoint([x,c], true, shift);
+                     
+                            this_chart.redraw();
                           
                         });
                     
                     
                     },5000);
                     }
+                
+                    
                 }
             },
             title: {
-                text: 'Database Servers Proportional Bandwidth Rolling Average'
+                text: 'Proportional Disk Activity Rolling Average '
             },
             xAxis: {
                 type: 'datetime',
@@ -266,22 +319,22 @@
                 enabled: false
             },
             series: [{
-                name: 'Random data',
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 5000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())
-            }]
+                name: 'Batch Robots',
+                data: []
+            },
+            {
+                name: 'Web Servers',
+                data: []
+            },
+            {
+                name: 'Database Servers',
+                data: []
+            },
+            {
+                name: 'Application Servers',
+                data: []
+            }
+            ]
         });
     });
 });</script>				
@@ -308,25 +361,46 @@
                 events: {
                     load: function () {
 
-                     var series = this.series[0];
+                     var series = this.series;
+                     var this_chart = this;
 
                     setInterval(function(){
                     
                         $.getJSON( "stored_sys_info.json", function( data ) {
                     
                             var x = (new Date()).getTime();
-                            var y = data.roles[3].cpu_load;
-                            series.addPoint([x,y],true,true);
+                            
+                            shift = series[0].data.length > 20;
+                            
+                            
+                            var y = data.roles[0].proportional_bandwidth;
+                            series[0].addPoint([x,y], true, shift);
+               
+                            
+                            var a = data.roles[1].proportional_bandwidth;
+                            series[1].addPoint([x,a], true, shift);
+                          
+                            
+                            var b = data.roles[2].proportional_bandwidth;
+                            series[2].addPoint([x,b], true, shift);
+                            
+               
+                            var c = data.roles[3].proportional_bandwidth;
+                            series[3].addPoint([x,c], true, shift);
+                     
+                            this_chart.redraw();
                           
                         });
                     
                     
                     },5000);
                     }
+                
+                    
                 }
             },
             title: {
-                text: 'Application Servers CPU Load Rolling Average'
+                text: 'Proportional Bandwidth Rolling Average '
             },
             xAxis: {
                 type: 'datetime',
@@ -356,22 +430,22 @@
                 enabled: false
             },
             series: [{
-                name: 'Random data',
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 5000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())
-            }]
+                name: 'Batch Robots',
+                data: []
+            },
+            {
+                name: 'Web Servers',
+                data: []
+            },
+            {
+                name: 'Database Servers',
+                data: []
+            },
+            {
+                name: 'Application Servers',
+                data: []
+            }
+            ]
         });
     });
 });</script>	
