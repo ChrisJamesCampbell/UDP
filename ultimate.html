@@ -153,19 +153,19 @@
                             shift = series[0].data.length > 20;
                             
                             
-                            var y = data.roles[0].proportional_free_mem;
+                            var y = data.roles[0].proportional_free_memory;
                             series[0].addPoint([x,y], true, shift);
                
                             
-                            var a = data.roles[1].proportional_free_mem;
+                            var a = data.roles[1].proportional_free_memory;
                             series[1].addPoint([x,a], true, shift);
                           
                             
-                            var b = data.roles[2].proportional_free_mem;
+                            var b = data.roles[2].proportional_free_memory;
                             series[2].addPoint([x,b], true, shift);
                             
                
-                            var c = data.roles[3].proportional_free_mem;
+                            var c = data.roles[3].proportional_free_memory;
                             series[3].addPoint([x,c], true, shift);
                      
                             this_chart.redraw();
