@@ -44,19 +44,19 @@
                             
                             
                             var y = data.roles[0].cpu_load;
-                            series[0].addPoint([x,y], false, shift);
+                            series[0].addPoint([x,y], true, shift);
                
                             
                             var a = data.roles[1].cpu_load;
-                            series[1].addPoint([x,a], false, shift);
+                            series[1].addPoint([x,a], true, shift);
                           
                             
                             var b = data.roles[2].cpu_load;
-                            series[2].addPoint([x,b], false, shift);
+                            series[2].addPoint([x,b], true, shift);
                             
                
                             var c = data.roles[3].cpu_load;
-                            series[3].addPoint([x,c], false, shift);
+                            series[3].addPoint([x,c], true, shift);
                      
                             chart.redraw();
                           
