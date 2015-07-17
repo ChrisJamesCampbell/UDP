@@ -19,7 +19,7 @@
 //find_average_smoothers by reading from file to be passed into main
 static double packets_per_minute_smoother, 
 			  cpu_load_average_smoother,
-			  proportional_free_memory_average_smoother, 
+			  proportional_used_memory_average_smoother, 
 			  proportional_disk_activity_average_smoother,
 			  proportional_bandwidth_average_smoother;
 	
@@ -54,7 +54,7 @@ struct sys_info
     //all fields identical to talker struct sysinfo
     char cpu_load; 
     double free_mem;
-    double proportional_free_mem;
+    double proportional_used_mem;
     int machine_type;
     long disk_activity;
     double proportional_disk_activity; 
@@ -73,7 +73,7 @@ static void initialise_sys_info(struct sys_info *sys_info)
     
     sys_info->cpu_load = 0;
     sys_info->free_mem = 0.0;
-    sys_info->proportional_free_mem = 0.0;
+    sys_info->proportional_used_mem = 0.0;
     sys_info->machine_type = 0;
     sys_info->disk_activity = 0;
     sys_info->proportional_disk_activity = 0.0; //disk activity
@@ -110,9 +110,9 @@ static void find_metric_average_smoothers()
 			sscanf(line+45, "%lf", &proportional_disk_activity_average_smoother);
 		}
 		
-		if(strncmp("proportional_free_memory_average_smoother: ", line, 43) == 0)
+		if(strncmp("proportional_used_memory_average_smoother: ", line, 43) == 0)
 		{
-			sscanf(line+43, "%lf", &proportional_free_memory_average_smoother);
+			sscanf(line+43, "%lf", &proportional_used_memory_average_smoother);
 		}
 		
 		if(strncmp("proportional_bandwidth_average_smoother: ", line, 41) == 0)
@@ -140,8 +140,8 @@ static void save_data(struct sys_info *old_data, struct sys_info *new_data)
     //old_data->packet_time_stamp = unix_time_now();
     
      //calculates proportional free memory average
-    old_data->proportional_free_mem = old_data->proportional_free_mem * proportional_free_memory_average_smoother +
-    new_data->proportional_free_mem * (1.0 - proportional_free_memory_average_smoother);
+    old_data->proportional_used_mem = old_data->proportional_used_mem * proportional_used_memory_average_smoother +
+    new_data->proportional_used_mem * (1.0 - proportional_used_memory_average_smoother);
     
     //calculates proportional disk activity average
     old_data->proportional_disk_activity = old_data->proportional_disk_activity * proportional_disk_activity_average_smoother +
@@ -285,45 +285,45 @@ int main(void)
         fp = fopen("/var/www/html/stored_sys_info.json", "w");
         
         fprintf(fp, "{\n \t \"cpu_load\" : %d  ,"
-                  " \n \t \"proportional_free_mem\" : %lf ,"
+                  " \n \t \"proportional_used_mem\" : %lf ,"
                   " \n \t \"proportional_disk_activity\" : %lf ,"
                   " \n \t \"proportional_bandwidth\" : %lf ,"
                   " \n \t \"roles\" : [ "
                   " \n \t \t {\"role_id\" : 1 , "
                   " \n \t \t \"cpu_load\" : %d , "
-                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_used_memory\" : %lf ,"
                   " \n \t \t \"proportional_disk_activity\" : %lf ,"
                   " \n \t \t \"proportional_bandwidth\" : %lf } ,\n"
                   " \n \t \t {\"role_id\" : 2 , "
                   " \n \t \t \"cpu_load\" : %d , "
-                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_used_memory\" : %lf ,"
                   " \n \t \t \"proportional_disk_activity\" : %lf ,"
                   " \n \t \t \"proportional_bandwidth\" : %lf } ,\n"
                   " \n \t \t {\"role_id\" : 3 , "
                   " \n \t \t \"cpu_load\" : %d , "
-                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_used_memory\" : %lf ,"
                   " \n \t \t \"proportional_disk_activity\" : %lf ,"
                   " \n \t \t \"proportional_bandwidth\" : %lf } ,\n"
                   " \n \t \t {\"role_id\" : 4 , "
                   " \n \t \t \"cpu_load\" : %d , "
-                  " \n \t \t \"proportional_free_memory\" : %lf ,"
+                  " \n \t \t \"proportional_used_memory\" : %lf ,"
                   " \n \t \t \"proportional_disk_activity\" : %lf ,"
                   " \n \t \t \"proportional_bandwidth\" : %lf } "
                   " \n \t \t   ]"
                   "\n }", 
-               (int)old_data.cpu_load, old_data.proportional_free_mem, //first elements of json string
+               (int)old_data.cpu_load, old_data.proportional_used_mem, //first elements of json string
                old_data.proportional_disk_activity, old_data.proportional_bandwidth,
                
-               (int)old_br_data.cpu_load, old_br_data.proportional_free_mem, //batch robot fields
+               (int)old_br_data.cpu_load, old_br_data.proportional_used_mem, //batch robot fields
                old_br_data.proportional_disk_activity, old_br_data.proportional_bandwidth,
                
-               (int)old_ws_data.cpu_load, old_ws_data.proportional_free_mem, //web server fields
+               (int)old_ws_data.cpu_load, old_ws_data.proportional_used_mem, //web server fields
                old_ws_data.proportional_disk_activity, old_ws_data.proportional_bandwidth,
                
-               (int)old_ds_data.cpu_load, old_ds_data.proportional_free_mem, //database server fields
+               (int)old_ds_data.cpu_load, old_ds_data.proportional_used_mem, //database server fields
                old_ds_data.proportional_disk_activity, old_ds_data.proportional_bandwidth,
                
-               (int)old_as_data.cpu_load, old_as_data.proportional_free_mem, //application server fields
+               (int)old_as_data.cpu_load, old_as_data.proportional_used_mem, //application server fields
                old_as_data.proportional_disk_activity, old_as_data.proportional_bandwidth);
         
         fclose(fp);
@@ -344,7 +344,7 @@ int main(void)
         printf("\nThe packet conatins: \n");
         printf("Instantaneous CPU Load: %d %%", (int)new_packet->cpu_load);
         printf("\nThe Free Memory on this machine was: %lf", (double)new_packet->free_mem);
-        printf("\nThe Proportional Free Memory on this machine was: %lf %%", new_packet->proportional_free_mem);
+        printf("\nThe Proportional Free Memory on this machine was: %lf %%", new_packet->proportional_used_mem);
         
         printf("\nAverage CPU load is: %d%% ", (int)old_data.cpu_load);
         
