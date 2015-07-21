@@ -343,23 +343,21 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 	FILE *fp;
 	char line[256];
 	
-	int open_port;
-	int count;
+	int open_ports_total;
+	int open_ports;
 	
-	fopen("/etc/services", "r");
+	fopen("/proc/net/tcp", "r");
 	
 	while(fgets(line,256, fp))
 	{
-		sscanf(line, "%*s%*[ ]%d", &open_port);
-		if(&open_port > 0)
-		{
-			count++;
-		}
-		open_port = 0;
+		sscanf(line, "%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%d", &open_ports);
+		open_ports_total = open_ports_total + open_ports;
+		open_ports = 0;
+		
 	}
 	 
 	
-	sys_info->open_tcp_ports = count;
+	sys_info->open_tcp_ports = open_ports_total;
 	
 	fclose(fp);
 	
