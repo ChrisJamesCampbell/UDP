@@ -348,7 +348,7 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 	
 	fopen("/etc/services", "r");
 	
-	while(fgets(line,1000, fp))
+	while(fgets(line,256, fp))
 	{
 		sscanf(line, "%*s%*[ ]%d", &open_port);
 		if(&open_port > 0)
@@ -357,9 +357,11 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 		}
 		open_port = 0;
 	}
-	 fclose(fp);
+	 
 	
 	sys_info->open_tcp_ports = count;
+	
+	fclose(fp);
 	
 }
 
