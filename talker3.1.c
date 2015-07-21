@@ -51,6 +51,8 @@ struct sys_info_type
     double proportional_bandwidth;
     
     double packet_time_stamp;
+	
+	int open_tcp_ports; //number of
     
 };
 
@@ -67,6 +69,7 @@ static void initialise_sys_info(struct sys_info_type *sys_info)
     sys_info->instantaneous_bandwidth = 0.0;
     sys_info->proportional_bandwidth = 0.0;
     sys_info->packet_time_stamp = unix_time_now();
+	sys_info->open_tcp_ports = 0;
     return;
     
 }
@@ -335,6 +338,30 @@ static void what_machine_type(struct sys_info_type *sys_info)
 	fclose(fp2);
 }
 
+static void find_open_tcp_ports(struct sys_info_type *sys_info)
+{
+	FILE *fp;
+	char line[256];
+	int open_port;
+	int count;
+	
+	fopen("/etc/services", "r");
+	
+	while(fgets(line,256, fp))
+	{
+		sscanf(line, "%*s%*[ ]%d", &open_port);
+		if(&open_port > 0)
+		{
+			count++;
+		}
+		open_port = 0;
+	}
+	 fclose(fp);
+	
+	sys_info->open_tcp_ports = count;
+	
+}
+
 int main()
 { 
 
@@ -355,6 +382,7 @@ int main()
         find_disk_info(&sys_info);
         find_bandwidth(&sys_info);
         what_machine_type(&sys_info);
+		find_open_tcp_ports(&sys_info);
         
         unix_time_now();
         
@@ -417,6 +445,7 @@ int main()
         printf("\nProportional Disk activity was: %lf %%", sys_info.proportional_disk_activity);
         printf("\nInstantaneous bandwidth was:  %lf bps)", sys_info.instantaneous_bandwidth);
         printf("\nProportional bandwidth was: %lf %% ", sys_info.proportional_bandwidth);
+	printf("\nThe number of open TCP ports were: %f", sys_info.open_tcp_ports);
         
         printf("\nThis packet was sent at: %lf unix time\n", (double)sys_info.packet_time_stamp);
         
