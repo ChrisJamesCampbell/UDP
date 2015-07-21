@@ -342,12 +342,13 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 {
 	FILE *fp;
 	char line[256];
+	
 	int open_port;
 	int count;
 	
 	fopen("/etc/services", "r");
 	
-	while(fgets(line,256, fp))
+	while(fgets(line,1000, fp))
 	{
 		sscanf(line, "%*s%*[ ]%d", &open_port);
 		if(&open_port > 0)
