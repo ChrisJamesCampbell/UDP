@@ -350,9 +350,9 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 	{
 		//sscanf(line, "%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%d", &open_ports);
 		
-		if(strncmp("TCP: inuse ", line, 11) == 0)
+		if(strncmp("TCP:", line, 4) == 0)
 		{
-			sscanf(line+11, "%lf", &open_ports);
+			sscanf(line+4, "%*[ ]%*s%*[ ]%lf", &open_ports);
 			break;
 		}
 		
