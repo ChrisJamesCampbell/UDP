@@ -18,12 +18,12 @@
 static long limit = 512;
 static char *skidouche;
 
-static char *rand_string(char *str, limit)
+static char *rand_string(char *str, long limit)
 {
     const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
     int n;
     
-        for (n = 0; n < size; n++) {
+        for (n = 0; n < limit; n++) {
             int key = rand() % (int) (sizeof charset - 1);
             str[n] = charset[key];
         }
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     struct addrinfo hints, *servinfo, *p;
     int rv;
     int numbytes = random_at_most(limit);
-    *char random_string = rand_string(skidouche, limit);
+    char* random_string = rand_string(skidouche, limit);
     
 
     if (argc != 2) {
