@@ -15,8 +15,22 @@
 #include <math.h>
 
 #define SERVERPORT "4950"    // the port users will be connecting to
-
 static long limit = 512;
+static char *skidouche;
+
+static char *rand_string(char *str, limit)
+{
+    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
+    int n;
+    
+        for (n = 0; n < size; n++) {
+            int key = rand() % (int) (sizeof charset - 1);
+            str[n] = charset[key];
+        }
+        str[limit] = '\0';
+    
+    return str;
+}
 
 
 	// Assumes 0 <= max <= RAND_MAX
@@ -47,12 +61,15 @@ int main(int argc, char *argv[])
     struct addrinfo hints, *servinfo, *p;
     int rv;
     int numbytes = random_at_most(limit);
+    *char random_string = rand_string(skidouche, limit);
+    
 
-    if (argc != 3) {
+    if (argc != 2) {
         fprintf(stderr,"usage: talker hostname message\n");
         exit(1);
     }
-
+    
+    
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
 		hints.ai_socktype = SOCK_DGRAM;
@@ -78,7 +95,7 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    if ((numbytes = sendto(sockfd, argv[2], strlen(argv[2]), 0,
+    if ((numbytes = sendto(sockfd, random_string, strlen(random_string), 0,
              p->ai_addr, p->ai_addrlen)) == -1) {
         perror("talker: sendto");
         exit(1);
