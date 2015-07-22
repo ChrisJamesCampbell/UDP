@@ -15,7 +15,6 @@
 #include <math.h>
 
 #define SERVERPORT "4950"    // the port users will be connecting to
-long limit = 512;
 //static char skidouche = " ";
 
 /*static char *rand_string(char *str, long limit)
@@ -58,7 +57,7 @@ char *randstring(size_t length) {
 
 	// Assumes 0 <= max <= RAND_MAX
 	// Returns in the half-open interval [0, max]
-	  static long random_at_most(limit) {
+	  static long random_at_most(long limit) {
 	  unsigned long
 	    // max <= RAND_MAX < ULONG_MAX, so this is okay.
 	    num_bins = (unsigned long) limit + 1,
@@ -83,6 +82,7 @@ int main(int argc, char *argv[])
     int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
+    long limit = 512;
     int numbytes = random_at_most(limit);
     //char* random_string = *rand_string(&skidouche, limit);
     
