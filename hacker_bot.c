@@ -15,12 +15,37 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 
+static int generate_random()
+{
+	// Assumes 0 <= max <= RAND_MAX
+	// Returns in the half-open interval [0, max]
+	  long random_at_most(512) {
+	  unsigned long
+	    // max <= RAND_MAX < ULONG_MAX, so this is okay.
+	    num_bins = (unsigned long) 512 + 1,
+	    num_rand = (unsigned long) RAND_MAX + 1,
+	    bin_size = num_rand / num_bins,
+	    defect   = num_rand % num_bins;
+	
+	  long x;
+	  do {
+	   x = random();
+	  }
+	  // This is carefully written not to overflow
+	  while (num_rand - defect <= (unsigned long)x);
+	
+	  // Truncated division is intentional
+	  return x/bin_size;
+}
+
+}
+
 int main(int argc, char *argv[])
 {
     int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
-    int numbytes;
+    int numbytes = generate_random();
 
     if (argc != 3) {
         fprintf(stderr,"usage: talker hostname message\n");
