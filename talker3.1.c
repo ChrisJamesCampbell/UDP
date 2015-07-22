@@ -352,7 +352,7 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 		
 		if(strncmp("TCP: inuse ", line, 11) == 0)
 		{
-			sscanf(line+11, "%d", &open_ports);
+			sscanf(line+11, "%lf", &open_ports);
 			break;
 		}
 		
