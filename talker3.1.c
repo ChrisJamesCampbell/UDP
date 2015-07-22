@@ -382,12 +382,19 @@ int main()
         initialise_sys_info(&sys_info);
         
         //calls the methods to extrapolate the metrics
+        //that are non machine specific
         find_cpu_load(&sys_info);
         find_free_memory(&sys_info);
         find_disk_info(&sys_info);
         find_bandwidth(&sys_info);
         what_machine_type(&sys_info);
+        
+        if(sys_info->machine_type == 2) //if machine type is Web Server
+        {
+        	//metric specific to Web Servers
 		find_open_tcp_ports(&sys_info);
+        }
+        
         
         unix_time_now();
         
