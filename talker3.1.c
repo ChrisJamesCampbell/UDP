@@ -353,10 +353,10 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 		if(strncmp("TCP:", line, 4) == 0)
 		{
 			sscanf(line+4, "%*[ ]%*s%*[ ]%d", &open_ports);
+			sys_info->open_tcp_ports = open_ports;
 			break;
 		}
 		
-		sys_info->open_tcp_ports = open_ports;
 		
 	}
 	 
