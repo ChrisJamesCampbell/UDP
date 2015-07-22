@@ -348,11 +348,11 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 	
 	while(fgets(line,256, fp))
 	{
-		//sscanf(line, "%*lf%*[ ]%*lf%*[ ]%*lf%*[ ]%d", &open_ports);
+		
 		
 		if(strncmp("TCP:", line, 4) == 0)
 		{
-			sscanf(line+4, "%*[ ]%*s%*[ ]%lf", &open_ports);
+			sscanf(line+4, "%*[ ]%*s%*[ ]%d", &open_ports);
 			break;
 		}
 		
