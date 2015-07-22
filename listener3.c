@@ -244,11 +244,11 @@ int main(void)
             continue;
         }
         
-       /* if(numbytes != (sizeof(struct sys_info)))
+        if(numbytes != (sizeof(struct sys_info)))
         {
             sleep(1);
             continue;
-        }*/
+        }
         
         //reads in from file what the metric average_smoother are
         //to be used in save_data
