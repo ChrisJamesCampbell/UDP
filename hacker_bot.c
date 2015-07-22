@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     struct addrinfo hints, *servinfo, *p;
     int rv;
     long limit = 512;
-    int numbytes = rand()
+    int numbytes = rand();
     //random_at_most(limit);
     //char* random_string = *rand_string(&skidouche, limit);
     
