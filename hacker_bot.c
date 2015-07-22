@@ -41,17 +41,17 @@ static long limit = 512;
 }
 
 
-int main(int argc, char *argv[])
+int main(int argc)
 {
     int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
     int numbytes = random_at_most(limit);
 
-    if (argc != 3) {
+    /*if (argc != 3) {
         fprintf(stderr,"usage: talker hostname message\n");
         exit(1);
-    }
+    }*/
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    if ((numbytes = sendto(sockfd, argv[2], strlen(argv[2]), 0,
+    if ((numbytes = sendto(sockfd, numbytes, numbytes, 0,
              p->ai_addr, p->ai_addrlen)) == -1) {
         perror("talker: sendto");
         exit(1);
