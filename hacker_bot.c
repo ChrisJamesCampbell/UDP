@@ -95,6 +95,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
     
+    while(1)
+    {
     
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
@@ -132,6 +134,7 @@ int main(int argc, char *argv[])
     printf("talker: sent %d bytes to %s\n", numbytes, argv[1]);
     printf("The string contained: %s \n", random_string);
     close(sockfd);
+    }
 
     return 0;
 }
