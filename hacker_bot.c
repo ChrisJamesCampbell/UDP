@@ -16,7 +16,7 @@
 
 #define SERVERPORT "4950"    // the port users will be connecting to
 static long limit = 512;
-static char *skidouche;
+static char skidouche;
 
 static char *rand_string(char *str, long limit)
 {
