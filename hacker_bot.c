@@ -132,11 +132,11 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    if ((strlen(random_string) = sendto(sockfd, random_string, strlen(random_string), 0,
+    /*if ((strlen(random_string) = sendto(sockfd, random_string, strlen(random_string), 0,
              p->ai_addr, p->ai_addrlen)) == -1) {
         perror("talker: sendto");
         exit(1);
-    }
+    }*/
 
     freeaddrinfo(servinfo);
 
