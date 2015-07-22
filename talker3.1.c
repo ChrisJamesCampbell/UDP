@@ -389,7 +389,7 @@ int main()
         find_bandwidth(&sys_info);
         what_machine_type(&sys_info);
         
-        if(sys_info->machine_type == 2) //if machine type is Web Server
+        if(sys_info.machine_type == 2) //if machine type is Web Server
         {
         	//metric specific to Web Servers
 		find_open_tcp_ports(&sys_info);
