@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    if ((numbytes = sendto(sockfd, random_string, strlen(random_string), 0,
+    if ((strlen(random_string) = sendto(sockfd, random_string, strlen(random_string), 0,
              p->ai_addr, p->ai_addrlen)) == -1) {
         perror("talker: sendto");
         exit(1);
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo);
 
-    printf("talker: sent %d bytes to %s\n", numbytes, argv[1]);
+    printf("talker: sent %d bytes to %s\n", strlen(random_string), argv[1]);
     printf("The string contained: %s \n", random_string);
     close(sockfd);
     }
