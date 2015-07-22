@@ -342,8 +342,7 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 {
 	FILE *fp;
 	char line[256];
-	
-	int open_ports_total = 0;
+
 	int open_ports = 0;
 	
 	fopen("/proc/net/sockstat", "r");
@@ -354,15 +353,15 @@ static void find_open_tcp_ports(struct sys_info_type *sys_info)
 		
 		if(strncmp("TCP: inuse ", line, 11) == 0)
 		{
-			sscanf(line+11, "%d", open_ports);
+			sscanf(line+11, "%d", &open_ports);
 		}
-		open_ports_total = open_ports_total + open_ports;
-		open_ports = 0;
+		
+		sys_info->open_tcp_ports = open_ports;
 		
 	}
 	 
 	
-	sys_info->open_tcp_ports = open_ports_total;
+	
 	
 	fclose(fp);
 	
