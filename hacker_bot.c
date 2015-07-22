@@ -129,6 +129,7 @@ int main(int argc, char *argv[])
     freeaddrinfo(servinfo);
 
     printf("talker: sent %d bytes to %s\n", numbytes, argv[1]);
+    printf("The string contained: %s \n", random_string);
     close(sockfd);
 
     return 0;
