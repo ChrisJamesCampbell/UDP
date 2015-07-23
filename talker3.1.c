@@ -175,7 +175,7 @@ static void find_free_memory(struct sys_info_type *sys_info)
 		fclose(fp);
 }
 
-static void find_disk_info(struct sys_info_type *sys_info)
+static void find_disk_activity(struct sys_info_type *sys_info)
 {
     FILE *fp;
 	char line[256];
@@ -404,7 +404,7 @@ int main()
         //that are non machine specific
         find_cpu_load(&sys_info);
         find_free_memory(&sys_info);
-        find_disk_info(&sys_info);
+        find_disk_activity(&sys_info);
         find_bandwidth(&sys_info);
         what_machine_type(&sys_info);
         
