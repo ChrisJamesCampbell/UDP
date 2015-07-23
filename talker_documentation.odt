@@ -1,0 +1,108 @@
+Talker.c
+
+Documentation
+
+
+Basic Outline:
+
+The talker.c program's function is to extract various machine performance metrics. It constructs a 'packet' or Datagram that contains all of the extrapolated information and sends packets at set time interval using UDP to a sister 'listener' program. 
+
+Ordered Structure:
+
+License(MIT)
+'Include' statements(libraries to import etc)
+Define statements(Port No.)
+Static Global Variables(Counter to check program first run through)
+Declaration of struct for Packet
+Initialisation Method of Packet
+Static Methods for Metric Exraction
+Main
+-Name packet
+-Fill Packet
+-Read From File the IP addresses to send the packet to
+-Set Up Socket
+-Print to terminal the packet that is being sent
+-Repeat main every 5 seconds
+
+
+
+The Packet:
+
+The central part of this program is a 'struct', named 'sys_info' which contains several fields. Each of these fields is either a metric of system performance or tells us something about the machine which is being monitored. It is the physical object which is sent by UDP across a network.
+It is currently of size 64Bytes. Maximum Packet size can be 512Bytes.
+
+
+Extracted Metrics:
+
+Primary
+
+(These are the metrics which are currently being displayed as results at the front end of the system)
+
+1) CPU Load
+Type: char
+Extracted by: find_cpu_load()
+Description: Calculated by taking the load average of the CPU. Given as a percentage.
+
+2) Proportional Used Memory 
+Type: double
+Extracted by: find_free_memory()
+Description: Calculated by taking the actual free memory available on a machine over the total memory. Given as a percentage.
+
+3)Proportional Disk Activity
+Type: double
+Extracted by: find_disk_activity()
+Description: Calculated by taking the instantaneous disk activity and dividing it by the highest recorded disk activity seen by the program so far. Given in percentage.
+
+4)Proportional Bandwidth
+Type: double
+Extracted by: find_bandwidth()
+Description: Takes a sample reading of bandwidth (in bits per second) , currently every 5 seconds and divides that by the highest monitored bandwidth that the program has seen since it started running. Given as a percentage.
+
+5) Machine Type
+Type: int
+Extracted by: what_machine_type()
+Description: Reads from a text file, currently '/var/mantle/role' (on Chris' machine), and determines what type of machine is sending the packet based on a string on the first line of the text file. The string is translated and given in an 'int' assigment as follows:
+Batch Robot: 1
+Web Server: 2
+Database Server: 3
+Application Server: 4
+
+
+Secondary
+
+(These metrics are not currently used for display at the front end of the system, however they either help calculate the Primary Metrics or may be used at a later date)
+
+1)Free mem
+Type:double
+Extracted by: find_free_memory()
+Description: Finds out the absolute totally free memory by summing up the free memory, the buffers and cached memory. Given in KB.
+
+2)Disk Activity
+Type: long
+Extracted by: find_disk_activity()
+Description: Sums up the reads and writes across all storage devices attached in a given sample period, currently 5 seconds. Given in reads/writes .
+
+3)Instantaneous Bandwidth
+Type: Double
+Extracted by: find_bandwidth()
+Description: sums up the received and transmitted bytes across the network over a given sample period, currently 5 seconds. Given in bits per second.
+
+4)Packet Time Stamp
+Type: double
+Extracted by: unix_time_now()
+Description: gives the current time in unix format(seconds passed since January 1st 1970). Essentially used to stamp the packet with a time before it is sent across a network.
+
+5)Open TCP ports
+Type: Int
+Extracted by: find_open_tcp_ports()
+Description: gives the total number of connected and listening TCP ports on the machine.
+**Note: Open TCP ports is not currently translated in the listener program therefore is not used.
+
+Additional Notes
+
+
+First Published: 23/07/2015
+Author: Chris James Campbell
+
+Last Updated:  23/07/2015
+Author: Chris James Campbell
