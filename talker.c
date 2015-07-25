@@ -482,7 +482,7 @@ int main()
         
         close(sockfd);
        
-        //sleep(5);
+        sleep(5);
         
         //increments the signal counter to say that the program has been 
         //run at least once
